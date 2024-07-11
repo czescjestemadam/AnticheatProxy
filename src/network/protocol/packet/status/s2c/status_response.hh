@@ -1,9 +1,21 @@
 #pragma once
+#include "network/protocol/packet/i_packet.hh"
 
 namespace acp::packet::status::s2c
 {
-	class StatusResponse
+	class StatusResponse : public IPacket
 	{
+		std::string json;
 
+	public:
+		using IPacket::IPacket;
+
+		void read() override;
+		void write() override;
+
+		std::string getJson() const;
+		void setJson(const std::string& json);
+
+		std::string toString() const override;
 	};
 }
