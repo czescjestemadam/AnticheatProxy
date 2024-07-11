@@ -1,5 +1,5 @@
 #pragma once
-#include "util/types.hh"
+#include "util/uuid.hh"
 
 #include <vector>
 
@@ -13,12 +13,19 @@ namespace acp
 		ByteBuf() = default;
 		ByteBuf(byte_t* bytes, size_t size);
 
+		// byte
 		byte_t readByte();
 		void writeByte(byte_t v);
+
+		void readBytes(byte_t* out, size_t len);
+		void writeBytes(const byte_t* buf, size_t len);
 
 		// var
 		int readVarint();
 		void writeVarint(int v);
+
+		long readVarlong();
+		void writeVarlong(long v);
 
 		// signed
 		short readShort();
@@ -41,8 +48,15 @@ namespace acp
 		void writeLongU(unsigned long v);
 
 		// misc
+		std::string readStr();
+		void writeStr(const std::string& v);
+
+		UUID readUuid();
+		void writeUuid(const UUID& uuid);
 
 
+		std::string toString() const;
+		std::string toStringShort() const;
 
 		const byte_t* data() const;
 		size_t size() const;
