@@ -4,6 +4,6 @@ namespace acp::packet::login::s2c
 {
 	class Disconnect
 	{
-
+		// TODO
 	};
 }
