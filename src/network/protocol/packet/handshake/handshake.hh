@@ -29,5 +29,8 @@ namespace acp::packet::handshake
 
 		int getNextState() const;
 		void setNextState(int next_state);
+
+
+		std::string toString() const override;
 	};
 }

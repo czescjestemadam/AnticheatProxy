@@ -16,5 +16,7 @@ namespace acp::packet
 		virtual void write() = 0;
 
 		ByteBuf& getBuf();
+
+		virtual std::string toString() const = 0;
 	};
 }

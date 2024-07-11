@@ -1,5 +1,7 @@
 #include "handshake.hh"
 
+#include <format>
+
 void acp::packet::handshake::Handshake::read()
 {
 	protocolVersion = buf.readVarint();
@@ -57,3 +59,7 @@ void acp::packet::handshake::Handshake::setNextState(int next_state)
 }
 
 
+std::string acp::packet::handshake::Handshake::toString() const
+{
+	return std::format("Handshake[pvn={}, addr={}:{}, next={}]", protocolVersion, address, port, nextState);
+}
