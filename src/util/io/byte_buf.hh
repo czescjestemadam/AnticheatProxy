@@ -54,6 +54,10 @@ namespace acp
 		UUID readUuid();
 		void writeUuid(const UUID& uuid);
 
+		// zlib
+		ByteBuf compress(int level);
+		ByteBuf decompress(int dstLen);
+
 
 		std::string toString() const;
 		std::string toStringShort() const;

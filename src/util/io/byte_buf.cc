@@ -183,6 +183,19 @@ void acp::ByteBuf::writeUuid(const UUID& uuid)
 }
 
 
+acp::ByteBuf acp::ByteBuf::compress(int level)
+{
+	// TODO
+	return { bytes.data(), bytes.size() };
+}
+
+acp::ByteBuf acp::ByteBuf::decompress(int dstLen)
+{
+	// TODO
+	return { bytes.data(), bytes.size() };
+}
+
+
 std::string acp::ByteBuf::toString() const
 {
 	std::string byteStr;
