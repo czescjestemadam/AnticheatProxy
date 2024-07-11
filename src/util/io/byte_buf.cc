@@ -8,13 +8,13 @@
 
 #define BUF_READ(type)					\
 	BUF_UNION(type);					\
-	readBytes(bytes, sizeof(bytes));	\
+	readBytes(bytes, sizeof(type));	\
 	return val
 
 #define BUF_WRITE(type)					\
 	BUF_UNION(type);					\
 	val = v;							\
-	writeBytes(bytes, sizeof(bytes))
+	writeBytes(bytes, sizeof(type))
 
 
 acp::ByteBuf::ByteBuf(byte_t* bytes, size_t size) : bytes(bytes, bytes + size)
@@ -24,7 +24,7 @@ acp::ByteBuf::ByteBuf(byte_t* bytes, size_t size) : bytes(bytes, bytes + size)
 
 byte_t acp::ByteBuf::readByte()
 {
-	byte_t byte = bytes.front();
+	const byte_t byte = bytes.front();
 	bytes.erase(bytes.begin());
 	return byte;
 }
@@ -43,7 +43,7 @@ void acp::ByteBuf::readBytes(byte_t* out, size_t len)
 void acp::ByteBuf::writeBytes(const byte_t* buf, size_t len)
 {
 	for (int i = 0; i < len; ++i)
-		writeByte(buf[i]);
+		bytes.push_back(buf[i]);
 }
 
 
