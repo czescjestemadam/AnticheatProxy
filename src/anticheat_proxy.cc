@@ -1,0 +1,34 @@
+#include "anticheat_proxy.hh"
+
+constexpr const char* LISTEN_ADDR = "127.0.0.1";
+constexpr ushort LISTEN_PORT = 30066;
+
+constexpr const char* KRYSTAL_ADDR = "146.59.52.73";
+constexpr const char* SERVER_ADDR = "127.0.0.1";
+constexpr ushort SERVER_PORT = 30077;
+
+static acp::AnticheatProxy* INST;
+
+acp::AnticheatProxy::AnticheatProxy(RunArgs&& args)
+	: args(std::move(args)),
+	  networkManager(LISTEN_ADDR, LISTEN_PORT, SERVER_ADDR, SERVER_PORT)
+{
+	INST = this;
+}
+
+void acp::AnticheatProxy::start()
+{
+	networkManager.start();
+	networkManager.wait();
+}
+
+void acp::AnticheatProxy::stop()
+{
+	networkManager.stop();
+}
+
+
+acp::AnticheatProxy* acp::AnticheatProxy::get()
+{
+	return INST;
+}
