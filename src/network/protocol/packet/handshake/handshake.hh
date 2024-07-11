@@ -17,5 +17,17 @@ namespace acp::packet::handshake
 
 		void read() override;
 		void write() override;
+
+		int getProtocolVersion() const;
+		void setProtocolVersion(int protocol_version);
+
+		const std::string& getAddress() const;
+		void setAddress(const std::string& address);
+
+		ushort getPort() const;
+		void setPort(ushort port);
+
+		int getNextState() const;
+		void setNextState(int next_state);
 	};
 }
