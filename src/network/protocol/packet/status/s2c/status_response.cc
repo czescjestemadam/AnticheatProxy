@@ -2,12 +2,12 @@
 
 #include <format>
 
-void acp::packet::status::s2c::StatusResponse::read()
+void acp::packet::status::s2c::StatusResponse::read(const ProtocolVersion* version)
 {
 	json = buf.readStr();
 }
 
-void acp::packet::status::s2c::StatusResponse::write()
+void acp::packet::status::s2c::StatusResponse::write(const ProtocolVersion* version)
 {
 	buf.writeStr(json);
 }

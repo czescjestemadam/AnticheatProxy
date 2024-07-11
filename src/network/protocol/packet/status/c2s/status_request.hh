@@ -8,8 +8,8 @@ namespace acp::packet::status::c2s
 	public:
 		using IPacket::IPacket;
 
-		void read() override;
-		void write() override;
+		void read(const ProtocolVersion* version) override;
+		void write(const ProtocolVersion* version) override;
 
 		std::string toString() const override;
 	};

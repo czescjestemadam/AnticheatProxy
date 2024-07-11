@@ -2,12 +2,12 @@
 
 #include <format>
 
-void acp::packet::status::c2s::PingRequest::read()
+void acp::packet::status::c2s::PingRequest::read(const ProtocolVersion* version)
 {
 	timestamp = buf.readLong();
 }
 
-void acp::packet::status::c2s::PingRequest::write()
+void acp::packet::status::c2s::PingRequest::write(const ProtocolVersion* version)
 {
 	buf.writeLong(timestamp);
 }

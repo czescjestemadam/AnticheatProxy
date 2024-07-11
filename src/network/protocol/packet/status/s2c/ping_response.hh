@@ -10,8 +10,8 @@ namespace acp::packet::status::s2c
 	public:
 		using IPacket::IPacket;
 
-		void read() override;
-		void write() override;
+		void read(const ProtocolVersion* version) override;
+		void write(const ProtocolVersion* version) override;
 
 		long getTimestamp() const;
 		void setTimestamp(long timestamp);

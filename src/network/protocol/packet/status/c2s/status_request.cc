@@ -1,10 +1,10 @@
 #include "status_request.hh"
 
-void acp::packet::status::c2s::StatusRequest::read()
+void acp::packet::status::c2s::StatusRequest::read(const ProtocolVersion* version)
 {
 }
 
-void acp::packet::status::c2s::StatusRequest::write()
+void acp::packet::status::c2s::StatusRequest::write(const ProtocolVersion* version)
 {
 }
 

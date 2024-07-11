@@ -2,7 +2,7 @@
 
 #include <format>
 
-void acp::packet::handshake::Handshake::read()
+void acp::packet::handshake::Handshake::read(const ProtocolVersion* version)
 {
 	protocolVersion = buf.readVarint();
 	address = buf.readStr();
@@ -10,7 +10,7 @@ void acp::packet::handshake::Handshake::read()
 	nextState = buf.readVarint();
 }
 
-void acp::packet::handshake::Handshake::write()
+void acp::packet::handshake::Handshake::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(protocolVersion);
 	buf.writeStr(address);

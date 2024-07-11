@@ -1,4 +1,5 @@
 #pragma once
+#include "network/protocol/protocol_version.hh"
 #include "util/io/byte_buf.hh"
 
 namespace acp::packet
@@ -12,8 +13,8 @@ namespace acp::packet
 		explicit IPacket(const ByteBuf& buf);
 		virtual ~IPacket() = default;
 
-		virtual void read() = 0;
-		virtual void write() = 0;
+		virtual void read(const ProtocolVersion* version) = 0;
+		virtual void write(const ProtocolVersion* version) = 0;
 
 		ByteBuf& getBuf();
 

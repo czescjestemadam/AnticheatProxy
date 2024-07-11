@@ -15,8 +15,8 @@ namespace acp::packet::handshake
 	public:
 		using IPacket::IPacket;
 
-		void read() override;
-		void write() override;
+		void read(const ProtocolVersion* version) override;
+		void write(const ProtocolVersion* version) override;
 
 		int getProtocolVersion() const;
 		void setProtocolVersion(int protocol_version);
