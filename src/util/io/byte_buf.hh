@@ -20,6 +20,9 @@ namespace acp
 		void readBytes(byte_t* out, size_t len);
 		void writeBytes(const byte_t* buf, size_t len);
 
+		ByteBuf readBuf(size_t len);
+		void writeBuf(const ByteBuf& buf);
+
 		// var
 		int readVarint();
 		void writeVarint(int v);

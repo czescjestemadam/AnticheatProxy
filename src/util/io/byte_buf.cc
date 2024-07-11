@@ -46,6 +46,18 @@ void acp::ByteBuf::writeBytes(const byte_t* buf, size_t len)
 		bytes.push_back(buf[i]);
 }
 
+acp::ByteBuf acp::ByteBuf::readBuf(size_t len)
+{
+	byte_t bytes[len];
+	readBytes(bytes, len);
+	return { bytes, len };
+}
+
+void acp::ByteBuf::writeBuf(const ByteBuf& buf)
+{
+	writeBytes(buf.data(), buf.size());
+}
+
 
 int acp::ByteBuf::readVarint()
 {
