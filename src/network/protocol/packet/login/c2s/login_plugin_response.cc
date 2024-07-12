@@ -16,6 +16,11 @@ void acp::packet::login::c2s::LoginPluginResponse::write(const ProtocolVersion* 
 	buf.writeBuf(data);
 }
 
+int acp::packet::login::c2s::LoginPluginResponse::getId(const ProtocolVersion* version) const
+{
+	return 2;
+}
+
 int acp::packet::login::c2s::LoginPluginResponse::getMessageId() const
 {
 	return messageId;

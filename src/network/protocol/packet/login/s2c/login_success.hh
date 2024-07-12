@@ -14,6 +14,8 @@ namespace acp::packet::login::s2c
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
+		int getId(const ProtocolVersion* version) const override;
+
 		UUID getUuid() const;
 		void setUuid(const UUID& uuid);
 

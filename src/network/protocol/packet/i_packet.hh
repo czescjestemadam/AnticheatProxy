@@ -18,6 +18,8 @@ namespace acp::packet
 
 		ByteBuf& getBuf();
 
+		virtual int getId(const ProtocolVersion* version) const = 0;
+
 		virtual std::string toString() const = 0;
 	};
 }

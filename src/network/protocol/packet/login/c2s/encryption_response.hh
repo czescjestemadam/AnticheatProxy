@@ -14,6 +14,8 @@ namespace acp::packet::login::c2s
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
+		int getId(const ProtocolVersion* version) const override;
+
 		ByteBuf getSharedSecret() const;
 		void setSharedSecret(const ByteBuf& shared_secret);
 

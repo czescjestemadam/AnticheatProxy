@@ -12,6 +12,11 @@ void acp::packet::login::s2c::SetCompression::write(const ProtocolVersion* versi
 	buf.writeVarint(threshold);
 }
 
+int acp::packet::login::s2c::SetCompression::getId(const ProtocolVersion* version) const
+{
+	return 3;
+}
+
 int acp::packet::login::s2c::SetCompression::getThreshold() const
 {
 	return threshold;

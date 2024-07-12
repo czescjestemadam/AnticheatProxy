@@ -16,6 +16,11 @@ void acp::packet::login::s2c::LoginPluginRequest::write(const ProtocolVersion* v
 	buf.writeBuf(data);
 }
 
+int acp::packet::login::s2c::LoginPluginRequest::getId(const ProtocolVersion* version) const
+{
+	return 4;
+}
+
 int acp::packet::login::s2c::LoginPluginRequest::getMessageId() const
 {
 	return messageId;

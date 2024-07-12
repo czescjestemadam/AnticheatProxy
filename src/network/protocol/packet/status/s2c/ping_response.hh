@@ -13,6 +13,8 @@ namespace acp::packet::status::s2c
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
+		int getId(const ProtocolVersion* version) const override;
+
 		long getTimestamp() const;
 		void setTimestamp(long timestamp);
 

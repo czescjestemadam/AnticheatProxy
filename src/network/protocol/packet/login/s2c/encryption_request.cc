@@ -20,6 +20,11 @@ void acp::packet::login::s2c::EncryptionRequest::write(const ProtocolVersion* ve
 	buf.writeBuf(verifyToken);
 }
 
+int acp::packet::login::s2c::EncryptionRequest::getId(const ProtocolVersion* version) const
+{
+	return 1;
+}
+
 std::string acp::packet::login::s2c::EncryptionRequest::getServerId() const
 {
 	return serverId;

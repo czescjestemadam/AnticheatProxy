@@ -12,6 +12,11 @@ void acp::packet::status::c2s::PingRequest::write(const ProtocolVersion* version
 	buf.writeLong(timestamp);
 }
 
+int acp::packet::status::c2s::PingRequest::getId(const ProtocolVersion* version) const
+{
+	return 1;
+}
+
 long acp::packet::status::c2s::PingRequest::getTimestamp() const
 {
 	return timestamp;

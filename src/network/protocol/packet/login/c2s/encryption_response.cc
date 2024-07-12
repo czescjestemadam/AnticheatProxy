@@ -15,6 +15,11 @@ void acp::packet::login::c2s::EncryptionResponse::write(const ProtocolVersion* v
 {
 }
 
+int acp::packet::login::c2s::EncryptionResponse::getId(const ProtocolVersion* version) const
+{
+	return 1;
+}
+
 acp::ByteBuf acp::packet::login::c2s::EncryptionResponse::getSharedSecret() const
 {
 	return sharedSecret;

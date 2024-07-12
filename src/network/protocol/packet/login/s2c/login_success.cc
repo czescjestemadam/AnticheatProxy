@@ -14,6 +14,11 @@ void acp::packet::login::s2c::LoginSuccess::write(const ProtocolVersion* version
 	buf.writeStr(username);
 }
 
+int acp::packet::login::s2c::LoginSuccess::getId(const ProtocolVersion* version) const
+{
+	return 2;
+}
+
 acp::UUID acp::packet::login::s2c::LoginSuccess::getUuid() const
 {
 	return uuid;

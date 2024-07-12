@@ -12,6 +12,11 @@ void acp::packet::login::c2s::LoginStart::write(const ProtocolVersion* version)
 	buf.writeStr(username);
 }
 
+int acp::packet::login::c2s::LoginStart::getId(const ProtocolVersion* version) const
+{
+	return 0;
+}
+
 std::string acp::packet::login::c2s::LoginStart::getUsername() const
 {
 	return username;

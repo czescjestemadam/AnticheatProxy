@@ -15,6 +15,8 @@ namespace acp::packet::login::s2c
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
+		int getId(const ProtocolVersion* version) const override;
+
 		std::string getServerId() const;
 		void setServerId(const std::string& server_id);
 

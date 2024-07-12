@@ -18,6 +18,8 @@ namespace acp::packet::handshake
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
+		int getId(const ProtocolVersion* version) const override;
+
 		int getProtocolVersion() const;
 		void setProtocolVersion(int protocol_version);
 
