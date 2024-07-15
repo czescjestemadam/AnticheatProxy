@@ -9,6 +9,7 @@ namespace acp
 		std::string key;
 
 	public:
+		Identifier() = default;
 		Identifier(const std::string& ns, const std::string& key);
 
 		std::string getNs() const;
