@@ -100,10 +100,39 @@ void acp::ByteBuf::writeVarint(int v)
 
 long acp::ByteBuf::readVarlong()
 {
+	long val = 0;
+	int pos = 0;
+	byte_t cur;
+
+	while (true)
+	{
+		cur = readByte();
+		val |= static_cast<long>(cur & 0x7f) << pos;
+
+		if ((cur & 0x80) == 0)
+			break;
+
+		pos += 7;
+
+		if (pos >= 64)
+			throw VarintException();
+	}
+
+	return val;
 }
 
 void acp::ByteBuf::writeVarlong(long v)
 {
+	while (true)
+	{
+		if ((v & ~0x7f) == 0)
+		{
+			writeByte(byte_t(v));
+			return;
+		}
+		writeByte(byte_t((v & 0x7f) | 0x80));
+		v = ulong(v) >> 7;
+	}
 }
 
 
