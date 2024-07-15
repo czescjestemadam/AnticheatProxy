@@ -1,5 +1,6 @@
 #pragma once
 #include "util/uuid.hh"
+#include "util/identifier.hh"
 
 #include <vector>
 
@@ -56,6 +57,9 @@ namespace acp
 
 		UUID readUuid();
 		void writeUuid(const UUID& uuid);
+
+		Identifier readIdentifier();
+		void writeIdentifier(const Identifier& v);
 
 		// zlib
 		ByteBuf compress(int level = -1) const;

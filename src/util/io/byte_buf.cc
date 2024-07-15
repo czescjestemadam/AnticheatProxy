@@ -225,6 +225,16 @@ void acp::ByteBuf::writeUuid(const UUID& uuid)
 	writeLongU(uuid.getLow());
 }
 
+acp::Identifier acp::ByteBuf::readIdentifier()
+{
+	return Identifier::parse(readStr());
+}
+
+void acp::ByteBuf::writeIdentifier(const Identifier& v)
+{
+	writeStr(v.toString());
+}
+
 
 acp::ByteBuf acp::ByteBuf::compress(int level) const
 {
