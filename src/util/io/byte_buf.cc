@@ -1,8 +1,10 @@
 #include "byte_buf.hh"
 
 #include "varint_exception.hh"
+#include "z_lib_exception.hh"
 
 #include <format>
+#include <zlib.h>
 
 #define BUF_UNION(type) union { byte_t bytes[sizeof(type)]; type val; }
 
@@ -195,16 +197,28 @@ void acp::ByteBuf::writeUuid(const UUID& uuid)
 }
 
 
-acp::ByteBuf acp::ByteBuf::compress(int level)
+acp::ByteBuf acp::ByteBuf::compress(int level) const
 {
-	// TODO
-	return { bytes.data(), bytes.size() };
+	size_t dstLen = compressBound(size());
+	byte_t dst[dstLen];
+
+	int code = compress2(dst, &dstLen, data(), size(), level);
+	if (code < 0)
+		throw ZLibException(code);
+
+	return { dst, dstLen };
 }
 
-acp::ByteBuf acp::ByteBuf::decompress(int dstLen)
+acp::ByteBuf acp::ByteBuf::decompress(int length) const
 {
-	// TODO
-	return { bytes.data(), bytes.size() };
+	size_t dstLen = length;
+	byte_t dst[dstLen];
+
+	int code = uncompress(dst, &dstLen, data(), size());
+	if (code < 0)
+		throw ZLibException(code);
+
+	return { dst, dstLen };
 }
 
 

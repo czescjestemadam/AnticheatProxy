@@ -510,9 +510,14 @@ add_executable(AnticheatProxy
 	src/util/io/varint_exception.hh
 	src/util/identifier.cc
 	src/util/identifier.hh
+	src/util/io/z_lib_exception.cc
+	src/util/io/z_lib_exception.hh
 )
 
 find_package(OpenSSL REQUIRED)
 target_link_libraries(AnticheatProxy OpenSSL::Crypto)
+
+find_package(ZLIB REQUIRED)
+target_link_libraries(AnticheatProxy ZLIB::ZLIB)
 
 target_include_directories(AnticheatProxy PRIVATE src/)
