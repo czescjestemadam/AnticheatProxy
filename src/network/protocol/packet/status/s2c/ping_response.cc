@@ -14,7 +14,7 @@ void acp::packet::status::s2c::PingResponse::write(const ProtocolVersion* versio
 
 int acp::packet::status::s2c::PingResponse::getId(const ProtocolVersion* version) const
 {
-	return 1;
+	return 0x01;
 }
 
 long acp::packet::status::s2c::PingResponse::getTimestamp() const

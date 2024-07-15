@@ -20,7 +20,7 @@ void acp::packet::handshake::Handshake::write(const ProtocolVersion* version)
 
 int acp::packet::handshake::Handshake::getId(const ProtocolVersion* version) const
 {
-	return 0;
+	return 0x00;
 }
 
 int acp::packet::handshake::Handshake::getProtocolVersion() const

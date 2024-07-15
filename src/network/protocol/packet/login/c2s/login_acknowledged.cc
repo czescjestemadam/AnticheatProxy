@@ -8,6 +8,11 @@ void acp::packet::login::c2s::LoginAcknowledged::write(const ProtocolVersion* ve
 {
 }
 
+int acp::packet::login::c2s::LoginAcknowledged::getId(const ProtocolVersion* version) const
+{
+	return 0x03;
+}
+
 std::string acp::packet::login::c2s::LoginAcknowledged::toString() const
 {
 	return "LoginAcknowledged";

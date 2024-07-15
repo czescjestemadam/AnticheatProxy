@@ -1,7 +1,7 @@
 #pragma once
-#include <string>
-
 #include "network/protocol/packet/i_packet.hh"
+
+#include <string>
 
 namespace acp::packet::handshake
 {
@@ -31,7 +31,6 @@ namespace acp::packet::handshake
 
 		int getNextState() const;
 		void setNextState(int next_state);
-
 
 		std::string toString() const override;
 	};
