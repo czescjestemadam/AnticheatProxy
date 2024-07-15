@@ -1,4 +1,6 @@
 #pragma once
+#include "protocol_mapping.hh"
+
 #include <string>
 
 namespace acp
@@ -7,12 +9,14 @@ namespace acp
 	{
 		int idx;
 		std::string name;
+		ProtocolMapping mapping;
 
 	public:
 		ProtocolVersion(int idx, std::string&& name);
 
 		int getIdx() const;
 		std::string getName() const;
+		const ProtocolMapping& getMapping() const;
 
 		bool operator==(const ProtocolVersion& rhs) const;
 		bool operator!=(const ProtocolVersion& rhs) const;

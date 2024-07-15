@@ -4,7 +4,7 @@
 
 static std::map<int, acp::ProtocolVersion*> versionByIdx;
 
-acp::ProtocolVersion::ProtocolVersion(int idx, std::string&& name) : idx(idx), name(std::move(name))
+acp::ProtocolVersion::ProtocolVersion(int idx, std::string&& name) : idx(idx), name(std::move(name)), mapping(this)
 {
 	versionByIdx[idx] = this;
 }
@@ -17,6 +17,11 @@ int acp::ProtocolVersion::getIdx() const
 std::string acp::ProtocolVersion::getName() const
 {
 	return name;
+}
+
+const acp::ProtocolMapping& acp::ProtocolVersion::getMapping() const
+{
+	return mapping;
 }
 
 bool acp::ProtocolVersion::operator==(const ProtocolVersion& rhs) const

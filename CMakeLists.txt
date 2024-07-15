@@ -512,6 +512,8 @@ add_executable(AnticheatProxy
 	src/util/identifier.hh
 	src/util/io/z_lib_exception.cc
 	src/util/io/z_lib_exception.hh
+	src/network/protocol/protocol_mapping.cc
+	src/network/protocol/protocol_mapping.hh
 )
 
 find_package(OpenSSL REQUIRED)
