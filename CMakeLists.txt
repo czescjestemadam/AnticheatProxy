@@ -508,6 +508,8 @@ add_executable(AnticheatProxy
 	src/util/base_64.hh
 	src/util/io/varint_exception.cc
 	src/util/io/varint_exception.hh
+	src/util/identifier.cc
+	src/util/identifier.hh
 )
 
 find_package(OpenSSL REQUIRED)
