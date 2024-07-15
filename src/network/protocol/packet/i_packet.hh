@@ -1,6 +1,10 @@
 #pragma once
-#include "network/protocol/protocol_version.hh"
 #include "util/io/byte_buf.hh"
+
+namespace acp
+{
+	class ProtocolVersion;
+}
 
 namespace acp::packet
 {
