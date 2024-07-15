@@ -4,6 +4,7 @@
 #include "handler/login_handler.hh"
 #include "handler/play_handler.hh"
 #include "handler/status_handler.hh"
+#include "protocol/packet/i_packet.hh"
 
 #include <iostream>
 
@@ -31,16 +32,30 @@ void acp::Connection::handleEvent(int fd)
 	PlayerSocket& to = getSide(toSide);
 
 	ByteBuf buf = from.read();
+	ByteBuf og = buf;
 
 	{
-		ByteBuf packet = buf;
+		if (compressionThreshold.has_value())
+		{
+			const int dataLen = buf.readVarint();
+			if (dataLen == 0)
+				buf = buf.decompress(dataLen);
+		}
 
+		const int id = buf.readVarint();
+		// get packet from factory/mapping
+		std::unique_ptr<packet::IPacket> packet = protocolVersion->getMapping().create(state, fromSide, id, buf);
+		if (packet) // if exists handle packet
+		{
+			packet->read(protocolVersion);
+			std::cout << "packet found: " << packet->toString() << std::endl;
+		}
+
+		// if packet changed rewrite
 	}
 
-
-	to.write(buf);
-
-	std::cout << std::format("[{}]: sent {} bytes\n", toString(toSide), buf.size());
+	to.write(og);
+	std::cout << std::format("[{}]: sent {}\n", toString(toSide), og.toString());
 }
 
 acp::PlayerSocket& acp::Connection::getSide(NetworkSide side)
@@ -73,6 +88,11 @@ void acp::Connection::setState(NetworkState state)
 const acp::ProtocolVersion* acp::Connection::getProtocolVersion() const
 {
 	return protocolVersion;
+}
+
+void acp::Connection::setCompressionThreshold(int threshold)
+{
+	compressionThreshold = threshold;
 }
 
 

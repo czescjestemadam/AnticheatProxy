@@ -38,6 +38,7 @@ namespace acp
 		void setState(NetworkState state);
 
 		const ProtocolVersion* getProtocolVersion() const;
+		void setCompressionThreshold(int threshold);
 
 		std::string toString(NetworkSide dest = NetworkSide::DEST) const;
 
