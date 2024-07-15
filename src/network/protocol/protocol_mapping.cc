@@ -233,8 +233,7 @@
 #define PACKET_CONSTRUCTOR(packet) [] (const ByteBuf& buf) { return std::make_unique<packet>(buf); }
 
 #define ADD_PACKET(state, side, packet) {							\
-		ByteBuf buf;												\
-		packet p(buf);												\
+		packet p(ByteBuf{});												\
 		int id = p.getId(version);									\
 		if (id >= 0)												\
 			mappings[state][side][id] = PACKET_CONSTRUCTOR(packet);	\
@@ -258,6 +257,32 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 	ADD_PACKET(NetworkState::LOGIN, NetworkSide::DEST, packet::login::s2c::SetCompression)
 	ADD_PACKET(NetworkState::LOGIN, NetworkSide::DEST, packet::login::s2c::LoginPluginRequest)
 	ADD_PACKET(NetworkState::LOGIN, NetworkSide::DEST, packet::login::s2c::CookieRequest)
+
+	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::ClientInformation)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::CookieResponse)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::PluginMessage)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::AcknowledgeFinishConfiguration)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::KeepAlive)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::Pong)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::ResourcePackResponse)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::KnownPacks)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::CookieRequest)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::PluginMessage)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::Disconnect)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::FinishConfiguration)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::KeepAlive)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::Ping)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::ResetChat)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::RegistryData)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::RemoveResourcePack)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::AddResourcePack)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::StoreCookie)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::Transfer)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::FeatureFlags)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::UpdateTags)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::KnownPacks)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::CustomReportDetails)
+	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::ServerLinks)
 }
 
 std::unique_ptr<acp::packet::IPacket> acp::ProtocolMapping::create(NetworkState state, NetworkSide sourceSide, int id, const ByteBuf& buf) const
