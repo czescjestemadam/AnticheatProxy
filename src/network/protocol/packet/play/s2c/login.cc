@@ -234,4 +234,5 @@ void acp::packet::play::s2c::Login::setEnforcesSecureChat(bool enforces_secure_c
 
 std::string acp::packet::play::s2c::Login::toString() const
 {
+	return std::format("Login[id={}, viewDist={}, simDist={}, gm={}]", entityId, viewDistance, simulationDistance, gameMode);
 }
