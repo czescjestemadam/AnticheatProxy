@@ -3,13 +3,12 @@
 #include "network/handler/handshake_handler.hh"
 
 #include <format>
-#include <netinet/in.h>
 
 void acp::packet::handshake::Handshake::read(const ProtocolVersion* version)
 {
 	protocolVersion = buf.readVarint();
 	address = buf.readStr();
-	port = ntohs(buf.readShortU());
+	port = buf.readShortU();
 	nextState = buf.readVarint();
 }
 
@@ -17,7 +16,7 @@ void acp::packet::handshake::Handshake::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(protocolVersion);
 	buf.writeStr(address);
-	buf.writeShortU(htons(port));
+	buf.writeShortU(port);
 	buf.writeVarint(nextState);
 }
 

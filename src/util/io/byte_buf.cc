@@ -5,17 +5,18 @@
 
 #include <format>
 #include <zlib.h>
+#include <netinet/in.h>
 
 #define BUF_UNION(type) union { byte_t bytes[sizeof(type)]; type val; }
 
-#define BUF_READ(type)					\
-	BUF_UNION(type);					\
+#define BUF_READ(type, wrapper)		\
+	BUF_UNION(type);				\
 	readBytes(bytes, sizeof(type));	\
-	return val
+	return wrapper(val)
 
-#define BUF_WRITE(type)					\
-	BUF_UNION(type);					\
-	val = v;							\
+#define BUF_WRITE(type, wrapper)	\
+	BUF_UNION(type);				\
+	val = wrapper(v);				\
 	writeBytes(bytes, sizeof(type))
 
 
@@ -138,63 +139,63 @@ void acp::ByteBuf::writeVarlong(long v)
 
 short acp::ByteBuf::readShort()
 {
-	BUF_READ(short);
+	BUF_READ(short, ntohs);
 }
 
 void acp::ByteBuf::writeShort(short v)
 {
-	BUF_WRITE(short);
+	BUF_WRITE(short, htons);
 }
 
 int acp::ByteBuf::readInt()
 {
-	BUF_READ(int);
+	BUF_READ(int, ntohl);
 }
 
 void acp::ByteBuf::writeInt(int v)
 {
-	BUF_WRITE(int);
+	BUF_WRITE(int, htonl);
 }
 
 long acp::ByteBuf::readLong()
 {
-	BUF_READ(long);
+	BUF_READ(long, ntohl);
 }
 
 void acp::ByteBuf::writeLong(long v)
 {
-	BUF_WRITE(long);
+	BUF_WRITE(long, htonl);
 }
 
 
 unsigned short acp::ByteBuf::readShortU()
 {
-	BUF_READ(unsigned short);
+	BUF_READ(unsigned short, ntohs);
 }
 
 void acp::ByteBuf::writeShortU(unsigned short v)
 {
-	BUF_WRITE(unsigned short);
+	BUF_WRITE(unsigned short, htons);
 }
 
 unsigned int acp::ByteBuf::readIntU()
 {
-	BUF_READ(unsigned int);
+	BUF_READ(unsigned int, ntohl);
 }
 
 void acp::ByteBuf::writeIntU(unsigned int v)
 {
-	BUF_WRITE(unsigned int);
+	BUF_WRITE(unsigned int, htonl);
 }
 
 unsigned long acp::ByteBuf::readLongU()
 {
-	BUF_READ(unsigned long);
+	BUF_READ(unsigned long, ntohl);
 }
 
 void acp::ByteBuf::writeLongU(unsigned long v)
 {
-	BUF_WRITE(unsigned long);
+	BUF_WRITE(unsigned long, htonl);
 }
 
 

@@ -3,16 +3,15 @@
 #include "network/handler/status_handler.hh"
 
 #include <format>
-#include <netinet/in.h>
 
 void acp::packet::status::s2c::PingResponse::read(const ProtocolVersion* version)
 {
-	timestamp = ntohl(buf.readLong());
+	timestamp = buf.readLong();
 }
 
 void acp::packet::status::s2c::PingResponse::write(const ProtocolVersion* version)
 {
-	buf.writeLong(htonl(timestamp));
+	buf.writeLong(timestamp);
 }
 
 bool acp::packet::status::s2c::PingResponse::apply(std::unique_ptr<INetworkHandler>& handler)
