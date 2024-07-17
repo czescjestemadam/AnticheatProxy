@@ -10,7 +10,7 @@ namespace acp
 		Connection* connection;
 
 	public:
-		explicit INetworkHandler(const Connection* connection);
+		explicit INetworkHandler(Connection* connection);
 		virtual ~INetworkHandler() = default;
 
 		// TODO reason
