@@ -3,11 +3,10 @@
 #include "protocol/protocol_version.hh"
 #include "socket/player_socket.hh"
 #include "handler/i_network_handler.hh"
+#include "handler/handshake_handler.hh"
 
 #include <optional>
 #include <memory>
-
-#include "handler/handshake_handler.hh"
 
 namespace acp
 {
