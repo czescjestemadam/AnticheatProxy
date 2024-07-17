@@ -63,5 +63,5 @@ void acp::packet::login::s2c::LoginPluginRequest::setData(const ByteBuf& data)
 
 std::string acp::packet::login::s2c::LoginPluginRequest::toString() const
 {
-	return std::format("LoginPluginRequest[id={}, ch={}, data={}]", messageId, channel, data.toStringShort());
+	return std::format("LoginPluginRequest[id={}, ch={}, data={}]", messageId, channel.toString(), data.toStringShort());
 }
