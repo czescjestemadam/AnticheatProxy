@@ -28,7 +28,6 @@ namespace acp
 		void close();
 
 		void handleEvent(int fd);
-
 		// TODO packets
 
 		PlayerSocket& getSide(NetworkSide side);
@@ -37,6 +36,7 @@ namespace acp
 		void setState(NetworkState state);
 
 		const ProtocolVersion* getProtocolVersion() const;
+		void setProtocolVersion(const ProtocolVersion* protocol_version);
 		void setCompressionThreshold(int threshold);
 
 		std::string toString(NetworkSide dest = NetworkSide::DEST) const;

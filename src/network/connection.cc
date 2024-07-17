@@ -31,31 +31,37 @@ void acp::Connection::handleEvent(int fd)
 	PlayerSocket& from = getSide(fromSide);
 	PlayerSocket& to = getSide(toSide);
 
-	ByteBuf buf = from.read();
-	ByteBuf og = buf;
+	ByteBuf ogBuf = from.read();
 
+	ByteBuf buf = ogBuf;
+	bool rewrite = false;
+
+	if (compressionThreshold.has_value())
 	{
-		if (compressionThreshold.has_value())
-		{
-			const int dataLen = buf.readVarint();
-			if (dataLen == 0)
-				buf = buf.decompress(dataLen);
-		}
-
-		const int id = buf.readVarint();
-		// get packet from factory/mapping
-		std::unique_ptr<packet::IPacket> packet = protocolVersion->getMapping().create(state, fromSide, id, buf);
-		if (packet) // if exists handle packet
-		{
-			packet->read(protocolVersion);
-			std::cout << "packet found: " << packet->toString() << std::endl;
-		}
-
-		// if packet changed rewrite
+		const int dataLen = buf.readVarint();
+		if (dataLen == 0)
+			buf = buf.decompress(dataLen);
 	}
 
-	to.write(og);
-	std::cout << std::format("[{}]: sent {}\n", toString(toSide), og.toString());
+	const int id = buf.readVarint();
+	std::unique_ptr<packet::IPacket> packet = protocolVersion == nullptr
+												  ? std::make_unique<packet::handshake::Handshake>(buf)
+												  : protocolVersion->getMapping().create(state, fromSide, id, buf);
+
+	if (packet)
+	{
+		packet->read(protocolVersion);
+		std::cout << "packet found: " << packet->toString() << std::endl;
+		rewrite = packet->apply(networkHandler);
+	}
+
+	if (rewrite)
+		packet->write(protocolVersion);
+
+	const ByteBuf& toWrite = rewrite ? packet->getBuf() : ogBuf;
+	to.write(toWrite);
+
+	// std::cout << std::format("[{}]: sent {}\n", toString(toSide), toWrite.toString());
 }
 
 acp::PlayerSocket& acp::Connection::getSide(NetworkSide side)
@@ -85,6 +91,11 @@ void acp::Connection::setState(NetworkState state)
 const acp::ProtocolVersion* acp::Connection::getProtocolVersion() const
 {
 	return protocolVersion;
+}
+
+void acp::Connection::setProtocolVersion(const ProtocolVersion* protocol_version)
+{
+	protocolVersion = protocol_version;
 }
 
 void acp::Connection::setCompressionThreshold(int threshold)
