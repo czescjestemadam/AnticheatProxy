@@ -1,5 +1,6 @@
 #pragma once
 #include "i_network_handler.hh"
+#include "network/protocol/packet/handshake/handshake.hh"
 
 namespace acp
 {
@@ -7,5 +8,7 @@ namespace acp
 	{
 	public:
 		using INetworkHandler::INetworkHandler;
+
+		bool handle(packet::handshake::Handshake* packet);
 	};
 }
