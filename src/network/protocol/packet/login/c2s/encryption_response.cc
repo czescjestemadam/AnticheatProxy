@@ -1,5 +1,7 @@
 #include "encryption_response.hh"
 
+#include "network/handler/login_handler.hh"
+
 #include <format>
 
 void acp::packet::login::c2s::EncryptionResponse::read(const ProtocolVersion* version)
@@ -13,6 +15,14 @@ void acp::packet::login::c2s::EncryptionResponse::read(const ProtocolVersion* ve
 
 void acp::packet::login::c2s::EncryptionResponse::write(const ProtocolVersion* version)
 {
+}
+
+bool acp::packet::login::c2s::EncryptionResponse::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
+		return loginHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::login::c2s::EncryptionResponse::getId(const ProtocolVersion* version) const

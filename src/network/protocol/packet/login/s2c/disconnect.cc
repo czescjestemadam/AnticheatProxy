@@ -1,5 +1,7 @@
 #include "disconnect.hh"
 
+#include "network/handler/login_handler.hh"
+
 #include <format>
 
 void acp::packet::login::s2c::Disconnect::read(const ProtocolVersion* version)
@@ -10,6 +12,14 @@ void acp::packet::login::s2c::Disconnect::read(const ProtocolVersion* version)
 void acp::packet::login::s2c::Disconnect::write(const ProtocolVersion* version)
 {
 	buf.writeStr(reason);
+}
+
+bool acp::packet::login::s2c::Disconnect::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
+		return loginHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::login::s2c::Disconnect::getId(const ProtocolVersion* version) const

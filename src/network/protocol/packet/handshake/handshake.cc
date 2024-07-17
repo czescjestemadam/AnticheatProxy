@@ -1,5 +1,7 @@
 #include "handshake.hh"
 
+#include "network/handler/handshake_handler.hh"
+
 #include <format>
 
 void acp::packet::handshake::Handshake::read(const ProtocolVersion* version)
@@ -16,6 +18,14 @@ void acp::packet::handshake::Handshake::write(const ProtocolVersion* version)
 	buf.writeStr(address);
 	buf.writeShortU(port);
 	buf.writeVarint(nextState);
+}
+
+bool acp::packet::handshake::Handshake::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* handshakeHandler = dynamic_cast<HandshakeHandler*>(handler.get()))
+		return handshakeHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::handshake::Handshake::getId(const ProtocolVersion* version) const

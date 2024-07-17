@@ -1,6 +1,7 @@
 #include "cookie_response.hh"
 
 #include "network/protocol/protocol_version.hh"
+#include "network/handler/login_handler.hh"
 
 #include <format>
 
@@ -24,6 +25,14 @@ void acp::packet::login::c2s::CookieResponse::write(const ProtocolVersion* versi
 		buf.writeVarint(payload.value().size());
 		buf.writeBuf(payload.value());
 	}
+}
+
+bool acp::packet::login::c2s::CookieResponse::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
+		return loginHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::login::c2s::CookieResponse::getId(const ProtocolVersion* version) const

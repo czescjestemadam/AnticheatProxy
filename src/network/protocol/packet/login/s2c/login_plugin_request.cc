@@ -1,19 +1,29 @@
 #include "login_plugin_request.hh"
 
+#include "network/handler/login_handler.hh"
+
 #include <format>
 
 void acp::packet::login::s2c::LoginPluginRequest::read(const ProtocolVersion* version)
 {
 	messageId = buf.readVarint();
-	channel = buf.readStr();
+	channel = buf.readIdentifier();
 	data = buf;
 }
 
 void acp::packet::login::s2c::LoginPluginRequest::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(messageId);
-	buf.writeStr(channel);
+	buf.writeIdentifier(channel);
 	buf.writeBuf(data);
+}
+
+bool acp::packet::login::s2c::LoginPluginRequest::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
+		return loginHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::login::s2c::LoginPluginRequest::getId(const ProtocolVersion* version) const
@@ -31,17 +41,17 @@ void acp::packet::login::s2c::LoginPluginRequest::setMessageId(int message_id)
 	messageId = message_id;
 }
 
-std::string acp::packet::login::s2c::LoginPluginRequest::getChannel() const
+acp::Identifier& acp::packet::login::s2c::LoginPluginRequest::getChannel()
 {
 	return channel;
 }
 
-void acp::packet::login::s2c::LoginPluginRequest::setChannel(const std::string& channel)
+void acp::packet::login::s2c::LoginPluginRequest::setChannel(const Identifier& channel)
 {
 	this->channel = channel;
 }
 
-acp::ByteBuf acp::packet::login::s2c::LoginPluginRequest::getData() const
+acp::ByteBuf& acp::packet::login::s2c::LoginPluginRequest::getData()
 {
 	return data;
 }

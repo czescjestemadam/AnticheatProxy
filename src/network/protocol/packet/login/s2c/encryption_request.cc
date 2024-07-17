@@ -1,5 +1,7 @@
 #include "encryption_request.hh"
 
+#include "network/handler/login_handler.hh"
+
 #include <format>
 
 void acp::packet::login::s2c::EncryptionRequest::read(const ProtocolVersion* version)
@@ -18,6 +20,14 @@ void acp::packet::login::s2c::EncryptionRequest::write(const ProtocolVersion* ve
 	buf.writeStr(serverId);
 	buf.writeBuf(publicKey);
 	buf.writeBuf(verifyToken);
+}
+
+bool acp::packet::login::s2c::EncryptionRequest::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
+		return loginHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::login::s2c::EncryptionRequest::getId(const ProtocolVersion* version) const

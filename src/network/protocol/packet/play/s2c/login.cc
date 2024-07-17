@@ -1,5 +1,6 @@
 #include "login.hh"
 
+#include "network/handler/play_handler.hh"
 #include "network/protocol/protocol_version.hh"
 
 void acp::packet::play::s2c::Login::read(const ProtocolVersion* version)
@@ -10,6 +11,14 @@ void acp::packet::play::s2c::Login::read(const ProtocolVersion* version)
 void acp::packet::play::s2c::Login::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(entityId);
+}
+
+bool acp::packet::play::s2c::Login::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
+		return playHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::play::s2c::Login::getId(const ProtocolVersion* version) const

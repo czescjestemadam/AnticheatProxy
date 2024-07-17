@@ -1,5 +1,7 @@
 #include "ping_response.hh"
 
+#include "network/handler/status_handler.hh"
+
 #include <format>
 
 void acp::packet::status::s2c::PingResponse::read(const ProtocolVersion* version)
@@ -10,6 +12,14 @@ void acp::packet::status::s2c::PingResponse::read(const ProtocolVersion* version
 void acp::packet::status::s2c::PingResponse::write(const ProtocolVersion* version)
 {
 	buf.writeLong(timestamp);
+}
+
+bool acp::packet::status::s2c::PingResponse::apply(std::unique_ptr<INetworkHandler>& handler)
+{
+	if (auto* statusHandler = dynamic_cast<StatusHandler*>(handler.get()))
+		return statusHandler->handle(this);
+
+	return false;
 }
 
 int acp::packet::status::s2c::PingResponse::getId(const ProtocolVersion* version) const

@@ -6,8 +6,7 @@ namespace acp::packet::login::s2c
 	class LoginPluginRequest : public IPacket
 	{
 		int messageId;
-		// TODO identifier
-		std::string channel;
+		Identifier channel;
 		ByteBuf data;
 
 	public:
@@ -16,15 +15,17 @@ namespace acp::packet::login::s2c
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
+		bool apply(std::unique_ptr<INetworkHandler>& handler) override;
+
 		int getId(const ProtocolVersion* version) const override;
 
 		int getMessageId() const;
 		void setMessageId(int message_id);
 
-		std::string getChannel() const;
-		void setChannel(const std::string& channel);
+		Identifier& getChannel();
+		void setChannel(const Identifier& channel);
 
-		ByteBuf getData() const;
+		ByteBuf& getData();
 		void setData(const ByteBuf& data);
 
 		std::string toString() const override;

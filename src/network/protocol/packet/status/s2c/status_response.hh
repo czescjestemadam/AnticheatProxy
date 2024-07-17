@@ -13,6 +13,8 @@ namespace acp::packet::status::s2c
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
+		bool apply(std::unique_ptr<INetworkHandler>& handler) override;
+
 		int getId(const ProtocolVersion* version) const override;
 
 		std::string getJson() const;
