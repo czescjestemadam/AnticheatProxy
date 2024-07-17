@@ -7,7 +7,7 @@ namespace acp
 	class INetworkHandler
 	{
 	protected:
-		const Connection* connection;
+		Connection* connection;
 
 	public:
 		explicit INetworkHandler(const Connection* connection);
