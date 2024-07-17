@@ -11,10 +11,7 @@ namespace acp
 
 	constexpr NetworkSide getOppositeSide(NetworkSide side)
 	{
-		if (side == NetworkSide::CLIENT)
-			return NetworkSide::DEST;
-
-		return NetworkSide::CLIENT;
+		return side == NetworkSide::CLIENT ? NetworkSide::DEST : NetworkSide::CLIENT;
 	}
 
 	template<>

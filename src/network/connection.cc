@@ -60,10 +60,7 @@ void acp::Connection::handleEvent(int fd)
 
 acp::PlayerSocket& acp::Connection::getSide(NetworkSide side)
 {
-	if (side == NetworkSide::CLIENT)
-		return clientSocket;
-
-	return destSocket;
+	return side == NetworkSide::CLIENT ? clientSocket : destSocket;
 }
 
 acp::NetworkState acp::Connection::getState() const
