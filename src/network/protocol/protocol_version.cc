@@ -57,7 +57,7 @@ bool acp::ProtocolVersion::operator>=(const ProtocolVersion& rhs) const
 
 acp::ProtocolVersion* acp::ProtocolVersion::byIdx(int idx)
 {
-	return versionByIdx[idx];
+	return versionByIdx.contains(idx) ? versionByIdx.at(idx) : nullptr;
 }
 
 const acp::ProtocolVersion acp::ProtocolVersion::v1_16_3 = { 753, "1.16.3" };
