@@ -1,5 +1,5 @@
 #pragma once
-#include "protocol/network_state.hh"
+#include "util/enum_names.hh"
 
 namespace acp
 {
