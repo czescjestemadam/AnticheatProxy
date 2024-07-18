@@ -1,10 +1,10 @@
 #include "anticheat_proxy.hh"
 
-constexpr const char* LISTEN_ADDR = "127.0.0.1";
+constexpr const char* LISTEN_ADDR = "0.0.0.0";
 constexpr ushort LISTEN_PORT = 30066;
 
 constexpr const char* KRYSTAL_ADDR = "146.59.52.73";
-constexpr const char* SERVER_ADDR = "127.0.0.1";
+constexpr const char* SERVER_ADDR = "192.168.0.234";
 constexpr ushort SERVER_PORT = 30077;
 
 static acp::AnticheatProxy* INST;
