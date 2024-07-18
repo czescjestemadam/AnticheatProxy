@@ -261,7 +261,7 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::ClientInformation)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::CookieResponse)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::PluginMessage)
-	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::AcknowledgeFinishConfiguration)
+	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::AcknowledgeFinishConfiguration)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::KeepAlive)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::Pong)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::ResourcePackResponse)
@@ -269,7 +269,7 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::CookieRequest)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::PluginMessage)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::Disconnect)
-	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::FinishConfiguration)
+	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::FinishConfiguration)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::KeepAlive)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::Ping)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::ResetChat)
@@ -278,7 +278,7 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::AddResourcePack)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::StoreCookie)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::Transfer)
-	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::FeatureFlags)
+	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::FeatureFlags)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::UpdateTags)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::KnownPacks)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::CustomReportDetails)
@@ -306,7 +306,7 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::DebugSampleSubscription)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::EditBook)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::QueryEntityTag)
-	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::Interact)
+	ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::Interact)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::JigsawGenerate)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::KeepAlive)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::LockDifficulty)
@@ -481,4 +481,9 @@ std::unique_ptr<acp::packet::IPacket> acp::ProtocolMapping::create(NetworkState 
 	if (!sideMappings.contains(id))
 		return nullptr;
 	return sideMappings.at(id)(buf);
+}
+
+size_t acp::ProtocolMapping::size() const
+{
+	return mappings.size();
 }

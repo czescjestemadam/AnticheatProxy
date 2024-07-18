@@ -1,10 +1,11 @@
 #include "protocol_version.hh"
 
+#include <iostream>
 #include <map>
 
 static std::map<int, acp::ProtocolVersion*> versionByIdx;
 
-acp::ProtocolVersion::ProtocolVersion(int idx, std::string&& name) : idx(idx), name(std::move(name)), mapping(this)
+acp::ProtocolVersion::ProtocolVersion(int idx, std::string&& name) : idx(idx), name(std::move(name))
 {
 	versionByIdx[idx] = this;
 }
@@ -54,6 +55,16 @@ bool acp::ProtocolVersion::operator>=(const ProtocolVersion& rhs) const
 	return !(*this < rhs);
 }
 
+void acp::ProtocolVersion::compileMappings()
+{
+	std::cout << "compiling packet mappings\n";
+
+	for (auto& [idx, version] : versionByIdx)
+	{
+		version->mapping = ProtocolMapping(version);
+		std::cout << std::format("compiled {} packets for {}\n", version->mapping.size(), version->getName());
+	}
+}
 
 acp::ProtocolVersion* acp::ProtocolVersion::byIdx(int idx)
 {

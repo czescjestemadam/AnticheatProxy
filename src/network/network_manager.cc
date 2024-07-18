@@ -21,6 +21,8 @@ acp::NetworkManager::~NetworkManager()
 
 void acp::NetworkManager::start()
 {
+	ProtocolVersion::compileMappings();
+
 	serverSocket.bind();
 	serverSocket.listen();
 

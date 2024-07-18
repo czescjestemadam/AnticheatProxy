@@ -61,6 +61,15 @@ void acp::Connection::handleEvent(int fd)
 		if (rewrite)
 			packet->write(protocolVersion);
 	}
+	else
+	{
+		std::cout << std::format("[{}] {} -> {}: packetId={}\n",
+								 EnumNames<NetworkState>::get(state),
+								 EnumNames<NetworkSide>::get(fromSide),
+								 EnumNames<NetworkSide>::get(toSide),
+								 id
+		);
+	}
 
 	const ByteBuf& toWrite = rewrite ? packet->getBuf() : ogBuf;
 	to.write(toWrite);

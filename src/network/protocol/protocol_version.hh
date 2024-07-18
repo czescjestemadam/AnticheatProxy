@@ -26,6 +26,8 @@ namespace acp
 		bool operator>=(const ProtocolVersion& rhs) const;
 
 
+		static void compileMappings();
+
 		static ProtocolVersion* byIdx(int idx);
 
 		static const ProtocolVersion v1_16_3;
