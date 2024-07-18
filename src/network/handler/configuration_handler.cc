@@ -1,5 +1,7 @@
 #include "configuration_handler.hh"
 
+#include "network/connection.hh"
+
 bool acp::ConfigurationHandler::handle(packet::configuration::c2s::ClientInformation* packet)
 {
 	return false;
@@ -17,6 +19,8 @@ bool acp::ConfigurationHandler::handle(packet::configuration::c2s::PluginMessage
 
 bool acp::ConfigurationHandler::handle(packet::configuration::c2s::AcknowledgeFinishConfiguration* packet)
 {
+	connection->setState(NetworkState::PLAY);
+
 	return false;
 }
 

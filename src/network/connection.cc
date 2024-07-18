@@ -51,12 +51,16 @@ void acp::Connection::handleEvent(int fd)
 	if (packet)
 	{
 		packet->read(protocolVersion);
-		std::cout << "packet found: " << packet->toString() << std::endl;
+		std::cout << std::format("[{}] {} -> {}: {}\n",
+								 EnumNames<NetworkState>::get(state),
+								 EnumNames<NetworkSide>::get(fromSide),
+								 EnumNames<NetworkSide>::get(toSide),
+								 packet->toString()
+		);
 		rewrite = packet->apply(networkHandler);
+		if (rewrite)
+			packet->write(protocolVersion);
 	}
-
-	if (rewrite)
-		packet->write(protocolVersion);
 
 	const ByteBuf& toWrite = rewrite ? packet->getBuf() : ogBuf;
 	to.write(toWrite);

@@ -1,5 +1,7 @@
 #include "login_handler.hh"
 
+#include "network/connection.hh"
+
 bool acp::LoginHandler::handle(packet::login::c2s::CookieResponse* packet)
 {
 	return false;
@@ -12,6 +14,8 @@ bool acp::LoginHandler::handle(packet::login::c2s::EncryptionResponse* packet)
 
 bool acp::LoginHandler::handle(packet::login::c2s::LoginAcknowledged* packet)
 {
+	connection->setState(NetworkState::CONFIGURATION);
+
 	return false;
 }
 
@@ -48,6 +52,9 @@ bool acp::LoginHandler::handle(packet::login::s2c::LoginPluginRequest* packet)
 
 bool acp::LoginHandler::handle(packet::login::s2c::LoginSuccess* packet)
 {
+	if (*connection->getProtocolVersion() <= ProtocolVersion::v1_20)
+		connection->setState(NetworkState::PLAY);
+
 	return false;
 }
 
