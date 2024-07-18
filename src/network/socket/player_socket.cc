@@ -40,7 +40,7 @@ void acp::PlayerSocket::write(const ByteBuf& buf)
 
 ssize_t acp::PlayerSocket::readBytes(byte_t* buf, size_t size)
 {
-	return checkReturnCode(recv(fd, buf, size, 0), "readBytes");
+	return checkReturnCode(recv(fd, buf, size, MSG_WAITALL), "readBytes");
 }
 
 void acp::PlayerSocket::writeBytes(const byte_t* buf, size_t size)
