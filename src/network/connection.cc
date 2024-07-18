@@ -39,7 +39,7 @@ void acp::Connection::handleEvent(int fd)
 	if (compressionThreshold.has_value())
 	{
 		const int dataLen = buf.readVarint();
-		if (dataLen == 0)
+		if (dataLen)
 			buf = buf.decompress(dataLen);
 	}
 

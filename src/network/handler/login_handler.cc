@@ -53,5 +53,7 @@ bool acp::LoginHandler::handle(packet::login::s2c::LoginSuccess* packet)
 
 bool acp::LoginHandler::handle(packet::login::s2c::SetCompression* packet)
 {
+	connection->setCompressionThreshold(packet->getThreshold());
+
 	return false;
 }
