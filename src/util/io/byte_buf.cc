@@ -198,6 +198,26 @@ void acp::ByteBuf::writeLongU(unsigned long v)
 	BUF_WRITE(unsigned long, htonl);
 }
 
+float acp::ByteBuf::readFloat()
+{
+	BUF_READ(float, float);
+}
+
+void acp::ByteBuf::writeFloat(float v)
+{
+	BUF_WRITE(float, float);
+}
+
+double acp::ByteBuf::readDouble()
+{
+	BUF_READ(double, double);
+}
+
+void acp::ByteBuf::writeDouble(double v)
+{
+	BUF_WRITE(double, double);
+}
+
 
 std::string acp::ByteBuf::readStr()
 {

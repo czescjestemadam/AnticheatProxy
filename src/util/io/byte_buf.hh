@@ -51,6 +51,13 @@ namespace acp
 		unsigned long readLongU();
 		void writeLongU(unsigned long v);
 
+		// float
+		float readFloat();
+		void writeFloat(float v);
+
+		double readDouble();
+		void writeDouble(double v);
+
 		// misc
 		std::string readStr();
 		void writeStr(const std::string& v);
