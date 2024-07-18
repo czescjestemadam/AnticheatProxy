@@ -26,7 +26,7 @@ bool acp::packet::login::s2c::LoginSuccess::apply(std::unique_ptr<INetworkHandle
 
 int acp::packet::login::s2c::LoginSuccess::getId(const ProtocolVersion* version) const
 {
-	return 2;
+	return 0x02;
 }
 
 acp::UUID acp::packet::login::s2c::LoginSuccess::getUuid() const

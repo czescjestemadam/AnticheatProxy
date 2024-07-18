@@ -24,7 +24,7 @@ bool acp::packet::login::c2s::LoginStart::apply(std::unique_ptr<INetworkHandler>
 
 int acp::packet::login::c2s::LoginStart::getId(const ProtocolVersion* version) const
 {
-	return 0;
+	return 0x00;
 }
 
 std::string acp::packet::login::c2s::LoginStart::getUsername() const

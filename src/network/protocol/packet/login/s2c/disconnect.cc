@@ -24,7 +24,7 @@ bool acp::packet::login::s2c::Disconnect::apply(std::unique_ptr<INetworkHandler>
 
 int acp::packet::login::s2c::Disconnect::getId(const ProtocolVersion* version) const
 {
-	return 0;
+	return 0x00;
 }
 
 std::string acp::packet::login::s2c::Disconnect::getReason() const

@@ -28,7 +28,7 @@ bool acp::packet::login::s2c::LoginPluginRequest::apply(std::unique_ptr<INetwork
 
 int acp::packet::login::s2c::LoginPluginRequest::getId(const ProtocolVersion* version) const
 {
-	return 4;
+	return 0x04;
 }
 
 int acp::packet::login::s2c::LoginPluginRequest::getMessageId() const

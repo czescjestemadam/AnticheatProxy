@@ -28,7 +28,7 @@ bool acp::packet::login::c2s::LoginPluginResponse::apply(std::unique_ptr<INetwor
 
 int acp::packet::login::c2s::LoginPluginResponse::getId(const ProtocolVersion* version) const
 {
-	return 2;
+	return 0x02;
 }
 
 int acp::packet::login::c2s::LoginPluginResponse::getMessageId() const

@@ -27,7 +27,7 @@ bool acp::packet::login::c2s::EncryptionResponse::apply(std::unique_ptr<INetwork
 
 int acp::packet::login::c2s::EncryptionResponse::getId(const ProtocolVersion* version) const
 {
-	return 1;
+	return 0x01;
 }
 
 acp::ByteBuf acp::packet::login::c2s::EncryptionResponse::getSharedSecret() const

@@ -32,7 +32,7 @@ bool acp::packet::login::s2c::EncryptionRequest::apply(std::unique_ptr<INetworkH
 
 int acp::packet::login::s2c::EncryptionRequest::getId(const ProtocolVersion* version) const
 {
-	return 1;
+	return 0x01;
 }
 
 std::string acp::packet::login::s2c::EncryptionRequest::getServerId() const

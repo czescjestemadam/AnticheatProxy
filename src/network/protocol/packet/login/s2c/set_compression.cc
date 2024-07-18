@@ -24,7 +24,7 @@ bool acp::packet::login::s2c::SetCompression::apply(std::unique_ptr<INetworkHand
 
 int acp::packet::login::s2c::SetCompression::getId(const ProtocolVersion* version) const
 {
-	return 3;
+	return 0x03;
 }
 
 int acp::packet::login::s2c::SetCompression::getThreshold() const
