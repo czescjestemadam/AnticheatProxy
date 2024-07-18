@@ -6,11 +6,11 @@
 #include "handler/status_handler.hh"
 #include "protocol/packet/i_packet.hh"
 
-#include <iostream>
-
 acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket)
-	: clientSocket(std::move(clientSocket)),
+	: logger("Connection " + clientSocket.getAddrStr()),
+	  clientSocket(std::move(clientSocket)),
 	  destSocket(std::move(destSocket))
+
 {
 	setState(NetworkState::HANDSHAKE);
 }
@@ -51,11 +51,11 @@ void acp::Connection::handleEvent(int fd)
 	if (packet)
 	{
 		packet->read(protocolVersion);
-		std::cout << std::format("[{}] {} -> {}: {}\n",
-								 EnumNames<NetworkState>::get(state),
-								 EnumNames<NetworkSide>::get(fromSide),
-								 EnumNames<NetworkSide>::get(toSide),
-								 packet->toString()
+		logger.debug("[{}] {} -> {}: {}",
+					 EnumNames<NetworkState>::get(state),
+					 EnumNames<NetworkSide>::get(fromSide),
+					 EnumNames<NetworkSide>::get(toSide),
+					 packet->toString()
 		);
 		rewrite = packet->apply(networkHandler);
 		if (rewrite)
@@ -63,11 +63,11 @@ void acp::Connection::handleEvent(int fd)
 	}
 	else
 	{
-		std::cout << std::format("[{}] {} -> {}: packetId={}\n",
-								 EnumNames<NetworkState>::get(state),
-								 EnumNames<NetworkSide>::get(fromSide),
-								 EnumNames<NetworkSide>::get(toSide),
-								 id
+		logger.debug("[{}] {} -> {}: packetId={}",
+					 EnumNames<NetworkState>::get(state),
+					 EnumNames<NetworkSide>::get(fromSide),
+					 EnumNames<NetworkSide>::get(toSide),
+					 id
 		);
 	}
 
@@ -75,6 +75,11 @@ void acp::Connection::handleEvent(int fd)
 	to.write(toWrite);
 
 	// std::cout << std::format("[{}]: sent {}\n", toString(toSide), toWrite.toString());
+}
+
+acp::Logger& acp::Connection::getLogger()
+{
+	return logger;
 }
 
 acp::PlayerSocket& acp::Connection::getSide(NetworkSide side)

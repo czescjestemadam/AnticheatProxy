@@ -2,7 +2,6 @@
 
 #include "socket/exception/socket_close_exception.hh"
 
-#include <iostream>
 #include <memory>
 
 constexpr int EPOLL_EVENT_COUNT = 32;
@@ -21,12 +20,14 @@ acp::NetworkManager::~NetworkManager()
 
 void acp::NetworkManager::start()
 {
+	logger.info("Starting NetworkManager");
+
 	ProtocolVersion::compileMappings();
 
 	serverSocket.bind();
 	serverSocket.listen();
 
-	std::cout << std::format("listening on {}\n", serverSocket.getAddrStr());
+	logger.info("Listening on {}", serverSocket.getAddrStr());
 
 	acceptThread = std::thread([this] { this->acceptLoop(); });
 	epollThread = std::thread([this] { this->epollLoop(); });
@@ -34,6 +35,8 @@ void acp::NetworkManager::start()
 
 void acp::NetworkManager::stop()
 {
+	logger.info("Stopping NetworkManager");
+
 	serverSocket.close();
 	epollSocket.close();
 
@@ -83,7 +86,7 @@ void acp::NetworkManager::removeConnection(const std::weak_ptr<Connection>& conn
 
 void acp::NetworkManager::acceptLoop()
 {
-	std::cout << std::format("started accept loop on {}\n", serverSocket.getAddrStr());
+	logger.info("Started accept loop on {}", serverSocket.getAddrStr());
 
 	while (serverSocket.isValid())
 	{
@@ -91,27 +94,27 @@ void acp::NetworkManager::acceptLoop()
 		{
 			PlayerSocket clientSocket = serverSocket.accept();
 
-			std::cout << std::format("{}: accepted {}\n", serverSocket.getAddrStr(), clientSocket.getAddrStr());
+			logger.info("{}: accepted {}", serverSocket.getAddrStr(), clientSocket.getAddrStr());
 
 			PlayerSocket destSocket = PlayerSocket::create(destAddress, destPort);
 			destSocket.connect();
 
 			std::shared_ptr<Connection> connection = std::make_shared<Connection>(std::move(clientSocket), std::move(destSocket));
 
-			std::cout << std::format("{} connected\n", connection->toString());
+			logger.info("{} connected", connection->toString());
 			this->addConnection(std::move(connection));
 		}
 		catch (const SocketException& ex)
 		{
-			std::cerr << std::format("error accepting connection on {}\n", serverSocket.getAddrStr());
-			std::cerr << std::format("{}: {}\n", ex.getSocket()->getAddrStr(), ex.what());
+			logger.error("error accepting connection on {}", serverSocket.getAddrStr());
+			logger.error("{}: {}", ex.getSocket()->getAddrStr(), ex.what());
 		}
 	}
 }
 
 void acp::NetworkManager::epollLoop()
 {
-	std::cout << std::format("started epoll wait loop on {}\n", epollSocket.getAddrStr());
+	logger.info("Started epoll wait loop on {}", epollSocket.getAddrStr());
 
 	while (epollSocket.isValid())
 	{
@@ -128,12 +131,12 @@ void acp::NetworkManager::epollLoop()
 				}
 				catch (const SocketCloseException& ex)
 				{
-					std::cout << std::format("connection {} closed\n", connection->toString());
+					logger.info("connection {} closed", connection->toString());
 					removeConnection(connection);
 				}
 				catch (const SocketException& ex)
 				{
-					std::cerr << std::format("{}: {}\n", ex.getSocket()->getAddrStr(), ex.what());
+					logger.error("{}: {}", ex.getSocket()->getAddrStr(), ex.what());
 				}
 			}
 		}

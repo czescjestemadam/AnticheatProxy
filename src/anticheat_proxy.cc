@@ -1,5 +1,7 @@
 #include "anticheat_proxy.hh"
 
+#include "globals.hh"
+
 constexpr const char* LISTEN_ADDR = "0.0.0.0";
 constexpr ushort LISTEN_PORT = 30066;
 
@@ -18,12 +20,15 @@ acp::AnticheatProxy::AnticheatProxy(RunArgs&& args)
 
 void acp::AnticheatProxy::start()
 {
+	logger.info("Starting AnticheatProxy {}", globals::VERSION);
+
 	networkManager.start();
 	networkManager.wait();
 }
 
 void acp::AnticheatProxy::stop()
 {
+	logger.info("Stopping AnticheatProxy");
 	networkManager.stop();
 }
 

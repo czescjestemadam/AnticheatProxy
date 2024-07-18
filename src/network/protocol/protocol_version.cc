@@ -1,8 +1,10 @@
 #include "protocol_version.hh"
 
-#include <iostream>
+#include "util/logger/logger.hh"
+
 #include <map>
 
+static acp::Logger logger{ "ProtocolVersion" };
 static std::map<int, acp::ProtocolVersion*> versionByIdx;
 
 acp::ProtocolVersion::ProtocolVersion(int idx, std::string&& name) : idx(idx), name(std::move(name))
@@ -57,12 +59,12 @@ bool acp::ProtocolVersion::operator>=(const ProtocolVersion& rhs) const
 
 void acp::ProtocolVersion::compileMappings()
 {
-	std::cout << "compiling packet mappings\n";
+	logger.info("Compiling packet mappings");
 
 	for (auto& [idx, version] : versionByIdx)
 	{
 		version->mapping = ProtocolMapping(version);
-		std::cout << std::format("compiled {} packets for {}\n", version->mapping.size(), version->getName());
+		logger.info("Compiled {} packets for {}", version->mapping.size(), version->getName());
 	}
 }
 

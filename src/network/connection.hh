@@ -4,6 +4,7 @@
 #include "socket/player_socket.hh"
 #include "handler/i_network_handler.hh"
 #include "handler/handshake_handler.hh"
+#include "util/logger/logger.hh"
 
 #include <optional>
 #include <memory>
@@ -12,6 +13,8 @@ namespace acp
 {
 	class Connection
 	{
+		Logger logger;
+
 		PlayerSocket clientSocket;
 		PlayerSocket destSocket;
 
@@ -29,6 +32,8 @@ namespace acp
 
 		void handleEvent(int fd);
 		// TODO packets
+
+		Logger& getLogger();
 
 		PlayerSocket& getSide(NetworkSide side);
 
