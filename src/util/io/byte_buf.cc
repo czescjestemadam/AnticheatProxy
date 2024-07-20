@@ -200,22 +200,42 @@ void acp::ByteBuf::writeLongU(unsigned long v)
 
 float acp::ByteBuf::readFloat()
 {
-	BUF_READ(float, float);
+	BUF_UNION(float);
+
+	for (int i = sizeof(float) - 1; i >= 0; i--)
+		bytes[i] = readByte();
+
+	return val;
 }
 
 void acp::ByteBuf::writeFloat(float v)
 {
-	BUF_WRITE(float, float);
+	BUF_UNION(float);
+
+	val = v;
+
+	for (int i = sizeof(float) - 1; i >= 0; i--)
+		writeByte(bytes[i]);
 }
 
 double acp::ByteBuf::readDouble()
 {
-	BUF_READ(double, double);
+	BUF_UNION(double);
+
+	for (int i = sizeof(double) - 1; i >= 0; i--)
+		bytes[i] = readByte();
+
+	return val;
 }
 
 void acp::ByteBuf::writeDouble(double v)
 {
-	BUF_WRITE(double, double);
+	BUF_UNION(double);
+
+	val = v;
+
+	for (int i = sizeof(double) - 1; i >= 0; i--)
+		writeByte(bytes[i]);
 }
 
 
