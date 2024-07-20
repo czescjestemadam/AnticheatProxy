@@ -318,3 +318,8 @@ size_t acp::ByteBuf::size() const
 {
 	return bytes.size();
 }
+
+void acp::ByteBuf::clear()
+{
+	bytes.clear();
+}

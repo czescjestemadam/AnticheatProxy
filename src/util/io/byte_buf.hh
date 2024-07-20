@@ -78,5 +78,6 @@ namespace acp
 
 		const byte_t* data() const;
 		size_t size() const;
+		void clear();
 	};
 }
