@@ -34,7 +34,6 @@ void acp::Connection::handleEvent(int fd)
 	ByteBuf ogBuf = from.read();
 
 	ByteBuf buf = ogBuf;
-	bool rewrite = false;
 
 	if (compressionThreshold.has_value())
 	{
@@ -57,24 +56,64 @@ void acp::Connection::handleEvent(int fd)
 					 EnumNames<NetworkSide>::get(toSide),
 					 packet->toString()
 		);
-		rewrite = packet->apply(networkHandler);
+		const bool rewrite = packet->apply(networkHandler);
 		if (rewrite)
+		{
+			packet->getBuf().clear();
 			packet->write(protocolVersion);
+			sendPacket(toSide, std::move(packet));
+		}
+		else
+		{
+			to.write(ogBuf);
+		}
 	}
 	else
 	{
-		logger.debug("[{}] {} -> {}: packetId={}",
-					 EnumNames<NetworkState>::get(state),
-					 EnumNames<NetworkSide>::get(fromSide),
-					 EnumNames<NetworkSide>::get(toSide),
-					 id
-		);
+		// logger.debug("[{}] {} -> {}: packetId=0x{:02X}",
+		// 			 EnumNames<NetworkState>::get(state),
+		// 			 EnumNames<NetworkSide>::get(fromSide),
+		// 			 EnumNames<NetworkSide>::get(toSide),
+		// 			 id
+		// );
+
+		to.write(ogBuf);
 	}
+}
 
-	const ByteBuf& toWrite = rewrite ? packet->getBuf() : ogBuf;
-	to.write(toWrite);
+void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet)
+{
+	sendPacket(to, packet->getId(protocolVersion), packet->getBuf());
+}
 
-	// std::cout << std::format("[{}]: sent {}\n", toString(toSide), toWrite.toString());
+void acp::Connection::sendPacket(NetworkSide to, int packetId, const ByteBuf& packetData)
+{
+	ByteBuf data;
+	data.writeVarint(packetId);
+	data.writeBuf(packetData);
+
+	sendPacket(to, std::move(data));
+}
+
+void acp::Connection::sendPacket(NetworkSide to, ByteBuf&& data)
+{
+	// TODO output compression threshold in config
+	if (compressionThreshold.has_value())
+	{
+		ByteBuf buf;
+
+		const int dataLen = static_cast<int>(data.size());
+		const bool compress = dataLen >= compressionThreshold.value();
+
+		buf.writeVarint(compress ? dataLen : 0);
+		buf.writeBuf(compress ? data.compress() : data);
+
+		getSide(to).write(buf);
+	}
+	else // before SetCompression packet
+	{
+		getSide(to).write(data);
+	}
 }
 
 acp::Logger& acp::Connection::getLogger()
