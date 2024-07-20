@@ -485,5 +485,13 @@ std::unique_ptr<acp::packet::IPacket> acp::ProtocolMapping::create(NetworkState 
 
 size_t acp::ProtocolMapping::size() const
 {
-	return mappings.size();
+	size_t count = 0;
+
+	for (const auto& [state, stateMappings] : mappings)
+	{
+		for (const auto& [side, sideMappings] : stateMappings)
+			count += sideMappings.size();
+	}
+
+	return count;
 }
