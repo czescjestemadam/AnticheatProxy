@@ -64,7 +64,7 @@ void acp::ProtocolVersion::compileMappings()
 	for (auto& [idx, version] : versionByIdx)
 	{
 		version->mapping = ProtocolMapping(version);
-		logger.info("Compiled {} packets for {}", version->mapping.size(), version->getName());
+		logger.info("Compiled {} packet ids for {}", version->mapping.size(), version->getName());
 	}
 }
 
