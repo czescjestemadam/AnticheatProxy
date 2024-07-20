@@ -6,6 +6,23 @@
 void acp::packet::play::s2c::Login::read(const ProtocolVersion* version)
 {
 	entityId = buf.readVarint();
+	hardcore = buf.readByte();
+
+	const int dimensionSize = buf.readVarint();
+	for (int i = 0; i < dimensionSize; ++i)
+		dimensionNames.push_back(buf.readIdentifier());
+
+	maxPlayers = buf.readVarint();
+	viewDistance = buf.readVarint();
+	simulationDistance = buf.readVarint();
+	reducedDebugInfo = buf.readByte();
+	enableRespawnScreen = buf.readByte();
+	doLimitedCrafting = buf.readByte();
+	dimensionType = buf.readVarint();
+	dimensionName = buf.readIdentifier();
+	hashedSeed = buf.readLong();
+	gameMode = buf.readByte();
+	previousGameMode = buf.readByte();
 }
 
 void acp::packet::play::s2c::Login::write(const ProtocolVersion* version)
