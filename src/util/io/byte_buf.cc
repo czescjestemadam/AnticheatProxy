@@ -39,13 +39,13 @@ void acp::ByteBuf::writeByte(byte_t v)
 
 void acp::ByteBuf::readBytes(byte_t* out, size_t len)
 {
-	for (int i = 0; i < len; ++i)
+	for (int i = 0; i < len; i++)
 		out[i] = readByte();
 }
 
 void acp::ByteBuf::writeBytes(const byte_t* buf, size_t len)
 {
-	for (int i = 0; i < len; ++i)
+	for (int i = 0; i < len; i++)
 		bytes.push_back(buf[i]);
 }
 
