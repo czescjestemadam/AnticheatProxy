@@ -518,6 +518,8 @@ add_executable(AnticheatProxy
 	src/util/logger/log_level.hh
 	src/util/logger/logger.cc
 	src/util/logger/logger.hh
+	src/util/thread/thread_pool_executor.cc
+	src/util/thread/thread_pool_executor.hh
 )
 
 find_package(OpenSSL REQUIRED)
