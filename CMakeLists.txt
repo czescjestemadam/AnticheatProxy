@@ -520,6 +520,7 @@ add_executable(AnticheatProxy
 	src/util/logger/logger.hh
 	src/util/thread/thread_pool_executor.cc
 	src/util/thread/thread_pool_executor.hh
+	src/util/vec3.hh
 )
 
 find_package(OpenSSL REQUIRED)
