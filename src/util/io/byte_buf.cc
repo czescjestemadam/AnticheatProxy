@@ -4,6 +4,7 @@
 #include "z_lib_exception.hh"
 
 #include <format>
+#include <iostream>
 #include <zlib.h>
 #include <netinet/in.h>
 
@@ -289,13 +290,22 @@ void acp::ByteBuf::writeIdentifier(const Identifier& v)
 
 acp::Vec3i acp::ByteBuf::readPosition()
 {
-	const long v = readLong();
-	return { static_cast<int>(v >> 38), static_cast<int>(v << 52 >> 52), static_cast<int>(v << 26 >> 38) };
+	BUF_UNION(long);
+
+	for (int i = sizeof(long) - 1; i >= 0; i--)
+		bytes[i] = readByte();
+
+	return { static_cast<int>(val >> 38), static_cast<int>(val << 52 >> 52), static_cast<int>(val << 26 >> 38) };
 }
 
 void acp::ByteBuf::writePosition(const Vec3i& v)
 {
-	writeLong((v.x & 0x3ffffff) << 38 | (v.z & 0x3ffffff) << 12 | v.y & 0xfff);
+	BUF_UNION(long);
+
+	val = static_cast<long>(v.x & 0x3ffffff) << 38 | static_cast<long>(v.z & 0x3ffffff) << 12 | v.y & 0xfff;
+
+	for (int i = sizeof(long) - 1; i >= 0; i--)
+		writeByte(bytes[i]);
 }
 
 acp::Vec3f acp::ByteBuf::readVec3f()
