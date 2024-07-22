@@ -287,6 +287,49 @@ void acp::ByteBuf::writeIdentifier(const Identifier& v)
 	writeStr(v.toString());
 }
 
+acp::Vec3i acp::ByteBuf::readPosition()
+{
+	const long v = readLong();
+	return { static_cast<int>(v >> 38), static_cast<int>(v << 52 >> 52), static_cast<int>(v << 26 >> 38) };
+}
+
+void acp::ByteBuf::writePosition(const Vec3i& v)
+{
+	writeLong((v.x & 0x3ffffff) << 38 | (v.z & 0x3ffffff) << 12 | v.y & 0xfff);
+}
+
+acp::Vec3f acp::ByteBuf::readVec3f()
+{
+	Vec3f v;
+	v.x = readFloat();
+	v.y = readFloat();
+	v.z = readFloat();
+	return v;
+}
+
+void acp::ByteBuf::writeVec3f(const Vec3f& v)
+{
+	writeFloat(v.x);
+	writeFloat(v.y);
+	writeFloat(v.z);
+}
+
+acp::Vec3d acp::ByteBuf::readVec3d()
+{
+	Vec3d v;
+	v.x = readDouble();
+	v.y = readDouble();
+	v.z = readDouble();
+	return v;
+}
+
+void acp::ByteBuf::writeVec3d(const Vec3d& v)
+{
+	writeDouble(v.x);
+	writeDouble(v.y);
+	writeDouble(v.z);
+}
+
 
 acp::ByteBuf acp::ByteBuf::compress(int level) const
 {

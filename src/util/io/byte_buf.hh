@@ -1,6 +1,7 @@
 #pragma once
 #include "util/uuid.hh"
 #include "util/identifier.hh"
+#include "util/vec3.hh"
 
 #include <vector>
 
@@ -70,6 +71,15 @@ namespace acp
 
 		Identifier readIdentifier();
 		void writeIdentifier(const Identifier& v);
+
+		Vec3i readPosition();
+		void writePosition(const Vec3i& v);
+
+		Vec3f readVec3f();
+		void writeVec3f(const Vec3f& v);
+
+		Vec3d readVec3d();
+		void writeVec3d(const Vec3d& v);
 
 		// zlib
 		ByteBuf compress(int level = -1) const;
