@@ -6,9 +6,7 @@
 void acp::packet::play::s2c::TeleportEntity::read(const ProtocolVersion* version)
 {
 	entityId = buf.readVarint();
-	x = buf.readDouble();
-	y = buf.readDouble();
-	z = buf.readDouble();
+	position = buf.readVec3d();
 	yaw = buf.readAngle();
 	pitch = buf.readAngle();
 	onGround = buf.readByte();
@@ -17,9 +15,7 @@ void acp::packet::play::s2c::TeleportEntity::read(const ProtocolVersion* version
 void acp::packet::play::s2c::TeleportEntity::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(entityId);
-	buf.writeDouble(x);
-	buf.writeDouble(y);
-	buf.writeDouble(z);
+	buf.writeVec3d(position);
 	buf.writeAngle(yaw);
 	buf.writeAngle(pitch);
 	buf.writeByte(onGround);
@@ -67,34 +63,14 @@ void acp::packet::play::s2c::TeleportEntity::setEntityId(const int entity_id)
 	entityId = entity_id;
 }
 
-double acp::packet::play::s2c::TeleportEntity::getX() const
+acp::Vec3d acp::packet::play::s2c::TeleportEntity::getPosition() const
 {
-	return x;
+	return position;
 }
 
-void acp::packet::play::s2c::TeleportEntity::setX(const double x)
+void acp::packet::play::s2c::TeleportEntity::setPosition(const Vec3d& position)
 {
-	this->x = x;
-}
-
-double acp::packet::play::s2c::TeleportEntity::getY() const
-{
-	return y;
-}
-
-void acp::packet::play::s2c::TeleportEntity::setY(const double y)
-{
-	this->y = y;
-}
-
-double acp::packet::play::s2c::TeleportEntity::getZ() const
-{
-	return z;
-}
-
-void acp::packet::play::s2c::TeleportEntity::setZ(const double z)
-{
-	this->z = z;
+	this->position = position;
 }
 
 float acp::packet::play::s2c::TeleportEntity::getYaw() const
@@ -131,7 +107,7 @@ std::string acp::packet::play::s2c::TeleportEntity::toString() const
 {
 	return std::format("TeleportEntity[id={}, pos={} {} {}, rot={} {}, ground={}]",
 					   entityId,
-					   x, y, z,
+					   position.x, position.y, position.z,
 					   yaw, pitch,
 					   onGround
 	);

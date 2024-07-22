@@ -6,7 +6,7 @@ namespace acp::packet::play::s2c
 	class TeleportEntity : public IPacket
 	{
 		int entityId;
-		double x, y, z;
+		Vec3d position;
 		/// not delta
 		float yaw, pitch;
 		bool onGround;
@@ -24,14 +24,8 @@ namespace acp::packet::play::s2c
 		int getEntityId() const;
 		void setEntityId(int entity_id);
 
-		double getX() const;
-		void setX(double x);
-
-		double getY() const;
-		void setY(double y);
-
-		double getZ() const;
-		void setZ(double z);
+		Vec3d getPosition() const;
+		void setPosition(const Vec3d& position);
 
 		float getYaw() const;
 		void setYaw(float yaw);
