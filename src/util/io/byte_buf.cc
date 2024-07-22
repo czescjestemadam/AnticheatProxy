@@ -238,6 +238,17 @@ void acp::ByteBuf::writeDouble(double v)
 		writeByte(bytes[i]);
 }
 
+float acp::ByteBuf::readAngle()
+{
+	const float angle = readByte();
+	return angle * 256.f / 360.f;
+}
+
+void acp::ByteBuf::writeAngle(float v)
+{
+	writeByte(static_cast<byte_t>(v / 360.f));
+}
+
 
 std::string acp::ByteBuf::readStr()
 {

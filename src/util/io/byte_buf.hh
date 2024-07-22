@@ -58,6 +58,9 @@ namespace acp
 		double readDouble();
 		void writeDouble(double v);
 
+		float readAngle();
+		void writeAngle(float v);
+
 		// misc
 		std::string readStr();
 		void writeStr(const std::string& v);
