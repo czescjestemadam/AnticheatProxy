@@ -450,7 +450,7 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::StartConfiguration)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::StopSound)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::StoreCookie)
-	// ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::SystemChatMessage) TODO
+	ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::SystemChatMessage)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::SetTabListHeaderAndFooter)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::TagQueryResponse)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::DEST, packet::play::s2c::PickupItem)

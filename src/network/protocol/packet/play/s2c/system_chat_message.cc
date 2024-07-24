@@ -5,13 +5,13 @@
 
 void acp::packet::play::s2c::SystemChatMessage::read(const ProtocolVersion* version)
 {
-	content = buf.readStr();
+	message = buf.readNbt(*version < ProtocolVersion::v1_20_2);
 	overlay = buf.readByte();
 }
 
 void acp::packet::play::s2c::SystemChatMessage::write(const ProtocolVersion* version)
 {
-	buf.writeStr(content);
+	buf.writeNbt(message, *version < ProtocolVersion::v1_20_2);
 	buf.writeByte(overlay);
 }
 
@@ -43,14 +43,14 @@ int acp::packet::play::s2c::SystemChatMessage::getId(const ProtocolVersion* vers
 	return -1;
 }
 
-std::string& acp::packet::play::s2c::SystemChatMessage::getContent()
+std::unique_ptr<acp::nbt::Tag>& acp::packet::play::s2c::SystemChatMessage::getMessage()
 {
-	return content;
+	return message;
 }
 
-void acp::packet::play::s2c::SystemChatMessage::setContent(const std::string& content)
+void acp::packet::play::s2c::SystemChatMessage::setMessage(std::unique_ptr<nbt::Tag>&& message)
 {
-	this->content = content;
+	this->message = std::move(message);
 }
 
 bool acp::packet::play::s2c::SystemChatMessage::isOverlay() const
@@ -65,5 +65,5 @@ void acp::packet::play::s2c::SystemChatMessage::setOverlay(bool overlay)
 
 std::string acp::packet::play::s2c::SystemChatMessage::toString() const
 {
-	return std::format("SystemChatMessage[content={}, overlay={}]", content, overlay);
+	return std::format("SystemChatMessage[msg={}, overlay={}]", message->toString(), overlay);
 }

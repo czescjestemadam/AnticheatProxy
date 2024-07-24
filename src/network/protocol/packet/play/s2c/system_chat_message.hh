@@ -1,12 +1,12 @@
 #pragma once
 #include "network/protocol/packet/i_packet.hh"
+#include "util/nbt/tag.hh"
 
 namespace acp::packet::play::s2c
 {
 	class SystemChatMessage : public IPacket
 	{
-		// TODO chat nbt
-		std::string content;
+		std::unique_ptr<nbt::Tag> message;
 		bool overlay;
 
 	public:
@@ -19,8 +19,8 @@ namespace acp::packet::play::s2c
 
 		int getId(const ProtocolVersion* version) const override;
 
-		std::string& getContent();
-		void setContent(const std::string& content);
+		std::unique_ptr<nbt::Tag>& getMessage();
+		void setMessage(std::unique_ptr<nbt::Tag>&& message);
 
 		bool isOverlay() const;
 		void setOverlay(bool overlay);
