@@ -4,7 +4,7 @@
 #include "network/network_side.hh"
 
 #include <functional>
-#include <map>
+#include <unordered_map>
 #include <memory>
 
 namespace acp
@@ -12,9 +12,9 @@ namespace acp
 	class ProtocolMapping
 	{
 		using PacketConstructor = std::function<std::unique_ptr<packet::IPacket>(const ByteBuf&)>;
-		using PacketIdMap = std::map<int, PacketConstructor>;
+		using PacketIdMap = std::unordered_map<int, PacketConstructor>;
 
-		std::map<NetworkState, std::map<NetworkSide, PacketIdMap>> mappings;
+		std::unordered_map<NetworkState, std::unordered_map<NetworkSide, PacketIdMap>> mappings;
 
 	public:
 		ProtocolMapping() = default;

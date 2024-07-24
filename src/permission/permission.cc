@@ -1,8 +1,8 @@
 #include "permission.hh"
 
-#include <map>
+#include <unordered_map>
 
-static std::map<std::string, Permission*> permissionByName;
+static std::unordered_map<std::string, Permission*> permissionByName;
 
 Permission::Permission(int idx, const std::string& name) : idx(idx), name(name)
 {

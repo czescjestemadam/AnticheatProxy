@@ -5,7 +5,6 @@
 #include "util/logger/logger.hh"
 
 #include <thread>
-#include <map>
 #include <memory>
 
 namespace acp
@@ -21,7 +20,7 @@ namespace acp
 		std::thread acceptThread;
 
 		std::vector<std::shared_ptr<Connection>> connections;
-		std::map<int, std::weak_ptr<Connection>> connectionByFd;
+		std::unordered_map<int, std::weak_ptr<Connection>> connectionByFd;
 
 		EpollSocket epollSocket;
 		std::thread epollThread;
