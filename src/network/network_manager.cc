@@ -136,7 +136,7 @@ void acp::NetworkManager::epollLoop()
 				}
 				catch (const SocketException& ex)
 				{
-					logger.error("{}: {}", ex.getSocket()->getAddrStr(), ex.what());
+					logger.error("handleEvent({}): {}", ex.getSocket()->getAddrStr(), ex.what());
 				}
 			}
 		}
