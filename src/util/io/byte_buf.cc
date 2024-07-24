@@ -2,9 +2,9 @@
 
 #include "varint_exception.hh"
 #include "z_lib_exception.hh"
+#include "util/nbt/tag.hh"
 
 #include <format>
-#include <iostream>
 #include <zlib.h>
 #include <netinet/in.h>
 
@@ -338,6 +338,26 @@ void acp::ByteBuf::writeVec3d(const Vec3d& v)
 	writeDouble(v.x);
 	writeDouble(v.y);
 	writeDouble(v.z);
+}
+
+std::unique_ptr<acp::nbt::Tag> acp::ByteBuf::readNbt(bool readName)
+{
+	const auto type = static_cast<nbt::TagType>(readByte());
+
+	std::unique_ptr<nbt::Tag> tag = nbt::Tag::createByType(type);
+	if (readName)
+		tag->readName(*this);
+	tag->read(*this);
+
+	return tag;
+}
+
+void acp::ByteBuf::writeNbt(std::unique_ptr<nbt::Tag>& v, bool writeName)
+{
+	writeByte(static_cast<byte_t>(v->getType()));
+	if (writeName)
+		v->writeName(*this);
+	v->write(*this);
 }
 
 

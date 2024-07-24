@@ -4,9 +4,15 @@
 #include "util/vec3.hh"
 
 #include <vector>
+#include <memory>
 
 namespace acp
 {
+	namespace nbt
+	{
+		class Tag;
+	}
+
 	class ByteBuf
 	{
 		std::vector<byte_t> bytes;
@@ -80,6 +86,9 @@ namespace acp
 
 		Vec3d readVec3d();
 		void writeVec3d(const Vec3d& v);
+
+		std::unique_ptr<nbt::Tag> readNbt(bool readName = true);
+		void writeNbt(std::unique_ptr<nbt::Tag>& v, bool writeName = true);
 
 		// zlib
 		ByteBuf compress(int level = -1) const;

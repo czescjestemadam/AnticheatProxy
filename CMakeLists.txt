@@ -521,6 +521,21 @@ add_executable(AnticheatProxy
 	src/util/thread/thread_pool_executor.cc
 	src/util/thread/thread_pool_executor.hh
 	src/util/vec3.hh
+	src/util/nbt/tag_type.hh
+	src/util/nbt/tag.cc
+	src/util/nbt/tag.hh
+	src/util/nbt/tag/tag_end.cc
+	src/util/nbt/tag/tag_end.hh
+	src/util/nbt/tag/tag_string.cc
+	src/util/nbt/tag/tag_string.hh
+	src/util/nbt/tag/tag_list.cc
+	src/util/nbt/tag/tag_list.hh
+	src/util/nbt/tag/tag_compound.cc
+	src/util/nbt/tag/tag_compound.hh
+	src/util/nbt/tag/tag_number.cc
+	src/util/nbt/tag/tag_number.hh
+	src/util/nbt/tag/tag_number_array.cc
+	src/util/nbt/tag/tag_number_array.hh
 )
 
 find_package(OpenSSL REQUIRED)
