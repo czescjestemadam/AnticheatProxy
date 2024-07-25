@@ -28,6 +28,9 @@ namespace acp
 		void readBytes(byte_t* out, size_t len);
 		void writeBytes(const byte_t* buf, size_t len);
 
+		void readBytesR(byte_t* out, size_t len);
+		void writeBytesR(const byte_t* buf, size_t len);
+
 		ByteBuf readBuf(size_t len);
 		void writeBuf(const ByteBuf& buf);
 
@@ -78,8 +81,8 @@ namespace acp
 		Identifier readIdentifier();
 		void writeIdentifier(const Identifier& v);
 
-		Vec3i readPosition();
-		void writePosition(const Vec3i& v);
+		Vec3i readPosition(int shiftX = 38, int shiftY = 52, int shiftZ = 26);
+		void writePosition(const Vec3i& v, int maskXZ = 0x3ffffff, int maskY = 0xfff, int shiftX = 38, int shiftZ = 12);
 
 		Vec3f readVec3f();
 		void writeVec3f(const Vec3f& v);

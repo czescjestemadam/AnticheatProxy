@@ -50,6 +50,18 @@ void acp::ByteBuf::writeBytes(const byte_t* buf, size_t len)
 		bytes.push_back(buf[i]);
 }
 
+void acp::ByteBuf::readBytesR(byte_t* out, size_t len)
+{
+	for (int i = len - 1; i >= 0; i--)
+		out[i] = readByte();
+}
+
+void acp::ByteBuf::writeBytesR(const byte_t* buf, size_t len)
+{
+	for (int i = len - 1; i >= 0; i--)
+		bytes.push_back(buf[i]);
+}
+
 acp::ByteBuf acp::ByteBuf::readBuf(size_t len)
 {
 	byte_t bytes[len];
@@ -288,24 +300,22 @@ void acp::ByteBuf::writeIdentifier(const Identifier& v)
 	writeStr(v.toString());
 }
 
-acp::Vec3i acp::ByteBuf::readPosition()
+acp::Vec3i acp::ByteBuf::readPosition(int shiftX, int shiftY, int shiftZ)
 {
 	BUF_UNION(long);
-
-	for (int i = sizeof(long) - 1; i >= 0; i--)
-		bytes[i] = readByte();
-
-	return { static_cast<int>(val >> 38), static_cast<int>(val << 52 >> 52), static_cast<int>(val << 26 >> 38) };
+	readBytesR(bytes, sizeof(long));
+	return {
+		static_cast<int>(val >> shiftX),
+		static_cast<int>(val << shiftY >> shiftY),
+		static_cast<int>(val << shiftZ >> shiftX)
+	};
 }
 
-void acp::ByteBuf::writePosition(const Vec3i& v)
+void acp::ByteBuf::writePosition(const Vec3i& v, int maskXZ, int maskY, int shiftX, int shiftZ)
 {
 	BUF_UNION(long);
-
-	val = static_cast<long>(v.x & 0x3ffffff) << 38 | static_cast<long>(v.z & 0x3ffffff) << 12 | v.y & 0xfff;
-
-	for (int i = sizeof(long) - 1; i >= 0; i--)
-		writeByte(bytes[i]);
+	val = static_cast<long>(v.x & maskXZ) << shiftX | static_cast<long>(v.z & maskXZ) << shiftZ | v.y & maskY;
+	writeBytesR(bytes, sizeof(long));
 }
 
 acp::Vec3f acp::ByteBuf::readVec3f()
