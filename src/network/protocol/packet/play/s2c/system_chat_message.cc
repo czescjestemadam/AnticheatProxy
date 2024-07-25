@@ -15,12 +15,12 @@ void acp::packet::play::s2c::SystemChatMessage::write(const ProtocolVersion* ver
 	buf.writeByte(overlay);
 }
 
-bool acp::packet::play::s2c::SystemChatMessage::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::s2c::SystemChatMessage::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::s2c::SystemChatMessage::getId(const ProtocolVersion* version) const

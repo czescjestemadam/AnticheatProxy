@@ -13,12 +13,12 @@ void acp::packet::play::c2s::SetPlayerOnGround::write(const ProtocolVersion* ver
 	buf.writeByte(onGround);
 }
 
-bool acp::packet::play::c2s::SetPlayerOnGround::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::c2s::SetPlayerOnGround::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::c2s::SetPlayerOnGround::getId(const ProtocolVersion* version) const

@@ -13,7 +13,7 @@ namespace acp::packet::login::c2s
 		void read(const ProtocolVersion* version) override;
 		void write(const ProtocolVersion* version) override;
 
-		bool apply(std::unique_ptr<INetworkHandler>& handler) override;
+		HandleResult apply(std::unique_ptr<INetworkHandler>& handler) override;
 
 		int getId(const ProtocolVersion* version) const override;
 

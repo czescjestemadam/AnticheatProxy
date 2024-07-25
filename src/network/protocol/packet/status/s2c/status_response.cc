@@ -14,12 +14,12 @@ void acp::packet::status::s2c::StatusResponse::write(const ProtocolVersion* vers
 	buf.writeStr(json);
 }
 
-bool acp::packet::status::s2c::StatusResponse::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::status::s2c::StatusResponse::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* statusHandler = dynamic_cast<StatusHandler*>(handler.get()))
 		return statusHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::status::s2c::StatusResponse::getId(const ProtocolVersion* version) const

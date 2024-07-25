@@ -33,31 +33,31 @@ namespace acp
 	public:
 		using INetworkHandler::INetworkHandler;
 
-		bool handle(packet::configuration::c2s::ClientInformation* packet);
-		bool handle(packet::configuration::c2s::CookieResponse* packet);
-		bool handle(packet::configuration::c2s::PluginMessage* packet);
-		bool handle(packet::configuration::c2s::AcknowledgeFinishConfiguration* packet);
-		bool handle(packet::configuration::c2s::KeepAlive* packet);
-		bool handle(packet::configuration::c2s::Pong* packet);
-		bool handle(packet::configuration::c2s::ResourcePackResponse* packet);
-		bool handle(packet::configuration::c2s::KnownPacks* packet);
+		HandleResult handle(packet::configuration::c2s::ClientInformation* packet);
+		HandleResult handle(packet::configuration::c2s::CookieResponse* packet);
+		HandleResult handle(packet::configuration::c2s::PluginMessage* packet);
+		HandleResult handle(packet::configuration::c2s::AcknowledgeFinishConfiguration* packet);
+		HandleResult handle(packet::configuration::c2s::KeepAlive* packet);
+		HandleResult handle(packet::configuration::c2s::Pong* packet);
+		HandleResult handle(packet::configuration::c2s::ResourcePackResponse* packet);
+		HandleResult handle(packet::configuration::c2s::KnownPacks* packet);
 
-		bool handle(packet::configuration::s2c::CookieRequest* packet);
-		bool handle(packet::configuration::s2c::PluginMessage* packet);
-		bool handle(packet::configuration::s2c::Disconnect* packet);
-		bool handle(packet::configuration::s2c::FinishConfiguration* packet);
-		bool handle(packet::configuration::s2c::KeepAlive* packet);
-		bool handle(packet::configuration::s2c::Ping* packet);
-		bool handle(packet::configuration::s2c::ResetChat* packet);
-		bool handle(packet::configuration::s2c::RegistryData* packet);
-		bool handle(packet::configuration::s2c::RemoveResourcePack* packet);
-		bool handle(packet::configuration::s2c::AddResourcePack* packet);
-		bool handle(packet::configuration::s2c::StoreCookie* packet);
-		bool handle(packet::configuration::s2c::Transfer* packet);
-		bool handle(packet::configuration::s2c::FeatureFlags* packet);
-		bool handle(packet::configuration::s2c::UpdateTags* packet);
-		bool handle(packet::configuration::s2c::KnownPacks* packet);
-		bool handle(packet::configuration::s2c::CustomReportDetails* packet);
-		bool handle(packet::configuration::s2c::ServerLinks* packet);
+		HandleResult handle(packet::configuration::s2c::CookieRequest* packet);
+		HandleResult handle(packet::configuration::s2c::PluginMessage* packet);
+		HandleResult handle(packet::configuration::s2c::Disconnect* packet);
+		HandleResult handle(packet::configuration::s2c::FinishConfiguration* packet);
+		HandleResult handle(packet::configuration::s2c::KeepAlive* packet);
+		HandleResult handle(packet::configuration::s2c::Ping* packet);
+		HandleResult handle(packet::configuration::s2c::ResetChat* packet);
+		HandleResult handle(packet::configuration::s2c::RegistryData* packet);
+		HandleResult handle(packet::configuration::s2c::RemoveResourcePack* packet);
+		HandleResult handle(packet::configuration::s2c::AddResourcePack* packet);
+		HandleResult handle(packet::configuration::s2c::StoreCookie* packet);
+		HandleResult handle(packet::configuration::s2c::Transfer* packet);
+		HandleResult handle(packet::configuration::s2c::FeatureFlags* packet);
+		HandleResult handle(packet::configuration::s2c::UpdateTags* packet);
+		HandleResult handle(packet::configuration::s2c::KnownPacks* packet);
+		HandleResult handle(packet::configuration::s2c::CustomReportDetails* packet);
+		HandleResult handle(packet::configuration::s2c::ServerLinks* packet);
 	};
 }

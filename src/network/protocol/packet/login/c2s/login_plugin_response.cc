@@ -18,12 +18,12 @@ void acp::packet::login::c2s::LoginPluginResponse::write(const ProtocolVersion* 
 	buf.writeBuf(data);
 }
 
-bool acp::packet::login::c2s::LoginPluginResponse::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::login::c2s::LoginPluginResponse::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
 		return loginHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::login::c2s::LoginPluginResponse::getId(const ProtocolVersion* version) const

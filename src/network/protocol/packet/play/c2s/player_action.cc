@@ -23,12 +23,12 @@ void acp::packet::play::c2s::PlayerAction::write(const ProtocolVersion* version)
 		buf.writeVarint(sequence.value());
 }
 
-bool acp::packet::play::c2s::PlayerAction::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::c2s::PlayerAction::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::c2s::PlayerAction::getId(const ProtocolVersion* version) const

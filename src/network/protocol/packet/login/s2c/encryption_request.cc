@@ -22,12 +22,12 @@ void acp::packet::login::s2c::EncryptionRequest::write(const ProtocolVersion* ve
 	buf.writeBuf(verifyToken);
 }
 
-bool acp::packet::login::s2c::EncryptionRequest::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::login::s2c::EncryptionRequest::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
 		return loginHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::login::s2c::EncryptionRequest::getId(const ProtocolVersion* version) const

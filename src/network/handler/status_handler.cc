@@ -1,22 +1,22 @@
 #include "status_handler.hh"
 
-bool acp::StatusHandler::handle(packet::status::c2s::StatusRequest* packet)
+acp::HandleResult acp::StatusHandler::handle(packet::status::c2s::StatusRequest* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::StatusHandler::handle(packet::status::c2s::PingRequest* packet)
+acp::HandleResult acp::StatusHandler::handle(packet::status::c2s::PingRequest* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
 
-bool acp::StatusHandler::handle(packet::status::s2c::StatusResponse* packet)
+acp::HandleResult acp::StatusHandler::handle(packet::status::s2c::StatusResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::StatusHandler::handle(packet::status::s2c::PingResponse* packet)
+acp::HandleResult acp::StatusHandler::handle(packet::status::s2c::PingResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }

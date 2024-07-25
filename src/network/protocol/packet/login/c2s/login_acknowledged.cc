@@ -11,12 +11,12 @@ void acp::packet::login::c2s::LoginAcknowledged::write(const ProtocolVersion* ve
 {
 }
 
-bool acp::packet::login::c2s::LoginAcknowledged::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::login::c2s::LoginAcknowledged::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
 		return loginHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::login::c2s::LoginAcknowledged::getId(const ProtocolVersion* version) const

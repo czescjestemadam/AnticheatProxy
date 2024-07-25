@@ -20,12 +20,12 @@ void acp::packet::handshake::Handshake::write(const ProtocolVersion* version)
 	buf.writeVarint(nextState);
 }
 
-bool acp::packet::handshake::Handshake::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::handshake::Handshake::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* handshakeHandler = dynamic_cast<HandshakeHandler*>(handler.get()))
 		return handshakeHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::handshake::Handshake::getId(const ProtocolVersion* version) const

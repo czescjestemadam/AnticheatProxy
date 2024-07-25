@@ -14,12 +14,12 @@ void acp::packet::login::s2c::SetCompression::write(const ProtocolVersion* versi
 	buf.writeVarint(threshold);
 }
 
-bool acp::packet::login::s2c::SetCompression::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::login::s2c::SetCompression::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* loginHandler = dynamic_cast<LoginHandler*>(handler.get()))
 		return loginHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::login::s2c::SetCompression::getId(const ProtocolVersion* version) const

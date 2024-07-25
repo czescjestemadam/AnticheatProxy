@@ -21,12 +21,12 @@ void acp::packet::play::s2c::TeleportEntity::write(const ProtocolVersion* versio
 	buf.writeByte(onGround);
 }
 
-bool acp::packet::play::s2c::TeleportEntity::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::s2c::TeleportEntity::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::s2c::TeleportEntity::getId(const ProtocolVersion* version) const

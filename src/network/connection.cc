@@ -56,16 +56,16 @@ void acp::Connection::handleEvent(int fd)
 					 EnumNames<NetworkSide>::get(toSide),
 					 packet->toString()
 		);
-		const bool rewrite = packet->apply(networkHandler);
-		if (rewrite)
+		const HandleResult result = packet->apply(networkHandler);
+		if (result == HandleResult::FORWARD)
+		{
+			to.write(ogBuf);
+		}
+		else if (result == HandleResult::REWRITE)
 		{
 			packet->getBuf().clear();
 			packet->write(protocolVersion);
 			sendPacket(toSide, std::move(packet));
-		}
-		else
-		{
-			to.write(ogBuf);
 		}
 	}
 	else

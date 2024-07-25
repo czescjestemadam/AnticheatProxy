@@ -30,12 +30,12 @@ void acp::packet::play::s2c::Login::write(const ProtocolVersion* version)
 	buf.writeVarint(entityId);
 }
 
-bool acp::packet::play::s2c::Login::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::s2c::Login::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::s2c::Login::getId(const ProtocolVersion* version) const

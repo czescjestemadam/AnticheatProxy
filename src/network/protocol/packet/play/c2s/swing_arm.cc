@@ -13,12 +13,12 @@ void acp::packet::play::c2s::SwingArm::write(const ProtocolVersion* version)
 	buf.writeVarint(hand);
 }
 
-bool acp::packet::play::c2s::SwingArm::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::c2s::SwingArm::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::c2s::SwingArm::getId(const ProtocolVersion* version) const

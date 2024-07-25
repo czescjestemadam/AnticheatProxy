@@ -15,12 +15,12 @@ void acp::packet::play::s2c::BlockUpdate::write(const ProtocolVersion* version)
 	buf.writeVarint(blockId);
 }
 
-bool acp::packet::play::s2c::BlockUpdate::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::s2c::BlockUpdate::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::s2c::BlockUpdate::getId(const ProtocolVersion* version) const

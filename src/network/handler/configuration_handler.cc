@@ -2,130 +2,130 @@
 
 #include "network/connection.hh"
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::ClientInformation* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::ClientInformation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::CookieResponse* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::CookieResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::PluginMessage* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::PluginMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::AcknowledgeFinishConfiguration* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::AcknowledgeFinishConfiguration* packet)
 {
 	connection->setState(NetworkState::PLAY);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::KeepAlive* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::KeepAlive* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::Pong* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::Pong* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::ResourcePackResponse* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::ResourcePackResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::c2s::KnownPacks* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::KnownPacks* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::CookieRequest* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::CookieRequest* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::PluginMessage* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::PluginMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::Disconnect* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::Disconnect* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::FinishConfiguration* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::FinishConfiguration* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::KeepAlive* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::KeepAlive* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::Ping* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::Ping* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::ResetChat* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::ResetChat* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::RegistryData* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::RegistryData* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::RemoveResourcePack* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::RemoveResourcePack* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::AddResourcePack* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::AddResourcePack* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::StoreCookie* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::StoreCookie* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::Transfer* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::Transfer* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::FeatureFlags* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::FeatureFlags* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::UpdateTags* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::UpdateTags* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::KnownPacks* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::KnownPacks* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::CustomReportDetails* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::CustomReportDetails* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::ConfigurationHandler::handle(packet::configuration::s2c::ServerLinks* packet)
+acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::ServerLinks* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }

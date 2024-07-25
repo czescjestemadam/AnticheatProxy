@@ -2,7 +2,7 @@
 
 #include "network/connection.hh"
 
-bool acp::HandshakeHandler::handle(packet::handshake::Handshake* packet)
+acp::HandleResult acp::HandshakeHandler::handle(packet::handshake::Handshake* packet)
 {
 	const ProtocolVersion* protocolVersion = ProtocolVersion::byIdx(packet->getProtocolVersion());
 	if (protocolVersion)
@@ -17,5 +17,5 @@ bool acp::HandshakeHandler::handle(packet::handshake::Handshake* packet)
 
 	connection->setState(nextState);
 
-	return false;
+	return HandleResult::FORWARD;
 }

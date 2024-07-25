@@ -12,10 +12,10 @@ namespace acp
 	public:
 		using INetworkHandler::INetworkHandler;
 
-		bool handle(packet::status::c2s::StatusRequest* packet);
-		bool handle(packet::status::c2s::PingRequest* packet);
+		HandleResult handle(packet::status::c2s::StatusRequest* packet);
+		HandleResult handle(packet::status::c2s::PingRequest* packet);
 
-		bool handle(packet::status::s2c::StatusResponse* packet);
-		bool handle(packet::status::s2c::PingResponse* packet);
+		HandleResult handle(packet::status::s2c::StatusResponse* packet);
+		HandleResult handle(packet::status::s2c::PingResponse* packet);
 	};
 }

@@ -19,17 +19,17 @@ namespace acp
 	public:
 		using INetworkHandler::INetworkHandler;
 
-		bool handle(packet::login::c2s::CookieResponse* packet);
-		bool handle(packet::login::c2s::EncryptionResponse* packet);
-		bool handle(packet::login::c2s::LoginAcknowledged* packet);
-		bool handle(packet::login::c2s::LoginPluginResponse* packet);
-		bool handle(packet::login::c2s::LoginStart* packet);
+		HandleResult handle(packet::login::c2s::CookieResponse* packet);
+		HandleResult handle(packet::login::c2s::EncryptionResponse* packet);
+		HandleResult handle(packet::login::c2s::LoginAcknowledged* packet);
+		HandleResult handle(packet::login::c2s::LoginPluginResponse* packet);
+		HandleResult handle(packet::login::c2s::LoginStart* packet);
 
-		bool handle(packet::login::s2c::CookieRequest* packet);
-		bool handle(packet::login::s2c::Disconnect* packet);
-		bool handle(packet::login::s2c::EncryptionRequest* packet);
-		bool handle(packet::login::s2c::LoginPluginRequest* packet);
-		bool handle(packet::login::s2c::LoginSuccess* packet);
-		bool handle(packet::login::s2c::SetCompression* packet);
+		HandleResult handle(packet::login::s2c::CookieRequest* packet);
+		HandleResult handle(packet::login::s2c::Disconnect* packet);
+		HandleResult handle(packet::login::s2c::EncryptionRequest* packet);
+		HandleResult handle(packet::login::s2c::LoginPluginRequest* packet);
+		HandleResult handle(packet::login::s2c::LoginSuccess* packet);
+		HandleResult handle(packet::login::s2c::SetCompression* packet);
 	};
 }

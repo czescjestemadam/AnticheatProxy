@@ -29,12 +29,12 @@ void acp::packet::configuration::c2s::ClientInformation::write(const ProtocolVer
 	buf.writeByte(allowServerListing);
 }
 
-bool acp::packet::configuration::c2s::ClientInformation::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::configuration::c2s::ClientInformation::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* configHandler = dynamic_cast<ConfigurationHandler*>(handler.get()))
 		return configHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::configuration::c2s::ClientInformation::getId(const ProtocolVersion* version) const

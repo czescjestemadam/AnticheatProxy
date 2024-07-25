@@ -33,12 +33,12 @@ void acp::packet::play::s2c::UpdateSectionBlocks::write(const ProtocolVersion* v
 		buf.writeVarlong(id << 12 | (pos.x << 8 | pos.z << 4 | pos.y));
 }
 
-bool acp::packet::play::s2c::UpdateSectionBlocks::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::s2c::UpdateSectionBlocks::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::s2c::UpdateSectionBlocks::getId(const ProtocolVersion* version) const

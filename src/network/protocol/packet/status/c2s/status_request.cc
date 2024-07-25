@@ -10,12 +10,12 @@ void acp::packet::status::c2s::StatusRequest::write(const ProtocolVersion* versi
 {
 }
 
-bool acp::packet::status::c2s::StatusRequest::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::status::c2s::StatusRequest::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* statusHandler = dynamic_cast<StatusHandler*>(handler.get()))
 		return statusHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::status::c2s::StatusRequest::getId(const ProtocolVersion* version) const

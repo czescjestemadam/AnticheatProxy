@@ -13,12 +13,12 @@ void acp::packet::play::s2c::SetHeldItem::write(const ProtocolVersion* version)
 	buf.writeByte(slot);
 }
 
-bool acp::packet::play::s2c::SetHeldItem::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::s2c::SetHeldItem::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::s2c::SetHeldItem::getId(const ProtocolVersion* version) const

@@ -53,12 +53,12 @@ void acp::packet::play::c2s::SignedChatCommand::write(const ProtocolVersion* ver
 	}
 }
 
-bool acp::packet::play::c2s::SignedChatCommand::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::play::c2s::SignedChatCommand::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
 		return playHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::play::c2s::SignedChatCommand::getId(const ProtocolVersion* version) const

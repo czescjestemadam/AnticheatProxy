@@ -1,912 +1,912 @@
 #include "play_handler.hh"
 
-bool acp::PlayHandler::handle(packet::play::c2s::ConfirmTeleportation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ConfirmTeleportation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::QueryBlockEntityTag* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::QueryBlockEntityTag* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ChangeDifficulty* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChangeDifficulty* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::AcknowledgeMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::AcknowledgeMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ChatCommand* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChatCommand* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SignedChatCommand* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SignedChatCommand* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ChatMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChatMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PlayerSession* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerSession* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ChunkBatchReceived* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChunkBatchReceived* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ClientStatus* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ClientStatus* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ClientInformation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ClientInformation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::CommandSuggestionsRequest* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CommandSuggestionsRequest* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::AcknowledgeConfiguration* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::AcknowledgeConfiguration* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ClickContainerButton* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ClickContainerButton* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ClickContainer* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ClickContainer* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::CloseContainer* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CloseContainer* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ChangeContainerSlotState* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChangeContainerSlotState* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::CookieResponse* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CookieResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PluginMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PluginMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::DebugSampleSubscription* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::DebugSampleSubscription* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::EditBook* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::EditBook* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::QueryEntityTag* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::QueryEntityTag* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::Interact* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::Interact* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::JigsawGenerate* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::JigsawGenerate* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::KeepAlive* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::KeepAlive* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::LockDifficulty* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::LockDifficulty* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetPlayerPosition* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerPosition* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetPlayerPositionRotation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerPositionRotation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetPlayerRotation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerRotation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetPlayerOnGround* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerOnGround* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::MoveVehicle* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::MoveVehicle* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PaddleBoat* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PaddleBoat* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PickItem* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PickItem* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PingRequest* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PingRequest* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PlaceRecipe* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlaceRecipe* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PlayerAbilities* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerAbilities* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PlayerAction* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerAction* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PlayerCommand* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerCommand* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::PlayerInput* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerInput* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::Pong* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::Pong* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ChangeRecipeBookSettings* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChangeRecipeBookSettings* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetSeenRecipe* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetSeenRecipe* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::RenameItem* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::RenameItem* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ResourcePackResponse* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ResourcePackResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SeenAdvancements* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SeenAdvancements* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SelectTrade* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SelectTrade* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetBeaconEffect* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetBeaconEffect* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetHeldItem* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetHeldItem* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ProgramCommandBlock* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ProgramCommandBlock* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ProgramCommandBlockMinecart* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ProgramCommandBlockMinecart* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SetCreativeModeSlot* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetCreativeModeSlot* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ProgramJigsawBlock* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ProgramJigsawBlock* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::ProgramStructureBlock* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ProgramStructureBlock* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::UpdateSign* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::UpdateSign* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::SwingArm* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SwingArm* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::TeleportToEntity* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::TeleportToEntity* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::UseItemOn* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::UseItemOn* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::c2s::UseItem* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::UseItem* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
 
-bool acp::PlayHandler::handle(packet::play::s2c::BundleDelimiter* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BundleDelimiter* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SpawnEntity* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SpawnEntity* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SpawnExperienceOrb* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SpawnExperienceOrb* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::EntityAnimation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::EntityAnimation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::AwardStatistics* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::AwardStatistics* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::AcknowledgeBlockChange* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::AcknowledgeBlockChange* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetBlockDestroyStage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetBlockDestroyStage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::BlockEntityData* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BlockEntityData* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::BlockAction* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BlockAction* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::BlockUpdate* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BlockUpdate* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::BossBar* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BossBar* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ChangeDifficulty* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChangeDifficulty* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ChunkBatchFinished* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChunkBatchFinished* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ChunkBatchStart* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChunkBatchStart* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ChunkBiomes* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChunkBiomes* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ClearTitles* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ClearTitles* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::CommandSuggestionsResponse* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CommandSuggestionsResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Commands* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Commands* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::CloseContainer* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CloseContainer* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetContainerContent* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetContainerContent* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetContainerProperty* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetContainerProperty* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetContainerSlot* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetContainerSlot* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::CookieRequest* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CookieRequest* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetCooldown* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetCooldown* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ChatSuggestions* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChatSuggestions* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PluginMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PluginMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::DamageEvent* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::DamageEvent* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::DebugSample* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::DebugSample* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::DeleteMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::DeleteMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Disconnect* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Disconnect* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::DisguisedChatMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::DisguisedChatMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::EntityEvent* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::EntityEvent* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Explosion* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Explosion* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UnloadChunk* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UnloadChunk* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::GameEvent* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::GameEvent* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::OpenHorseScreen* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::OpenHorseScreen* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::HurtAnimation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::HurtAnimation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::InitializeWorldBorder* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::InitializeWorldBorder* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::KeepAlive* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::KeepAlive* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ChunkDataAndUpdateLight* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChunkDataAndUpdateLight* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::WorldEvent* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::WorldEvent* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Particle* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Particle* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateLight* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateLight* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Login* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Login* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::MapData* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::MapData* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::MerchantOffers* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::MerchantOffers* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPosition* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPosition* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositionRotation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositionRotation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateEntityRotation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityRotation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::MoveVehicle* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::MoveVehicle* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::OpenBook* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::OpenBook* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::OpenScreen* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::OpenScreen* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::OpenSignEditor* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::OpenSignEditor* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Ping* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Ping* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PingResponse* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PingResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PlaceGhostRecipe* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PlaceGhostRecipe* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PlayerAbilities* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PlayerAbilities* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PlayerChatMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PlayerChatMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::EndCombat* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::EndCombat* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::EnterCombat* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::EnterCombat* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::CombatDeath* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CombatDeath* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PlayerInfoRemove* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PlayerInfoRemove* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PlayerInfoUpdate* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PlayerInfoUpdate* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::LookAt* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::LookAt* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SynchronizePlayerPosition* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SynchronizePlayerPosition* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateRecipeBook* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateRecipeBook* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::RemoveEntities* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::RemoveEntities* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::RemoveEntityEffect* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::RemoveEntityEffect* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ResetScore* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ResetScore* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::RemoveResourcePack* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::RemoveResourcePack* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::AddResourcePack* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::AddResourcePack* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Respawn* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Respawn* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetHeadRotation* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetHeadRotation* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateSectionBlocks* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateSectionBlocks* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SelectAdvancementsTab* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SelectAdvancementsTab* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ServerData* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ServerData* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetActionBarText* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetActionBarText* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetBorderCenter* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetBorderCenter* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetBorderLerpSize* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetBorderLerpSize* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetBorderSize* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetBorderSize* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetBorderWarningDelay* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetBorderWarningDelay* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetBorderWarningDistance* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetBorderWarningDistance* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetCamera* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetCamera* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetHeldItem* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetHeldItem* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetCenterChunk* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetCenterChunk* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetRenderDistance* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetRenderDistance* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetDefaultSpawnPosition* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetDefaultSpawnPosition* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::DisplayObjective* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::DisplayObjective* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetEntityMetadata* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetEntityMetadata* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::LinkEntities* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::LinkEntities* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetEntityVelocity* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetEntityVelocity* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetEquipment* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetEquipment* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetExperience* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetExperience* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetHealth* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetHealth* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateObjectives* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateObjectives* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetPassengers* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetPassengers* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateTeams* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateTeams* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateScore* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateScore* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetSimulationDistance* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetSimulationDistance* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetSubtitleText* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetSubtitleText* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateTime* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateTime* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetTitleText* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetTitleText* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetTitleAnimationTimes* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetTitleAnimationTimes* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::EntitySoundEffect* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::EntitySoundEffect* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SoundEffect* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SoundEffect* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::StartConfiguration* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::StartConfiguration* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::StopSound* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::StopSound* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::StoreCookie* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::StoreCookie* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SystemChatMessage* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SystemChatMessage* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetTabListHeaderAndFooter* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetTabListHeaderAndFooter* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::TagQueryResponse* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::TagQueryResponse* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::PickupItem* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PickupItem* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::TeleportEntity* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::TeleportEntity* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::SetTickingState* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetTickingState* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::StepTick* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::StepTick* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::Transfer* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Transfer* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateAdvancements* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateAdvancements* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateAttributes* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateAttributes* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::EntityEffect* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::EntityEffect* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateRecipes* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateRecipes* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::UpdateTags* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateTags* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ProjectilePower* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ProjectilePower* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::CustomReportDetails* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CustomReportDetails* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }
 
-bool acp::PlayHandler::handle(packet::play::s2c::ServerLinks* packet)
+acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ServerLinks* packet)
 {
-	return false;
+	return HandleResult::FORWARD;
 }

@@ -9,6 +9,6 @@ namespace acp
 	public:
 		using INetworkHandler::INetworkHandler;
 
-		bool handle(packet::handshake::Handshake* packet);
+		HandleResult handle(packet::handshake::Handshake* packet);
 	};
 }

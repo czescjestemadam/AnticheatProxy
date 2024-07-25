@@ -14,12 +14,12 @@ void acp::packet::status::c2s::PingRequest::write(const ProtocolVersion* version
 	buf.writeLong(timestamp);
 }
 
-bool acp::packet::status::c2s::PingRequest::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::status::c2s::PingRequest::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* statusHandler = dynamic_cast<StatusHandler*>(handler.get()))
 		return statusHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::status::c2s::PingRequest::getId(const ProtocolVersion* version) const

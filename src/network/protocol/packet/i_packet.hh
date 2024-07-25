@@ -1,6 +1,7 @@
 #pragma once
 #include "util/io/byte_buf.hh"
 #include "network/handler/i_network_handler.hh"
+#include "network/handler/handle_result.hh"
 
 #include <memory>
 
@@ -23,7 +24,7 @@ namespace acp::packet
 		virtual void read(const ProtocolVersion* version) = 0;
 		virtual void write(const ProtocolVersion* version) = 0;
 
-		virtual bool apply(std::unique_ptr<INetworkHandler>& handler) = 0;
+		virtual HandleResult apply(std::unique_ptr<INetworkHandler>& handler) = 0;
 
 		ByteBuf& getBuf();
 

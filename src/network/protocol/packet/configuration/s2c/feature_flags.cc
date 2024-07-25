@@ -17,12 +17,12 @@ void acp::packet::configuration::s2c::FeatureFlags::write(const ProtocolVersion*
 		buf.writeIdentifier(flag);
 }
 
-bool acp::packet::configuration::s2c::FeatureFlags::apply(std::unique_ptr<INetworkHandler>& handler)
+acp::HandleResult acp::packet::configuration::s2c::FeatureFlags::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* configHandler = dynamic_cast<ConfigurationHandler*>(handler.get()))
 		return configHandler->handle(this);
 
-	return false;
+	return HandleResult::FORWARD;
 }
 
 int acp::packet::configuration::s2c::FeatureFlags::getId(const ProtocolVersion* version) const
