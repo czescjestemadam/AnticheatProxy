@@ -50,12 +50,6 @@ void acp::Connection::handleEvent(int fd)
 	if (packet)
 	{
 		packet->read(protocolVersion);
-		logger.debug("[{}] {} -> {}: {}",
-					 EnumNames<NetworkState>::get(state),
-					 EnumNames<NetworkSide>::get(fromSide),
-					 EnumNames<NetworkSide>::get(toSide),
-					 packet->toString()
-		);
 		const HandleResult result = packet->apply(networkHandler);
 		if (result == HandleResult::FORWARD)
 		{
@@ -67,6 +61,14 @@ void acp::Connection::handleEvent(int fd)
 			packet->write(protocolVersion);
 			sendPacket(toSide, std::move(packet));
 		}
+
+		logger.debug("[{}] {} -> {}: {} {}",
+					 EnumNames<NetworkState>::get(state),
+					 EnumNames<NetworkSide>::get(fromSide),
+					 EnumNames<NetworkSide>::get(toSide),
+					 EnumNames<HandleResult>::get(result),
+					 packet->toString()
+		);
 	}
 	else
 	{
