@@ -2,8 +2,10 @@
 
 #include "util/logger/logger.hh"
 
+#include <map>
+
 static acp::Logger logger{ "ProtocolVersion" };
-static std::unordered_map<int, acp::ProtocolVersion*> versionByIdx;
+static std::map<int, acp::ProtocolVersion*> versionByIdx;
 
 acp::ProtocolVersion::ProtocolVersion(int idx, std::string&& name) : idx(idx), name(std::move(name))
 {
