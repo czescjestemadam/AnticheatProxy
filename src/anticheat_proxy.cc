@@ -26,6 +26,16 @@ void acp::AnticheatProxy::stop()
 	networkManager.stop();
 }
 
+acp::ConfigManager& acp::AnticheatProxy::getConfigManager()
+{
+	return configManager;
+}
+
+acp::NetworkManager& acp::AnticheatProxy::getNetworkManager()
+{
+	return networkManager;
+}
+
 
 acp::AnticheatProxy* acp::AnticheatProxy::get()
 {

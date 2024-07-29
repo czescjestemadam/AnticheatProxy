@@ -19,6 +19,8 @@ namespace acp
 		void start();
 		void stop();
 
+		ConfigManager& getConfigManager();
+		NetworkManager& getNetworkManager();
 
 		static AnticheatProxy* get();
 	};
