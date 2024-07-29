@@ -49,8 +49,41 @@ void acp::Connection::handleEvent(int fd)
 
 	if (packet)
 	{
-		packet->read(protocolVersion);
-		const HandleResult result = packet->apply(networkHandler);
+		try
+		{
+			packet->read(protocolVersion);
+		}
+		catch (const std::exception& ex)
+		{
+			logger.error("[{}] {} -> {}: error reading {}: {}",
+						 EnumNames<NetworkState>::get(state),
+						 EnumNames<NetworkSide>::get(fromSide),
+						 EnumNames<NetworkSide>::get(toSide),
+						 packet->toString(),
+						 ex.what()
+			);
+			to.write(ogBuf);
+			return;
+		}
+
+		HandleResult result;
+		try
+		{
+			result = packet->apply(networkHandler);
+		}
+		catch (const std::exception& ex)
+		{
+			logger.error("[{}] {} -> {}: error handling {}: {}",
+						 EnumNames<NetworkState>::get(state),
+						 EnumNames<NetworkSide>::get(fromSide),
+						 EnumNames<NetworkSide>::get(toSide),
+						 packet->toString(),
+						 ex.what()
+			);
+			to.write(ogBuf);
+			return;
+		}
+
 		if (result == HandleResult::FORWARD)
 		{
 			to.write(ogBuf);
