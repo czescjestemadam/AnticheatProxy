@@ -318,6 +318,22 @@ void acp::ByteBuf::writePosition(const Vec3i& v, int maskXZ, int maskY, int shif
 	writeBytesR(bytes, sizeof(long));
 }
 
+acp::Vec3s acp::ByteBuf::readVec3s()
+{
+	Vec3s v;
+	v.x = readShort();
+	v.y = readShort();
+	v.z = readShort();
+	return v;
+}
+
+void acp::ByteBuf::writeVec3s(const Vec3s& v)
+{
+	writeShort(v.x);
+	writeShort(v.y);
+	writeShort(v.z);
+}
+
 acp::Vec3f acp::ByteBuf::readVec3f()
 {
 	Vec3f v;

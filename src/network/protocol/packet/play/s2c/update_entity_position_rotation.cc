@@ -6,11 +6,7 @@
 void acp::packet::play::s2c::UpdateEntityPositionRotation::read(const ProtocolVersion* version)
 {
 	entityId = buf.readVarint();
-	delta = {
-		buf.readShort(),
-		buf.readShort(),
-		buf.readShort()
-	};
+	delta = buf.readVec3s();
 	yaw = buf.readAngle();
 	pitch = buf.readAngle();
 	onGround = buf.readByte();
@@ -19,9 +15,7 @@ void acp::packet::play::s2c::UpdateEntityPositionRotation::read(const ProtocolVe
 void acp::packet::play::s2c::UpdateEntityPositionRotation::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(entityId);
-	buf.writeShort(delta.x);
-	buf.writeShort(delta.y);
-	buf.writeShort(delta.z);
+	buf.writeVec3s(delta);
 	buf.writeAngle(yaw);
 	buf.writeAngle(pitch);
 	buf.writeByte(onGround);

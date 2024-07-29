@@ -6,20 +6,14 @@
 void acp::packet::play::s2c::UpdateEntityPosition::read(const ProtocolVersion* version)
 {
 	entityId = buf.readVarint();
-	delta = {
-		buf.readShort(),
-		buf.readShort(),
-		buf.readShort()
-	};
+	delta = buf.readVec3s();
 	onGround = buf.readByte();
 }
 
 void acp::packet::play::s2c::UpdateEntityPosition::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(entityId);
-	buf.writeShort(delta.x);
-	buf.writeShort(delta.y);
-	buf.writeShort(delta.z);
+	buf.writeVec3s(delta);
 	buf.writeByte(onGround);
 }
 

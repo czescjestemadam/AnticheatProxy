@@ -84,6 +84,9 @@ namespace acp
 		Vec3i readPosition(int shiftX = 38, int shiftY = 52, int shiftZ = 26);
 		void writePosition(const Vec3i& v, int maskXZ = 0x3ffffff, int maskY = 0xfff, int shiftX = 38, int shiftZ = 12);
 
+		Vec3s readVec3s();
+		void writeVec3s(const Vec3s& v);
+
 		Vec3f readVec3f();
 		void writeVec3f(const Vec3f& v);
 
