@@ -13,7 +13,7 @@ void acp::packet::play::s2c::CommandSuggestionsResponse::read(const ProtocolVers
 	for (int i = 0; i < len; i++)
 	{
 		const std::string match = buf.readStr();
-		std::unique_ptr<nbt::Tag> tooltip = buf.readByte() ? buf.readNbt() : nullptr;
+		std::unique_ptr<nbt::Tag> tooltip = buf.readByte() ? buf.readNbt(*version < ProtocolVersion::v1_20_2) : nullptr;
 
 		matches.emplace_back(match, std::move(tooltip));
 	}
@@ -31,7 +31,7 @@ void acp::packet::play::s2c::CommandSuggestionsResponse::write(const ProtocolVer
 		buf.writeStr(match);
 		buf.writeByte(tooltip != nullptr);
 		if (tooltip != nullptr)
-			buf.writeNbt(tooltip);
+			buf.writeNbt(tooltip, *version < ProtocolVersion::v1_20_2);
 	}
 }
 
