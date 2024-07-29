@@ -37,5 +37,6 @@ namespace acp
 
 		static UUID random();
 		static UUID parse(const std::string& str);
+		static UUID fromString(const std::string& str);
 	};
 }
