@@ -29,11 +29,9 @@ void acp::packet::play::s2c::CommandSuggestionsResponse::write(const ProtocolVer
 	for (auto& [match, tooltip] : matches)
 	{
 		buf.writeStr(match);
+		buf.writeByte(tooltip != nullptr);
 		if (tooltip != nullptr)
-		{
-			buf.writeByte(true);
 			buf.writeNbt(tooltip);
-		}
 	}
 }
 
