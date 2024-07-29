@@ -94,7 +94,7 @@ void acp::NetworkManager::acceptLoop()
 		{
 			PlayerSocket clientSocket = serverSocket.accept();
 
-			logger.info("{}: accepted {}", serverSocket.getAddrStr(), clientSocket.getAddrStr());
+			logger.info("Accepted connection from {}", clientSocket.getAddrStr());
 
 			PlayerSocket destSocket = PlayerSocket::create(destAddress, destPort);
 			destSocket.connect();
@@ -106,7 +106,7 @@ void acp::NetworkManager::acceptLoop()
 		}
 		catch (const SocketException& ex)
 		{
-			logger.error("error accepting connection on {}", serverSocket.getAddrStr());
+			logger.error("Error accepting connection on {}", serverSocket.getAddrStr());
 			logger.error("{}: {}", ex.getSocket()->getAddrStr(), ex.what());
 		}
 	}
@@ -131,7 +131,7 @@ void acp::NetworkManager::epollLoop()
 				}
 				catch (const SocketCloseException& ex)
 				{
-					logger.info("connection {} closed", connection->toString());
+					logger.info("Connection {} closed", connection->toString());
 					removeConnection(connection);
 				}
 				catch (const SocketException& ex)
