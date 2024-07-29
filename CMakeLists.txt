@@ -541,6 +541,7 @@ add_executable(AnticheatProxy
 	src/config/i_config.hh
 	src/config/network_config.cc
 	src/config/network_config.hh
+	src/config/config_macros.hh
 )
 
 find_package(OpenSSL REQUIRED)
