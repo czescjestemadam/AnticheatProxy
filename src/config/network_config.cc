@@ -1,27 +1,29 @@
 #include "network_config.hh"
 
+#include "config_macros.hh"
+
 acp::NetworkConfig::NetworkConfig() : IConfig("NetworkConfig")
 {
 }
 
 void acp::NetworkConfig::loadJson(const nlohmann::json& json)
 {
-	listenIp = json["listen-ip"];
-	listenPort = json["listen-port"];
+	JSON_READ("listen-ip", listenIp);
+	JSON_READ("listen-port", listenPort);
 
-	destinationIp = json["destination-ip"];
-	destinationPort = json["destination-port"];
-	outCompressionThreshold = json["out-compression-threshold"];
+	JSON_READ("destination-ip", destinationIp);
+	JSON_READ("destination-port", destinationPort);
+	JSON_READ("destination-out-compression-threshold", destinationOutCompressionThreshold);
 }
 
 void acp::NetworkConfig::saveJson(nlohmann::json& json)
 {
-	json["listen-ip"] = listenIp;
-	json["listen-port"] = listenPort;
+	JSON_WRITE("listen-ip", listenIp);
+	JSON_WRITE("listen-port", listenPort);
 
-	json["destination-ip"] = destinationIp;
-	json["destination-port"] = destinationPort;
-	json["out-compression-threshold"] = outCompressionThreshold;
+	JSON_WRITE("destination-ip", destinationIp);
+	JSON_WRITE("destination-port", destinationPort);
+	JSON_WRITE("destination-out-compression-threshold", destinationOutCompressionThreshold);
 }
 
 std::filesystem::path acp::NetworkConfig::getFile()

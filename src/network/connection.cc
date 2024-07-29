@@ -138,7 +138,9 @@ void acp::Connection::sendPacket(NetworkSide to, ByteBuf&& data)
 		ByteBuf buf;
 
 		const int dataLen = static_cast<int>(data.size());
-		const int outCompressionThreshold = AnticheatProxy::get()->getConfigManager().getNetwork().outCompressionThreshold;
+		const int outCompressionThreshold = to == NetworkSide::DEST
+												? AnticheatProxy::get()->getConfigManager().getNetwork().destinationOutCompressionThreshold
+												: compressionThreshold.value();
 		const bool compress = outCompressionThreshold < 0 ? false : dataLen >= outCompressionThreshold;
 
 		buf.writeVarint(compress ? dataLen : 0);

@@ -11,7 +11,7 @@ namespace acp
 
 		std::string destinationIp = "127.0.0.1";
 		ushort destinationPort = 30077;
-		int outCompressionThreshold = -1;
+		int destinationOutCompressionThreshold = -1;
 
 
 		NetworkConfig();
