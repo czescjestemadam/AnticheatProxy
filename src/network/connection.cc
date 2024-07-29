@@ -1,5 +1,6 @@
 #include "connection.hh"
 
+#include "anticheat_proxy.hh"
 #include "handler/configuration_handler.hh"
 #include "handler/login_handler.hh"
 #include "handler/play_handler.hh"
@@ -132,13 +133,13 @@ void acp::Connection::sendPacket(NetworkSide to, int packetId, const ByteBuf& pa
 
 void acp::Connection::sendPacket(NetworkSide to, ByteBuf&& data)
 {
-	// TODO output compression threshold in config
 	if (compressionThreshold.has_value())
 	{
 		ByteBuf buf;
 
 		const int dataLen = static_cast<int>(data.size());
-		const bool compress = dataLen >= compressionThreshold.value();
+		const int outCompressionThreshold = AnticheatProxy::get()->getConfigManager().getNetwork().outCompressionThreshold;
+		const bool compress = outCompressionThreshold < 0 ? false : dataLen >= outCompressionThreshold;
 
 		buf.writeVarint(compress ? dataLen : 0);
 		buf.writeBuf(compress ? data.compress() : data);
