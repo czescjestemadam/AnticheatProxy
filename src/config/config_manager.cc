@@ -1,8 +1,11 @@
 #include "config_manager.hh"
 
-acp::ConfigManager::ConfigManager()
+acp::ConfigManager::ConfigManager(const RunArgs& args)
 {
-	load();
+	if (args.hasFlag("default-configs"))
+		logger.info("Loading configs skipped (--default-configs)");
+	else
+		load();
 }
 
 void acp::ConfigManager::load()

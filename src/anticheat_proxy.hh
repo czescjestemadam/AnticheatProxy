@@ -19,6 +19,7 @@ namespace acp
 		void start();
 		void stop();
 
+		const RunArgs& getArgs() const;
 		ConfigManager& getConfigManager();
 		NetworkManager& getNetworkManager();
 

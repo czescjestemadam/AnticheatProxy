@@ -16,8 +16,9 @@ int main(int argc, char* argv[])
 	if (args.hasFlag("help"))
 	{
 		std::cout << "AnticheatProxy " << acp::globals::VERSION << " compiled at " << acp::globals::COMPILE_TIME << std::endl
-				<< "\t--help      shows help" << std::endl
-				<< "\t--version   shows proxy version" << std::endl;
+				<< "\t--help              shows help" << std::endl
+				<< "\t--version           shows proxy version" << std::endl
+				<< "\t--default-configs   skips loading (and saving default) configs" << std::endl;
 		return 0;
 	}
 

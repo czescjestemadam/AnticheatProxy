@@ -6,6 +6,7 @@ static acp::AnticheatProxy* INST;
 
 acp::AnticheatProxy::AnticheatProxy(RunArgs&& args)
 	: args(std::move(args)),
+	  configManager(this->args),
 	  networkManager(configManager.getNetwork().listenIp, configManager.getNetwork().listenPort,
 					 configManager.getNetwork().destinationIp, configManager.getNetwork().destinationPort)
 {
@@ -24,6 +25,11 @@ void acp::AnticheatProxy::stop()
 {
 	logger.info("Stopping AnticheatProxy");
 	networkManager.stop();
+}
+
+const acp::RunArgs& acp::AnticheatProxy::getArgs() const
+{
+	return args;
 }
 
 acp::ConfigManager& acp::AnticheatProxy::getConfigManager()

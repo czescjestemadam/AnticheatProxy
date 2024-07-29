@@ -1,6 +1,7 @@
 #pragma once
 #include "util/logger/logger.hh"
 #include "network_config.hh"
+#include "run_args.hh"
 
 namespace acp
 {
@@ -11,7 +12,7 @@ namespace acp
 		NetworkConfig network;
 
 	public:
-		ConfigManager();
+		explicit ConfigManager(const RunArgs& args);
 
 		void load();
 		void save();
