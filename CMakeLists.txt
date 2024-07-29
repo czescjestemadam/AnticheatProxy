@@ -537,6 +537,10 @@ add_executable(AnticheatProxy
 	src/util/nbt/tag/tag_number_array.cc
 	src/util/nbt/tag/tag_number_array.hh
 	src/network/handler/handle_result.hh
+	src/config/i_config.cc
+	src/config/i_config.hh
+	src/config/network_config.cc
+	src/config/network_config.hh
 )
 
 find_package(OpenSSL REQUIRED)
