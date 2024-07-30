@@ -542,6 +542,23 @@ add_executable(AnticheatProxy
 	src/config/network_config.cc
 	src/config/network_config.hh
 	src/config/config_macros.hh
+	src/util/text/type.cc
+	src/util/text/type.hh
+	src/util/text/style/style.cc
+	src/util/text/style/style.hh
+	src/util/text/style/click_event.cc
+	src/util/text/style/click_event.hh
+	src/util/text/style/hover_event.cc
+	src/util/text/style/hover_event.hh
+	src/util/text/component.cc
+	src/util/text/component.hh
+	src/util/text/text_component.cc
+	src/util/text/text_component.hh
+	src/util/text/translatable_component.cc
+	src/util/text/translatable_component.hh
+	src/util/text/keybind_component.cc
+	src/util/text/keybind_component.hh
+	src/util/io/i_serializable.hh
 )
 
 find_package(OpenSSL REQUIRED)
