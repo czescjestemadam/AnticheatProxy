@@ -15,6 +15,16 @@ acp::UUID::UUID(unsigned long high, unsigned long low) : high(high), low(low)
 {
 }
 
+byte_t* acp::UUID::getBytes()
+{
+	return bytes;
+}
+
+const byte_t* acp::UUID::getBytes() const
+{
+	return bytes;
+}
+
 unsigned long acp::UUID::getHigh() const
 {
 	return high;

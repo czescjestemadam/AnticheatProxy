@@ -22,6 +22,8 @@ namespace acp
 		UUID();
 		UUID(unsigned long high, unsigned long low);
 
+		byte_t* getBytes();
+		const byte_t* getBytes() const;
 		unsigned long getHigh() const;
 		unsigned long getLow() const;
 

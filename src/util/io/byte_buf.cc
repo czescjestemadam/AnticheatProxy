@@ -279,15 +279,14 @@ void acp::ByteBuf::writeStr(const std::string& v)
 
 acp::UUID acp::ByteBuf::readUuid()
 {
-	unsigned long high = readLongU();
-	unsigned long low = readLongU();
-	return { high, low };
+	UUID id;
+	readBytes(id.getBytes(), 16);
+	return id;
 }
 
 void acp::ByteBuf::writeUuid(const UUID& uuid)
 {
-	writeLongU(uuid.getHigh());
-	writeLongU(uuid.getLow());
+	writeBytes(uuid.getBytes(), 16);
 }
 
 acp::Identifier acp::ByteBuf::readIdentifier()
