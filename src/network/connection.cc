@@ -32,7 +32,7 @@ void acp::Connection::handleEvent(int fd)
 	PlayerSocket& from = getSide(fromSide);
 	PlayerSocket& to = getSide(toSide);
 
-	ByteBuf ogBuf = from.read();
+	const ByteBuf ogBuf = from.read();
 
 	ByteBuf buf = ogBuf;
 
@@ -48,74 +48,65 @@ void acp::Connection::handleEvent(int fd)
 												  ? std::make_unique<packet::handshake::Handshake>(buf)
 												  : protocolVersion->getMapping().create(state, fromSide, id, buf);
 
-	if (packet)
+	if (!packet)
 	{
-		try
-		{
-			packet->read(protocolVersion);
-		}
-		catch (const std::exception& ex)
-		{
-			logger.error("[{}] {} -> {}: error reading {}: {}",
-						 EnumNames<NetworkState>::get(state),
-						 EnumNames<NetworkSide>::get(fromSide),
-						 EnumNames<NetworkSide>::get(toSide),
-						 packet->toString(),
-						 ex.what()
-			);
-			to.write(ogBuf);
-			return;
-		}
+		sendPacket(toSide, id, buf);
+		return;
+	}
 
-		HandleResult result;
-		try
-		{
-			result = packet->apply(networkHandler);
-		}
-		catch (const std::exception& ex)
-		{
-			logger.error("[{}] {} -> {}: error handling {}: {}",
-						 EnumNames<NetworkState>::get(state),
-						 EnumNames<NetworkSide>::get(fromSide),
-						 EnumNames<NetworkSide>::get(toSide),
-						 packet->toString(),
-						 ex.what()
-			);
-			to.write(ogBuf);
-			return;
-		}
-
-		if (result == HandleResult::FORWARD)
-		{
-			// sendPacket(toSide, std::move(packet)); // strict read/write
-			to.write(ogBuf);
-		}
-		else if (result == HandleResult::REWRITE)
-		{
-			packet->getBuf().clear();
-			sendPacket(toSide, std::move(packet));
-		}
-
-		logger.debug("[{}] {} -> {}: {} {}",
+	try
+	{
+		packet->read(protocolVersion);
+	}
+	catch (const std::exception& ex)
+	{
+		logger.error("[{}] {} -> {}: error reading {}: {}",
 					 EnumNames<NetworkState>::get(state),
 					 EnumNames<NetworkSide>::get(fromSide),
 					 EnumNames<NetworkSide>::get(toSide),
-					 EnumNames<HandleResult>::get(result),
-					 packet->toString()
+					 packet->toString(),
+					 ex.what()
 		);
+		to.write(ogBuf);
+		return;
 	}
-	else
-	{
-		// logger.debug("[{}] {} -> {}: packetId=0x{:02X}",
-		// 			 EnumNames<NetworkState>::get(state),
-		// 			 EnumNames<NetworkSide>::get(fromSide),
-		// 			 EnumNames<NetworkSide>::get(toSide),
-		// 			 id
-		// );
 
-		sendPacket(toSide, id, buf);
-		// to.write(ogBuf);
+	HandleResult result;
+	try
+	{
+		result = packet->apply(networkHandler);
 	}
+	catch (const std::exception& ex)
+	{
+		logger.error("[{}] {} -> {}: error handling {}: {}",
+					 EnumNames<NetworkState>::get(state),
+					 EnumNames<NetworkSide>::get(fromSide),
+					 EnumNames<NetworkSide>::get(toSide),
+					 packet->toString(),
+					 ex.what()
+		);
+		to.write(ogBuf);
+		return;
+	}
+
+	if (result == HandleResult::FORWARD)
+	{
+		// sendPacket(toSide, std::move(packet)); // strict read/write
+		to.write(ogBuf);
+	}
+	else if (result == HandleResult::REWRITE)
+	{
+		packet->getBuf().clear();
+		sendPacket(toSide, std::move(packet));
+	}
+
+	logger.debug("[{}] {} -> {}: {} {}",
+				 EnumNames<NetworkState>::get(state),
+				 EnumNames<NetworkSide>::get(fromSide),
+				 EnumNames<NetworkSide>::get(toSide),
+				 EnumNames<HandleResult>::get(result),
+				 packet->toString()
+	);
 }
 
 void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write)
