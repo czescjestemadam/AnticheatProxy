@@ -87,12 +87,12 @@ void acp::Connection::handleEvent(int fd)
 
 		if (result == HandleResult::FORWARD)
 		{
+			// sendPacket(toSide, std::move(packet)); // strict read/write
 			to.write(ogBuf);
 		}
 		else if (result == HandleResult::REWRITE)
 		{
 			packet->getBuf().clear();
-			packet->write(protocolVersion);
 			sendPacket(toSide, std::move(packet));
 		}
 
@@ -113,7 +113,8 @@ void acp::Connection::handleEvent(int fd)
 		// 			 id
 		// );
 
-		to.write(ogBuf);
+		sendPacket(toSide, id, buf);
+		// to.write(ogBuf);
 	}
 }
 

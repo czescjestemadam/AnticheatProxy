@@ -31,7 +31,6 @@ namespace acp
 		void close();
 
 		void handleEvent(int fd);
-		// TODO packets
 
 		void sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write = true);
 		void sendPacket(NetworkSide to, int packetId, const ByteBuf& packetData);
