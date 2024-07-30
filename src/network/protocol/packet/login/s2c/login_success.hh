@@ -7,6 +7,10 @@ namespace acp::packet::login::s2c
 	{
 		UUID uuid;
 		std::string username;
+		/// 1.19 - now
+		std::vector<std::tuple<std::string, std::string, std::string>> properties;
+		/// 1.20.5 - now
+		std::optional<bool> strictErrorHandling;
 
 	public:
 		using IPacket::IPacket;
@@ -23,6 +27,12 @@ namespace acp::packet::login::s2c
 
 		std::string getUsername() const;
 		void setUsername(const std::string& username);
+
+		std::vector<std::tuple<std::string, std::string, std::string>>& getProperties();
+		void setProperties(const std::vector<std::tuple<std::string, std::string, std::string>>& properties);
+
+		const std::optional<bool>& getStrictErrorHandling() const;
+		void setStrictErrorHandling(const std::optional<bool>& strict_error_handling);
 
 		std::string toString() const override;
 	};

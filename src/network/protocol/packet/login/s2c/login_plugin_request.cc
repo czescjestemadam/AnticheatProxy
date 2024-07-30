@@ -8,7 +8,7 @@ void acp::packet::login::s2c::LoginPluginRequest::read(const ProtocolVersion* ve
 {
 	messageId = buf.readVarint();
 	channel = buf.readIdentifier();
-	data = buf;
+	data = buf.readBuf(buf.size());
 }
 
 void acp::packet::login::s2c::LoginPluginRequest::write(const ProtocolVersion* version)

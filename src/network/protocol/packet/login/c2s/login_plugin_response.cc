@@ -8,7 +8,7 @@ void acp::packet::login::c2s::LoginPluginResponse::read(const ProtocolVersion* v
 {
 	messageId = buf.readVarint();
 	success = buf.readByte();
-	data = buf;
+	data = buf.readBuf(buf.size());
 }
 
 void acp::packet::login::c2s::LoginPluginResponse::write(const ProtocolVersion* version)

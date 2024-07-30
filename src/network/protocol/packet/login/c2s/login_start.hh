@@ -7,6 +7,12 @@ namespace acp::packet::login::c2s
 	{
 		std::string username;
 
+		/// 1.19 - 1.19.1
+		std::optional<std::tuple<long, ByteBuf, ByteBuf>> signatureData;
+
+		/// 1.19 - now, optional <= 1.20
+		std::optional<UUID> uuid;
+
 	public:
 		using IPacket::IPacket;
 
@@ -19,6 +25,9 @@ namespace acp::packet::login::c2s
 
 		std::string getUsername() const;
 		void setUsername(const std::string& username);
+
+		const std::optional<UUID>& getUuid() const;
+		void setUuid(const std::optional<UUID>& uuid);
 
 		std::string toString() const override;
 	};
