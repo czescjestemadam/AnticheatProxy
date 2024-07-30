@@ -117,8 +117,11 @@ void acp::Connection::handleEvent(int fd)
 	}
 }
 
-void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet)
+void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write)
 {
+	if (write)
+		packet->write(protocolVersion);
+
 	sendPacket(to, packet->getId(protocolVersion), packet->getBuf());
 }
 

@@ -33,7 +33,7 @@ namespace acp
 		void handleEvent(int fd);
 		// TODO packets
 
-		void sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet);
+		void sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write = true);
 		void sendPacket(NetworkSide to, int packetId, const ByteBuf& packetData);
 		void sendPacket(NetworkSide to, ByteBuf&& data);
 
