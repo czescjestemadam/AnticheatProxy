@@ -21,6 +21,7 @@ void acp::nbt::TagCompound::write(ByteBuf& buf)
 	for (auto& [name, tag] : tags)
 	{
 		buf.writeByte(static_cast<byte_t>(tag->getType()));
+		tag->setName(name);
 		tag->writeName(buf);
 		tag->write(buf);
 	}
