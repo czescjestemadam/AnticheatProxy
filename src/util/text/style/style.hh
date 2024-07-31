@@ -17,5 +17,6 @@ namespace acp::text
 		std::optional<HoverEvent> hoverEvent;
 
 		std::unique_ptr<nbt::TagCompound> serialize() override;
+		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
 	};
 }

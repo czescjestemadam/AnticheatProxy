@@ -32,11 +32,13 @@ namespace acp::text
 			static const Action COPY_TO_CLIPBOARD;
 		};
 
-		const Action* action;
+		const Action* action = &Action::COPY_TO_CLIPBOARD;
 		std::string value;
 
+		ClickEvent() = default;
 		ClickEvent(const Action& action, const std::string& value);
 
 		std::unique_ptr<nbt::TagCompound> serialize() override;
+		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
 	};
 }

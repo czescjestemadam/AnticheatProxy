@@ -50,3 +50,20 @@ std::unique_ptr<acp::nbt::TagCompound> acp::text::HoverEvent::serialize()
 
 	return tag;
 }
+
+void acp::text::HoverEvent::deserialize(std::unique_ptr<nbt::TagCompound>& v)
+{
+	if (v->get().contains("action"))
+	{
+		nbt::Tag* tag = v->get()["action"].get();
+		if (const auto* actionTag = dynamic_cast<nbt::TagString*>(tag))
+			action = Action::byName(actionTag->get());
+	}
+
+	if (v->get().contains("contents"))
+	{
+		nbt::Tag* tag = v->get()["contents"].get();
+		if (const auto* contentsTag = dynamic_cast<nbt::TagString*>(tag))
+			contents = contentsTag->get();
+	}
+}

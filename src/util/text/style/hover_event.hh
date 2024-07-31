@@ -30,11 +30,13 @@ namespace acp::text
 			static const Action SHOW_ENTITY;
 		};
 
-		const Action* action;
+		const Action* action = &Action::SHOW_TEXT;
 		std::string contents;
 
+		HoverEvent() = default;
 		HoverEvent(const Action& action, const std::string& contents);
 
 		std::unique_ptr<nbt::TagCompound> serialize() override;
+		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
 	};
 }

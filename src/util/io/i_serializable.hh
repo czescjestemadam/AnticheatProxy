@@ -8,5 +8,6 @@ namespace acp
 		virtual ~ISerializable() = default;
 
 		virtual T serialize() = 0;
+		virtual void deserialize(T& v) = 0;
 	};
 }

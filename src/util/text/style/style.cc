@@ -40,3 +40,29 @@ std::unique_ptr<acp::nbt::TagCompound> acp::text::Style::serialize()
 
 	return tag;
 }
+
+#define DESERIALIZE(key, var, tagType) if (v->get().contains(key)) { \
+	nbt::Tag* tag = v->get()[key].get(); \
+	if (const auto* derivedTag = dynamic_cast<tagType*>(tag)) \
+		var = derivedTag->get(); \
+	}
+
+void acp::text::Style::deserialize(std::unique_ptr<nbt::TagCompound>& v)
+{
+	DESERIALIZE("color", color, nbt::TagString)
+	DESERIALIZE("bold", bold, nbt::TagByte)
+	DESERIALIZE("italic", italic, nbt::TagByte)
+	DESERIALIZE("underlined", underlined, nbt::TagByte)
+	DESERIALIZE("strikethrough", strikethrough, nbt::TagByte)
+	DESERIALIZE("obfuscated", obfuscated, nbt::TagByte)
+	DESERIALIZE("font", font, nbt::TagString)
+	DESERIALIZE("insertion", insertion, nbt::TagString)
+
+	// TODO fuckin unique_ptr wont cast
+	// if (v->get().contains("clickEvent"))
+	// {
+	// 	ClickEvent event;
+	// 	const auto& tag = v->get()["clickEvent"];
+	// 	event.deserialize();
+	// }
+}

@@ -52,3 +52,20 @@ std::unique_ptr<acp::nbt::TagCompound> acp::text::ClickEvent::serialize()
 
 	return tag;
 }
+
+void acp::text::ClickEvent::deserialize(std::unique_ptr<nbt::TagCompound>& v)
+{
+	if (v->get().contains("action"))
+	{
+		nbt::Tag* tag = v->get()["action"].get();
+		if (const auto* actionTag = dynamic_cast<nbt::TagString*>(tag))
+			action = Action::byName(actionTag->get());
+	}
+
+	if (v->get().contains("value"))
+	{
+		nbt::Tag* tag = v->get()["value"].get();
+		if (const auto* valueTag = dynamic_cast<nbt::TagString*>(tag))
+			value = valueTag->get();
+	}
+}

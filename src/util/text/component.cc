@@ -15,6 +15,10 @@ std::unique_ptr<acp::nbt::TagCompound> acp::text::Component::serialize()
 	return tag;
 }
 
+void acp::text::Component::deserialize(std::unique_ptr<nbt::TagCompound>& v)
+{
+}
+
 acp::text::Style& acp::text::Component::getStyle()
 {
 	return style;
