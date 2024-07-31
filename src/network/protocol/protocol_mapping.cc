@@ -260,7 +260,7 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 
 	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::ClientInformation)
 	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::CookieResponse)
-	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::PluginMessage)
+	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::PluginMessage)
 	ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::AcknowledgeFinishConfiguration)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::KeepAlive)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::CLIENT, packet::configuration::c2s::Pong)
