@@ -20,6 +20,10 @@ namespace acp
 
 		std::string toString() const;
 
+		bool operator==(const Identifier& rhs) const;
+		bool operator!=(const Identifier& rhs) const;
+
+
 		static Identifier parse(const std::string& str);
 	};
 }

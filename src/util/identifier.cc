@@ -29,6 +29,17 @@ std::string acp::Identifier::toString() const
 	return ns + ':' + key;
 }
 
+bool acp::Identifier::operator==(const Identifier& rhs) const
+{
+	return ns == rhs.ns && key == rhs.key;
+}
+
+bool acp::Identifier::operator!=(const Identifier& rhs) const
+{
+	return !(*this == rhs);
+}
+
+
 acp::Identifier acp::Identifier::parse(const std::string& str)
 {
 	const size_t colonPos = str.find(':');
