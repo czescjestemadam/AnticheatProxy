@@ -2,9 +2,11 @@
 #include "util/uuid.hh"
 #include "util/identifier.hh"
 #include "util/vec3.hh"
+#include "util/game_profile.hh"
 
 #include <vector>
 #include <memory>
+
 
 namespace acp
 {
@@ -95,6 +97,9 @@ namespace acp
 
 		std::unique_ptr<nbt::Tag> readNbt(bool readName = true);
 		void writeNbt(std::unique_ptr<nbt::Tag>& v, bool writeName = true);
+
+		GameProfile readGameProfile(bool readProperties = true);
+		void writeGameProfile(const GameProfile& profile, bool writeProperties = true);
 
 		// zlib
 		ByteBuf compress(int level = -1) const;

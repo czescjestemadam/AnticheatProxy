@@ -8,6 +8,8 @@
 #include <zlib.h>
 #include <netinet/in.h>
 
+#include "network/protocol/protocol_version.hh"
+
 #define BUF_UNION(type) union { byte_t bytes[sizeof(type)]; type val; }
 
 #define BUF_READ(type, wrapper)		\
@@ -383,6 +385,43 @@ void acp::ByteBuf::writeNbt(std::unique_ptr<nbt::Tag>& v, bool writeName)
 	if (writeName)
 		v->writeName(*this);
 	v->write(*this);
+}
+
+acp::GameProfile acp::ByteBuf::readGameProfile(bool readProperties)
+{
+	GameProfile profile;
+	profile.uuid = readUuid();
+	profile.username = readStr();
+
+	if (readProperties)
+	{
+		const int len = readVarint();
+		for (int i = 0; i < len; ++i)
+			profile.properties.emplace_back(readStr(), readStr(), readByte() ? readStr() : "");
+	}
+
+	return profile;
+}
+
+void acp::ByteBuf::writeGameProfile(const GameProfile& profile, bool writeProperties)
+{
+	writeUuid(profile.uuid);
+	writeStr(profile.username);
+
+	if (writeProperties)
+	{
+		writeVarint(static_cast<int>(profile.properties.size()));
+		for (const GameProfile::Property& property : profile.properties)
+		{
+			writeStr(property.name);
+			writeStr(property.value);
+
+			const bool signaturePresent = !property.signature.empty();
+			writeByte(signaturePresent);
+			if (signaturePresent)
+				writeStr(property.signature);
+		}
+	}
 }
 
 
