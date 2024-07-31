@@ -1,5 +1,7 @@
 #include "play_handler.hh"
 
+#include "network/connection.hh"
+
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ConfirmTeleportation* packet)
 {
 	return HandleResult::FORWARD;
@@ -62,6 +64,8 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CommandSuggestions
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::AcknowledgeConfiguration* packet)
 {
+	connection->setState(NetworkState::CONFIGURATION);
+
 	return HandleResult::FORWARD;
 }
 
