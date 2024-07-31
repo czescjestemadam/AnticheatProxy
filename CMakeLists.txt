@@ -559,6 +559,8 @@ add_executable(AnticheatProxy
 	src/util/text/keybind_component.cc
 	src/util/text/keybind_component.hh
 	src/util/io/i_serializable.hh
+	src/util/pid_file_lock.cc
+	src/util/pid_file_lock.hh
 )
 
 find_package(OpenSSL REQUIRED)
