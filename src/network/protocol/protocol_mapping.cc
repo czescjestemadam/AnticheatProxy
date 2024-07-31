@@ -225,10 +225,6 @@
 #include "packet/play/s2c/update_teams.hh"
 #include "packet/play/s2c/update_time.hh"
 #include "packet/play/s2c/world_event.hh"
-#include "packet/status/c2s/ping_request.hh"
-#include "packet/status/c2s/status_request.hh"
-#include "packet/status/s2c/ping_response.hh"
-#include "packet/status/s2c/status_response.hh"
 
 #define PACKET_CONSTRUCTOR(packet) [] (const ByteBuf& buf) { return std::make_unique<packet>(buf); }
 
