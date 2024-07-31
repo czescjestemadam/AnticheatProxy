@@ -13,6 +13,9 @@ namespace acp
 			std::string value;
 			std::string signature;
 
+			Property() = default;
+			Property(const std::string& name, const std::string& value, const std::string& signature);
+
 			ByteBuf serialize() override;
 			void deserialize(ByteBuf& v) override;
 		};
@@ -21,6 +24,8 @@ namespace acp
 		std::string username;
 		std::vector<Property> properties;
 
+		GameProfile() = default;
+		GameProfile(const UUID& uuid, const std::string& username, const std::vector<Property>& properties);
 
 		ByteBuf serialize() override;
 		void deserialize(ByteBuf& v) override;
