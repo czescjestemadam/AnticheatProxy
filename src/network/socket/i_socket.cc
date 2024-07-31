@@ -34,6 +34,11 @@ const sockaddr_in& acp::ISocket::getAddr() const
 	return address;
 }
 
+void acp::ISocket::setAddr(const sockaddr_in& address)
+{
+	this->address = address;
+}
+
 std::string acp::ISocket::getAddrStr() const
 {
 	return std::format("{}:{}/{}", inet_ntoa(address.sin_addr), ntohs(address.sin_port), fd);

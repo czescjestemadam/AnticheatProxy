@@ -20,6 +20,7 @@ namespace acp
 
 		int getFd() const;
 		const sockaddr_in& getAddr() const;
+		void setAddr(const sockaddr_in& address);
 
 		std::string getAddrStr() const;
 
