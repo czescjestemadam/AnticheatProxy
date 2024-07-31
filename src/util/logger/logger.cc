@@ -18,3 +18,13 @@ void acp::Logger::log(LogLevel level, const std::string& message)
 					  (name.empty() ? "" : "[" + name + "] ") + message
 	);
 }
+
+const std::string& acp::Logger::getName() const
+{
+	return name;
+}
+
+void acp::Logger::setName(const std::string& name)
+{
+	this->name = name;
+}

@@ -12,5 +12,8 @@ namespace acp
 		explicit Logger(const std::string& name);
 
 		void log(LogLevel level, const std::string& message) override;
+
+		const std::string& getName() const;
+		void setName(const std::string& name);
 	};
 }
