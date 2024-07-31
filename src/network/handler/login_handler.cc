@@ -52,6 +52,10 @@ acp::HandleResult acp::LoginHandler::handle(packet::login::s2c::LoginPluginReque
 
 acp::HandleResult acp::LoginHandler::handle(packet::login::s2c::LoginSuccess* packet)
 {
+	connection->getLogger().info("{} ({}) logged in", packet->getUsername(), packet->getUuid().toString());
+
+	connection->setGameProfile(packet->toGameProfile());
+
 	if (*connection->getProtocolVersion() <= ProtocolVersion::v1_20)
 		connection->setState(NetworkState::PLAY);
 

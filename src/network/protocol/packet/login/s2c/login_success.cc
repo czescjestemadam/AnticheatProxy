@@ -108,6 +108,15 @@ void acp::packet::login::s2c::LoginSuccess::setStrictErrorHandling(const std::op
 	strictErrorHandling = strict_error_handling;
 }
 
+acp::GameProfile acp::packet::login::s2c::LoginSuccess::toGameProfile() const
+{
+	std::vector<GameProfile::Property> properties;
+	for (auto& [name, value, sig] : this->properties)
+		properties.emplace_back(name, value, sig);
+
+	return { uuid, username, properties };
+}
+
 std::string acp::packet::login::s2c::LoginSuccess::toString() const
 {
 	return std::format("LoginSuccess[id={}, name={}, props={}, strictError={}]",

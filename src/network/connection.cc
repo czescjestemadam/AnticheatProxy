@@ -193,6 +193,16 @@ void acp::Connection::setCompressionThreshold(int threshold)
 	compressionThreshold = threshold;
 }
 
+acp::GameProfile& acp::Connection::getGameProfile()
+{
+	return gameProfile;
+}
+
+void acp::Connection::setGameProfile(const GameProfile& game_profile)
+{
+	gameProfile = game_profile;
+}
+
 
 std::string acp::Connection::toString(NetworkSide dest) const
 {

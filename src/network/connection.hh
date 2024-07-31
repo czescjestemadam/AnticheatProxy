@@ -5,6 +5,7 @@
 #include "handler/i_network_handler.hh"
 #include "handler/handshake_handler.hh"
 #include "util/logger/logger.hh"
+#include "util/game_profile.hh"
 
 #include <optional>
 #include <memory>
@@ -23,6 +24,8 @@ namespace acp
 		NetworkState state = NetworkState::HANDSHAKE;
 		const ProtocolVersion* protocolVersion = nullptr;
 		std::optional<int> compressionThreshold;
+
+		GameProfile gameProfile;
 
 	public:
 		Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket);
@@ -46,6 +49,9 @@ namespace acp
 		const ProtocolVersion* getProtocolVersion() const;
 		void setProtocolVersion(const ProtocolVersion* protocol_version);
 		void setCompressionThreshold(int threshold);
+
+		GameProfile& getGameProfile();
+		void setGameProfile(const GameProfile& game_profile);
 
 		std::string toString(NetworkSide dest = NetworkSide::DEST) const;
 

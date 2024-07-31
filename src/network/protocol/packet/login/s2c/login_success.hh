@@ -1,5 +1,6 @@
 #pragma once
 #include "network/protocol/packet/i_packet.hh"
+#include "util/game_profile.hh"
 
 namespace acp::packet::login::s2c
 {
@@ -33,6 +34,8 @@ namespace acp::packet::login::s2c
 
 		const std::optional<bool>& getStrictErrorHandling() const;
 		void setStrictErrorHandling(const std::optional<bool>& strict_error_handling);
+
+		GameProfile toGameProfile() const;
 
 		std::string toString() const override;
 	};
