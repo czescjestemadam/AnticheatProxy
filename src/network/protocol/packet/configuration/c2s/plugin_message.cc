@@ -55,5 +55,5 @@ void acp::packet::configuration::c2s::PluginMessage::setData(const ByteBuf& data
 
 std::string acp::packet::configuration::c2s::PluginMessage::toString() const
 {
-	return std::format("PluginMessage[ch={}, data={}]", channel.toString(), data.toString());
+	return std::format("PluginMessage[ch={}, data={}]", channel.toString(), data.toStringShort());
 }
