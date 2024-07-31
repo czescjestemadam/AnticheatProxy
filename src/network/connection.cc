@@ -13,7 +13,6 @@ acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSock
 	  destSocket(std::move(destSocket))
 
 {
-	setState(NetworkState::HANDSHAKE);
 }
 
 void acp::Connection::close()
