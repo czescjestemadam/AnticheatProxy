@@ -566,6 +566,9 @@ add_executable(AnticheatProxy
 	src/util/velocity/forwarding_version.hh
 	src/util/velocity/forwarding_info.cc
 	src/util/velocity/forwarding_info.hh
+	src/util/color.hh
+	src/util/terminal/format.cc
+	src/util/terminal/format.hh
 )
 
 find_package(OpenSSL REQUIRED)
