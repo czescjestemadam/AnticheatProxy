@@ -16,6 +16,8 @@ namespace acp
 {
 	class LoginHandler : public INetworkHandler
 	{
+		std::optional<int> velocityMessageId;
+
 	public:
 		using INetworkHandler::INetworkHandler;
 
