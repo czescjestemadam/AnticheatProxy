@@ -5,7 +5,7 @@
 
 void acp::packet::play::s2c::Login::read(const ProtocolVersion* version)
 {
-	entityId = buf.readVarint();
+	entityId = buf.readInt();
 	hardcore = buf.readByte();
 
 	const int dimensionSize = buf.readVarint();
@@ -27,7 +27,10 @@ void acp::packet::play::s2c::Login::read(const ProtocolVersion* version)
 
 void acp::packet::play::s2c::Login::write(const ProtocolVersion* version)
 {
-	buf.writeVarint(entityId);
+	buf.writeInt(entityId);
+	buf.writeByte(hardcore);
+
+	// TODO
 }
 
 acp::HandleResult acp::packet::play::s2c::Login::apply(std::unique_ptr<INetworkHandler>& handler)
