@@ -561,6 +561,8 @@ add_executable(AnticheatProxy
 	src/util/io/i_serializable.hh
 	src/util/pid_file_lock.cc
 	src/util/pid_file_lock.hh
+	src/util/game_profile.cc
+	src/util/game_profile.hh
 )
 
 find_package(OpenSSL REQUIRED)
