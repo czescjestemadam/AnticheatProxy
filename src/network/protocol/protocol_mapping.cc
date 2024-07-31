@@ -284,7 +284,7 @@ acp::ProtocolMapping::ProtocolMapping(const ProtocolVersion* version)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::CustomReportDetails)
 	// ADD_PACKET(NetworkState::CONFIGURATION, NetworkSide::DEST, packet::configuration::s2c::ServerLinks)
 
-	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::ConfirmTeleportation)
+	ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::ConfirmTeleportation)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::QueryBlockEntityTag)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::ChangeDifficulty)
 	// ADD_PACKET(NetworkState::PLAY, NetworkSide::CLIENT, packet::play::c2s::AcknowledgeMessage)
