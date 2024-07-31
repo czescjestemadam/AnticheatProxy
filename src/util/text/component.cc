@@ -1,6 +1,8 @@
 #include "component.hh"
 
+#include "text_component.hh"
 #include "util/nbt/tag/tag_list.hh"
+#include "util/nbt/tag/tag_string.hh"
 
 std::unique_ptr<acp::nbt::TagCompound> acp::text::Component::serialize()
 {
@@ -41,4 +43,18 @@ const std::vector<std::unique_ptr<acp::text::Component>>& acp::text::Component::
 void acp::text::Component::setExtra(std::vector<std::unique_ptr<Component>>&& extra)
 {
 	this->extra = std::move(extra);
+}
+
+
+std::unique_ptr<acp::text::Component> acp::text::Component::fromNbt(std::unique_ptr<nbt::Tag> tag)
+{
+	if (tag->getType() == nbt::TagType::STRING)
+	{
+		const auto strTag = dynamic_cast<nbt::TagString*>(tag.get());
+		return std::make_unique<TextComponent>(strTag->get());
+	}
+
+	// TODO get by checking if contains field for components
+	// TODO deserializer in ISerializable
+	return std::make_unique<TextComponent>("nullptr");
 }
