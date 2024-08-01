@@ -12,7 +12,7 @@ void acp::packet::configuration::s2c::RegistryData::read(const ProtocolVersion* 
 	}
 	else
 	{
-		registryId = buf.readIdentifier(); // TODO test
+		registryId = buf.readIdentifier();
 
 		const int len = buf.readVarint();
 		for (int i = 0; i < len; i++)
