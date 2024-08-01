@@ -1,4 +1,5 @@
 #pragma once
+#include "util/text/component.hh"
 
 namespace acp
 {
@@ -13,7 +14,6 @@ namespace acp
 		explicit INetworkHandler(Connection* connection);
 		virtual ~INetworkHandler() = default;
 
-		// TODO reason
-		virtual void disconnect();
+		virtual void disconnect(const std::unique_ptr<text::Component>& reason);
 	};
 }

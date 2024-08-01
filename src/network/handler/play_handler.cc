@@ -914,3 +914,11 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ServerLinks* packe
 {
 	return HandleResult::FORWARD;
 }
+
+void acp::PlayHandler::disconnect(const std::unique_ptr<text::Component>& reason)
+{
+	auto packet = std::make_unique<packet::play::s2c::Disconnect>();
+	packet->setReason(reason->copy());
+
+	connection->sendPacket(NetworkSide::CLIENT, std::move(packet));
+}

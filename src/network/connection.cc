@@ -6,6 +6,7 @@
 #include "handler/play_handler.hh"
 #include "handler/status_handler.hh"
 #include "protocol/packet/i_packet.hh"
+#include "util/text/translatable_component.hh"
 
 acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket)
 	: logger("Connection " + clientSocket.getAddrStr()),
@@ -15,10 +16,15 @@ acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSock
 {
 }
 
-void acp::Connection::close()
+void acp::Connection::close(const std::unique_ptr<text::Component>& reason)
 {
-	// TODO reason
-	networkHandler->disconnect();
+	if (clientSocket.isValid())
+	{
+		if (reason == nullptr)
+			networkHandler->disconnect(std::make_unique<text::TranslatableComponent>("disconnect.closed"));
+		else
+			networkHandler->disconnect(reason);
+	}
 
 	destSocket.close();
 	clientSocket.close();

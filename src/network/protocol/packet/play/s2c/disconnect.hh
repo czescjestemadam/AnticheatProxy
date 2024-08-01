@@ -5,8 +5,7 @@ namespace acp::packet::play::s2c
 {
 	class Disconnect : public IPacket
 	{
-		// TODO text component
-		std::string reason;
+		std::unique_ptr<text::Component> reason;
 
 	public:
 		using IPacket::IPacket;
@@ -18,8 +17,9 @@ namespace acp::packet::play::s2c
 
 		int getId(const ProtocolVersion* version) const override;
 
-		std::string& getReason();
-		void setReason(const std::string& reason);
+		std::unique_ptr<text::Component>& getReason();
+		const std::unique_ptr<text::Component>& getReason() const;
+		void setReason(std::unique_ptr<text::Component>&& reason);
 
 		std::string toString() const override;
 	};

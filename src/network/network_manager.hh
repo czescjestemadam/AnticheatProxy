@@ -35,7 +35,7 @@ namespace acp
 
 		std::weak_ptr<Connection> getByFd(int fd);
 		void addConnection(std::shared_ptr<Connection>&& connection);
-		void removeConnection(const std::weak_ptr<Connection>& connection);
+		void removeConnection(const std::weak_ptr<Connection>& connection, const std::unique_ptr<text::Component>& reason);
 
 	private:
 		void acceptLoop();

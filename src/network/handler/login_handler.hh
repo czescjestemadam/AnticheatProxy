@@ -33,5 +33,7 @@ namespace acp
 		HandleResult handle(packet::login::s2c::LoginPluginRequest* packet);
 		HandleResult handle(packet::login::s2c::LoginSuccess* packet);
 		HandleResult handle(packet::login::s2c::SetCompression* packet);
+
+		void disconnect(const std::unique_ptr<text::Component>& reason) override;
 	};
 }

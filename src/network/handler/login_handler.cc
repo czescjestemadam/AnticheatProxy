@@ -94,3 +94,9 @@ acp::HandleResult acp::LoginHandler::handle(packet::login::s2c::SetCompression* 
 
 	return HandleResult::FORWARD;
 }
+
+
+void acp::LoginHandler::disconnect(const std::unique_ptr<text::Component>& reason)
+{
+	// TODO json component
+}

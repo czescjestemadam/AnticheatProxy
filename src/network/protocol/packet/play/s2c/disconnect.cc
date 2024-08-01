@@ -5,12 +5,13 @@
 
 void acp::packet::play::s2c::Disconnect::read(const ProtocolVersion* version)
 {
-	reason = buf.readStr();
+	reason = text::Component::fromNbt(buf.readNbt(*version < ProtocolVersion::v1_20_2));
 }
 
 void acp::packet::play::s2c::Disconnect::write(const ProtocolVersion* version)
 {
-	buf.writeStr(reason);
+	std::unique_ptr<nbt::Tag> tag = reason->serialize();
+	buf.writeNbt(tag, *version < ProtocolVersion::v1_20_2);
 }
 
 acp::HandleResult acp::packet::play::s2c::Disconnect::apply(std::unique_ptr<INetworkHandler>& handler)
@@ -41,17 +42,22 @@ int acp::packet::play::s2c::Disconnect::getId(const ProtocolVersion* version) co
 	return 0x19;
 }
 
-std::string& acp::packet::play::s2c::Disconnect::getReason()
+std::unique_ptr<acp::text::Component>& acp::packet::play::s2c::Disconnect::getReason()
 {
 	return reason;
 }
 
-void acp::packet::play::s2c::Disconnect::setReason(const std::string& reason)
+const std::unique_ptr<acp::text::Component>& acp::packet::play::s2c::Disconnect::getReason() const
 {
-	this->reason = reason;
+	return reason;
+}
+
+void acp::packet::play::s2c::Disconnect::setReason(std::unique_ptr<text::Component>&& reason)
+{
+	this->reason = std::move(reason);
 }
 
 std::string acp::packet::play::s2c::Disconnect::toString() const
 {
-	return std::format("Disconnect[{}]", reason);
+	return std::format("Disconnect[{}]", reason->serialize()->toString());
 }

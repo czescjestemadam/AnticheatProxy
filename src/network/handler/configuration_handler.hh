@@ -59,5 +59,7 @@ namespace acp
 		HandleResult handle(packet::configuration::s2c::KnownPacks* packet);
 		HandleResult handle(packet::configuration::s2c::CustomReportDetails* packet);
 		HandleResult handle(packet::configuration::s2c::ServerLinks* packet);
+
+		void disconnect(const std::unique_ptr<text::Component>& reason) override;
 	};
 }

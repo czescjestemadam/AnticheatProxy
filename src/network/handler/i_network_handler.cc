@@ -4,6 +4,6 @@ acp::INetworkHandler::INetworkHandler(Connection* connection) : connection(conne
 {
 }
 
-void acp::INetworkHandler::disconnect()
+void acp::INetworkHandler::disconnect(const std::unique_ptr<text::Component>& reason)
 {
 }

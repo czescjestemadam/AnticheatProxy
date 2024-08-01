@@ -6,6 +6,7 @@
 #include "handler/handshake_handler.hh"
 #include "util/logger/logger.hh"
 #include "util/game_profile.hh"
+#include "util/text/component.hh"
 
 #include <optional>
 #include <memory>
@@ -31,7 +32,7 @@ namespace acp
 		Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket);
 		Connection(Connection&&) = default;
 
-		void close();
+		void close(const std::unique_ptr<text::Component>& reason);
 
 		void handleEvent(int fd);
 

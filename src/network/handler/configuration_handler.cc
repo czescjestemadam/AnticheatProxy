@@ -129,3 +129,12 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::
 {
 	return HandleResult::FORWARD;
 }
+
+
+void acp::ConfigurationHandler::disconnect(const std::unique_ptr<text::Component>& reason)
+{
+	auto packet = std::make_unique<packet::configuration::s2c::Disconnect>();
+	packet->setReason(reason->copy());
+
+	connection->sendPacket(NetworkSide::CLIENT, std::move(packet));
+}
