@@ -18,6 +18,7 @@ namespace acp::packet
 		ByteBuf buf;
 
 	public:
+		IPacket() = default;
 		explicit IPacket(const ByteBuf& buf);
 		virtual ~IPacket() = default;
 

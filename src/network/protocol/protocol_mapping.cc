@@ -229,7 +229,7 @@
 #define PACKET_CONSTRUCTOR(packet) [] (const ByteBuf& buf) { return std::make_unique<packet>(buf); }
 
 #define ADD_PACKET(state, side, packet) {							\
-		packet p(ByteBuf{});										\
+		packet p;													\
 		int id = p.getId(version);									\
 		if (id >= 0)												\
 			mappings[state][side][id] = PACKET_CONSTRUCTOR(packet);	\

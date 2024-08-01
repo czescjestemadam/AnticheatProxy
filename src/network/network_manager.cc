@@ -1,6 +1,7 @@
 #include "network_manager.hh"
 
 #include "socket/exception/socket_close_exception.hh"
+#include "util/text/translatable_component.hh"
 
 #include <memory>
 
@@ -39,6 +40,10 @@ void acp::NetworkManager::stop()
 
 	serverSocket.close();
 	epollSocket.close();
+
+	const std::unique_ptr<text::Component> closeReason = std::make_unique<text::TranslatableComponent>("disconnect.disconnected");
+	for (std::shared_ptr<Connection>& connection : connections)
+		connection->close(closeReason);
 }
 
 void acp::NetworkManager::wait()
@@ -63,7 +68,7 @@ void acp::NetworkManager::addConnection(std::shared_ptr<Connection>&& connection
 	connections.push_back(std::move(connection));
 }
 
-void acp::NetworkManager::removeConnection(const std::weak_ptr<Connection>& connection)
+void acp::NetworkManager::removeConnection(const std::weak_ptr<Connection>& connection, const std::unique_ptr<text::Component>& reason)
 {
 	std::shared_ptr<Connection> conn = connection.lock();
 	if (!conn)
@@ -78,7 +83,7 @@ void acp::NetworkManager::removeConnection(const std::weak_ptr<Connection>& conn
 	connectionByFd.erase(conn->getSide(NetworkSide::CLIENT).getFd());
 	connectionByFd.erase(conn->getSide(NetworkSide::DEST).getFd());
 
-	conn->close();
+	conn->close(reason);
 }
 
 
@@ -105,12 +110,14 @@ void acp::NetworkManager::acceptLoop()
 		catch (const SocketException& ex)
 		{
 			if (!serverSocket.isValid())
-				return;
+				break;
 
 			logger.error("Error accepting connection on {}", serverSocket.getAddrStr());
 			logger.error("{}: {}", ex.getSocket()->getAddrStr(), ex.what());
 		}
 	}
+
+	logger.info("Stopped accept loop");
 }
 
 void acp::NetworkManager::epollLoop()
@@ -132,7 +139,9 @@ void acp::NetworkManager::epollLoop()
 				catch (const SocketCloseException& ex)
 				{
 					logger.info("Connection {} closed", connection->toString());
-					removeConnection(connection);
+					removeConnection(connection, *ex.getSocket() == serverSocket
+													 ? std::make_unique<text::TranslatableComponent>("disconnect.disconnected")
+													 : nullptr);
 				}
 				catch (const SocketException& ex)
 				{
@@ -141,4 +150,6 @@ void acp::NetworkManager::epollLoop()
 			}
 		}
 	}
+
+	logger.info("Stopped epoll loop");
 }
