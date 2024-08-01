@@ -42,7 +42,7 @@ void acp::NetworkManager::stop()
 	epollSocket.close();
 
 	const std::unique_ptr<text::Component> closeReason = std::make_unique<text::TranslatableComponent>("disconnect.disconnected");
-	for (std::shared_ptr<Connection>& connection : connections)
+	for (const std::shared_ptr<Connection>& connection : connections)
 		connection->close(closeReason);
 }
 
@@ -70,7 +70,7 @@ void acp::NetworkManager::addConnection(std::shared_ptr<Connection>&& connection
 
 void acp::NetworkManager::removeConnection(const std::weak_ptr<Connection>& connection, const std::unique_ptr<text::Component>& reason)
 {
-	std::shared_ptr<Connection> conn = connection.lock();
+	const std::shared_ptr<Connection> conn = connection.lock();
 	if (!conn)
 		return;
 
@@ -126,15 +126,13 @@ void acp::NetworkManager::epollLoop()
 
 	while (epollSocket.isValid())
 	{
-		for (const epoll_event& event : epollSocket.wait(EPOLL_EVENT_COUNT))
+		for (const auto& [events, data] : epollSocket.wait(EPOLL_EVENT_COUNT))
 		{
-			const int fd = event.data.fd;
-
-			if (std::shared_ptr<Connection> connection = getByFd(fd).lock())
+			if (std::shared_ptr<Connection> connection = getByFd(data.fd).lock())
 			{
 				try
 				{
-					connection->handleEvent(fd);
+					connection->handleEvent(data.fd);
 				}
 				catch (const SocketCloseException& ex)
 				{
