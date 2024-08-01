@@ -11,8 +11,11 @@ namespace acp::text
 
 	public:
 		explicit TranslatableComponent(const std::string& key);
+		TranslatableComponent(TranslatableComponent& component);
 
 		std::unique_ptr<nbt::TagCompound> serialize() override;
+
+		std::unique_ptr<Component> copy() override;
 
 		const std::string& getKey() const;
 		void setKey(const std::string& key);

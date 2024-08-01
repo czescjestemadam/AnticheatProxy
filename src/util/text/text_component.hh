@@ -10,8 +10,11 @@ namespace acp::text
 	public:
 		TextComponent() = default;
 		explicit TextComponent(const std::string& text);
+		TextComponent(TextComponent& component);
 
 		std::unique_ptr<nbt::TagCompound> serialize() override;
+
+		std::unique_ptr<Component> copy() override;
 
 		std::string& getText();
 		const std::string& getText() const;

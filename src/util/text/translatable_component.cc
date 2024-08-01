@@ -8,6 +8,16 @@ acp::text::TranslatableComponent::TranslatableComponent(const std::string& key) 
 {
 }
 
+acp::text::TranslatableComponent::TranslatableComponent(TranslatableComponent& component) : key(component.key)
+{
+	style = component.style;
+	for (const std::unique_ptr<Component>& e : component.extra)
+		extra.push_back(e->copy());
+
+	for (const std::unique_ptr<TextComponent>& e : component.with)
+		with.push_back(std::make_unique<TextComponent>(*e));
+}
+
 std::unique_ptr<acp::nbt::TagCompound> acp::text::TranslatableComponent::serialize()
 {
 	auto tag = Component::serialize();
@@ -21,6 +31,11 @@ std::unique_ptr<acp::nbt::TagCompound> acp::text::TranslatableComponent::seriali
 	tag->get()["with"] = std::move(withTag);
 
 	return tag;
+}
+
+std::unique_ptr<acp::text::Component> acp::text::TranslatableComponent::copy()
+{
+	return std::make_unique<TranslatableComponent>(*this);
 }
 
 const std::string& acp::text::TranslatableComponent::getKey() const

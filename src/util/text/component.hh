@@ -18,6 +18,8 @@ namespace acp::text
 		std::unique_ptr<nbt::TagCompound> serialize() override;
 		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
 
+		virtual std::unique_ptr<Component> copy() = 0;
+
 		Style& getStyle();
 		const Style& getStyle() const;
 		void setStyle(const Style& style);
