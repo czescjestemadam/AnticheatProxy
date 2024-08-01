@@ -15,7 +15,7 @@ acp::NetworkManager::NetworkManager(const std::string& address, ushort port, con
 
 acp::NetworkManager::~NetworkManager()
 {
-	stop();
+	wait();
 }
 
 void acp::NetworkManager::start()
@@ -39,8 +39,6 @@ void acp::NetworkManager::stop()
 
 	serverSocket.close();
 	epollSocket.close();
-
-	wait();
 }
 
 void acp::NetworkManager::wait()
@@ -106,6 +104,9 @@ void acp::NetworkManager::acceptLoop()
 		}
 		catch (const SocketException& ex)
 		{
+			if (!serverSocket.isValid())
+				return;
+
 			logger.error("Error accepting connection on {}", serverSocket.getAddrStr());
 			logger.error("{}: {}", ex.getSocket()->getAddrStr(), ex.what());
 		}
@@ -122,8 +123,7 @@ void acp::NetworkManager::epollLoop()
 		{
 			const int fd = event.data.fd;
 
-			std::weak_ptr<Connection> weakConnection = getByFd(fd);
-			if (std::shared_ptr<Connection> connection = weakConnection.lock())
+			if (std::shared_ptr<Connection> connection = getByFd(fd).lock())
 			{
 				try
 				{

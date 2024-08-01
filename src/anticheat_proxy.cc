@@ -18,12 +18,14 @@ void acp::AnticheatProxy::start()
 	logger.info("Starting AnticheatProxy {}", globals::VERSION);
 
 	networkManager.start();
+
 	networkManager.wait();
 }
 
 void acp::AnticheatProxy::stop()
 {
 	logger.info("Stopping AnticheatProxy");
+
 	networkManager.stop();
 }
 
