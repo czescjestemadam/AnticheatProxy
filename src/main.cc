@@ -1,10 +1,13 @@
 #include "anticheat_proxy.hh"
 #include "globals.hh"
+#include "util/signal.hh"
 
 #include <iostream>
 
 int main(int argc, char* argv[])
 {
+	acp::signal::initHandlers();
+
 	acp::RunArgs args(argc, argv);
 
 	if (args.hasFlag("version"))
@@ -24,7 +27,6 @@ int main(int argc, char* argv[])
 
 	acp::AnticheatProxy acp(std::move(args));
 	acp.start();
-
 
 	return 0;
 }
