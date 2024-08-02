@@ -1,0 +1,63 @@
+#include "entity.hh"
+
+#include <format>
+
+acp::game::Entity::Entity(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch)
+	: id(id), uuid(uuid), position(position), yaw(yaw), pitch(pitch)
+{
+}
+
+int acp::game::Entity::getId() const
+{
+	return id;
+}
+
+void acp::game::Entity::setId(const int id)
+{
+	this->id = id;
+}
+
+const acp::UUID& acp::game::Entity::getUuid() const
+{
+	return uuid;
+}
+
+void acp::game::Entity::setUuid(const UUID& uuid)
+{
+	this->uuid = uuid;
+}
+
+const acp::Vec3d& acp::game::Entity::getPosition() const
+{
+	return position;
+}
+
+void acp::game::Entity::setPosition(const Vec3d& position)
+{
+	this->position = position;
+}
+
+float acp::game::Entity::getYaw() const
+{
+	return yaw;
+}
+
+void acp::game::Entity::setYaw(const float yaw)
+{
+	this->yaw = yaw;
+}
+
+float acp::game::Entity::getPitch() const
+{
+	return pitch;
+}
+
+void acp::game::Entity::setPitch(const float pitch)
+{
+	this->pitch = pitch;
+}
+
+std::string acp::game::Entity::toString()
+{
+	return std::format("Entity[id={}, uuid={}, pos={} {} {}, rot={} {}]", id, uuid.toString(), position.x, position.y, position.z, yaw, pitch);
+}

@@ -576,6 +576,14 @@ add_executable(AnticheatProxy
 	src/util/logger/sub_logger.hh
 	src/util/terminal/prompt.cc
 	src/util/terminal/prompt.hh
+	src/game/entity/entity.cc
+	src/game/entity/entity.hh
+	src/game/entity/living_entity.cc
+	src/game/entity/living_entity.hh
+	src/game/entity/player.cc
+	src/game/entity/player.hh
+	src/anticheat/acp_player.cc
+	src/anticheat/acp_player.hh
 )
 
 find_package(OpenSSL REQUIRED)

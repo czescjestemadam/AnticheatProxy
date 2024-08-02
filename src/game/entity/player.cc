@@ -1,0 +1,23 @@
+#include "player.hh"
+
+#include <format>
+
+acp::game::Player::Player(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch, double health, const GameProfile& profile)
+	: LivingEntity(id, uuid, position, yaw, pitch, health), profile(profile)
+{
+}
+
+const acp::GameProfile& acp::game::Player::getProfile() const
+{
+	return profile;
+}
+
+void acp::game::Player::setProfile(const GameProfile& profile)
+{
+	this->profile = profile;
+}
+
+std::string acp::game::Player::toString()
+{
+	return std::format("Player[profile={} {} {}, {}]", profile.username, profile.uuid.toString(), profile.properties.size(), LivingEntity::toString());
+}
