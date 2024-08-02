@@ -512,6 +512,13 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateLight* packe
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Login* packet)
 {
+	connection->getLogger().info("{} ({}) logged in with id {} in {}",
+								 connection->getGameProfile().username,
+								 connection->getGameProfile().uuid.toString(),
+								 packet->getEntityId(),
+								 packet->getDimensionName().toString()
+	);
+
 	return HandleResult::FORWARD;
 }
 
