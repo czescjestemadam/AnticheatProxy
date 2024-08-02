@@ -4,7 +4,7 @@
 #include "socket/player_socket.hh"
 #include "handler/i_network_handler.hh"
 #include "handler/handshake_handler.hh"
-#include "util/logger/logger.hh"
+#include "util/logger/sub_logger.hh"
 #include "util/game_profile.hh"
 #include "util/text/component.hh"
 
@@ -15,7 +15,7 @@ namespace acp
 {
 	class Connection
 	{
-		Logger logger;
+		SubLogger logger;
 
 		PlayerSocket clientSocket;
 		PlayerSocket destSocket;
@@ -40,7 +40,7 @@ namespace acp
 		void sendPacket(NetworkSide to, int packetId, const ByteBuf& packetData);
 		void sendPacket(NetworkSide to, ByteBuf&& data);
 
-		Logger& getLogger();
+		SubLogger& getLogger();
 
 		PlayerSocket& getSide(NetworkSide side);
 

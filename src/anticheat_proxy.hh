@@ -3,7 +3,6 @@
 #include "config/config_manager.hh"
 #include "network/network_manager.hh"
 #include "util/pid_file_lock.hh"
-#include "util/logger/logger.hh"
 
 namespace acp
 {
@@ -12,7 +11,6 @@ namespace acp
 		PidFileLock _pidFileLock;
 
 		RunArgs args;
-		Logger logger;
 		ConfigManager configManager;
 		NetworkManager networkManager;
 

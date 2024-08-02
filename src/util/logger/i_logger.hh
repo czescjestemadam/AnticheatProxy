@@ -1,10 +1,12 @@
 #pragma once
-#include <format>
-
 #include "log_level.hh"
+
+#include <format>
 
 namespace acp
 {
+	class SubLogger;
+
 	class ILogger
 	{
 	public:
@@ -47,6 +49,8 @@ namespace acp
 		{
 			crash(std::vformat(format.get(), std::make_format_args<>(args...)));
 		}
+
+		virtual SubLogger getSubLogger(const std::string& name) = 0;
 	};
 
 	inline void ILogger::debug(const std::string& message)

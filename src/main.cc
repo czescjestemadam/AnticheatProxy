@@ -1,6 +1,7 @@
 #include "anticheat_proxy.hh"
 #include "globals.hh"
 #include "util/signal.hh"
+#include "util/logger/root_logger.hh"
 
 #include <iostream>
 
@@ -25,6 +26,7 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	acp::RootLogger::get()->info("Loading...");
 	acp::AnticheatProxy acp(std::move(args));
 	acp.start();
 

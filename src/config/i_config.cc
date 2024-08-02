@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-acp::IConfig::IConfig(const std::string& name) : logger(name)
+acp::IConfig::IConfig(const std::string& name) : logger(SubLogger::fromRoot(name))
 {
 }
 

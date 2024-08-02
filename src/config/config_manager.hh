@@ -1,13 +1,13 @@
 #pragma once
-#include "util/logger/logger.hh"
 #include "network_config.hh"
 #include "run_args.hh"
+#include "util/logger/sub_logger.hh"
 
 namespace acp
 {
 	class ConfigManager
 	{
-		Logger logger{ "ConfigManager" };
+		SubLogger logger = SubLogger::fromRoot("ConfigManager");
 
 		NetworkConfig network;
 

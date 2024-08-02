@@ -2,7 +2,7 @@
 #include "socket/server_socket.hh"
 #include "connection.hh"
 #include "socket/epoll_socket.hh"
-#include "util/logger/logger.hh"
+#include "util/logger/sub_logger.hh"
 
 #include <thread>
 #include <memory>
@@ -11,7 +11,7 @@ namespace acp
 {
 	class NetworkManager
 	{
-		Logger logger{ "NetworkManager" };
+		SubLogger logger = SubLogger::fromRoot("NetworkManager");
 
 		std::string destAddress;
 		ushort destPort;

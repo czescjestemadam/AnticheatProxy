@@ -1,14 +1,15 @@
 #pragma once
-#include "util/logger/logger.hh"
+#include "util/logger/sub_logger.hh"
 
 #include <nlohmann/json.hpp>
+
 
 namespace acp
 {
 	class IConfig
 	{
 	protected:
-		Logger logger;
+		SubLogger logger;
 
 		explicit IConfig(const std::string& name);
 

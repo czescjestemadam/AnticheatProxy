@@ -23,7 +23,7 @@ void acp::NetworkManager::start()
 {
 	logger.info("Starting NetworkManager");
 
-	ProtocolVersion::compileMappings();
+	ProtocolVersion::compileMappings(logger.getSubLogger("ProtocolVersion"));
 
 	serverSocket.bind();
 	serverSocket.listen();

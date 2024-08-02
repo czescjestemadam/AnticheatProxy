@@ -1,6 +1,7 @@
 #include "anticheat_proxy.hh"
 
 #include "globals.hh"
+#include "util/logger/root_logger.hh"
 
 static acp::AnticheatProxy* INST;
 
@@ -15,7 +16,7 @@ acp::AnticheatProxy::AnticheatProxy(RunArgs&& args)
 
 void acp::AnticheatProxy::start()
 {
-	logger.info("Starting AnticheatProxy {}", globals::VERSION);
+	RootLogger::get()->info("Starting AnticheatProxy {}", globals::VERSION);
 
 	networkManager.start();
 
@@ -24,7 +25,7 @@ void acp::AnticheatProxy::start()
 
 void acp::AnticheatProxy::stop()
 {
-	logger.info("Stopping AnticheatProxy");
+	RootLogger::get()->info("Stopping AnticheatProxy");
 
 	networkManager.stop();
 }

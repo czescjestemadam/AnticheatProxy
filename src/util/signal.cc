@@ -4,7 +4,7 @@
 
 #include <csignal>
 
-static acp::Logger logger{ "SignalHandler" };
+static acp::SubLogger logger = acp::SubLogger::fromRoot("SignalHandler");
 
 using clk = std::chrono::steady_clock;
 

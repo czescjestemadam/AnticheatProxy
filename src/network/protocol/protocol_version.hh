@@ -1,5 +1,6 @@
 #pragma once
 #include "protocol_mapping.hh"
+#include "util/logger/sub_logger.hh"
 
 #include <string>
 
@@ -26,7 +27,7 @@ namespace acp
 		bool operator>=(const ProtocolVersion& rhs) const;
 
 
-		static void compileMappings();
+		static void compileMappings(SubLogger&& logger);
 
 		static ProtocolVersion* byIdx(int idx);
 

@@ -9,7 +9,7 @@
 #include "util/text/translatable_component.hh"
 
 acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket)
-	: logger("Connection " + clientSocket.getAddrStr()),
+	: logger(SubLogger::fromRoot("Connection " + clientSocket.getAddrStr())),
 	  clientSocket(std::move(clientSocket)),
 	  destSocket(std::move(destSocket))
 
@@ -105,13 +105,13 @@ void acp::Connection::handleEvent(int fd)
 		sendPacket(toSide, std::move(packet));
 	}
 
-	logger.debug("[{}] {} -> {}: {} {}",
-				 EnumNames<NetworkState>::get(state),
-				 EnumNames<NetworkSide>::get(fromSide),
-				 EnumNames<NetworkSide>::get(toSide),
-				 EnumNames<HandleResult>::get(result),
-				 packet->toString()
-	);
+	// logger.debug("[{}] {} -> {}: {} {}",
+	// 			 EnumNames<NetworkState>::get(state),
+	// 			 EnumNames<NetworkSide>::get(fromSide),
+	// 			 EnumNames<NetworkSide>::get(toSide),
+	// 			 EnumNames<HandleResult>::get(result),
+	// 			 packet->toString()
+	// );
 }
 
 void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write)
@@ -154,7 +154,7 @@ void acp::Connection::sendPacket(NetworkSide to, ByteBuf&& data)
 	}
 }
 
-acp::Logger& acp::Connection::getLogger()
+acp::SubLogger& acp::Connection::getLogger()
 {
 	return logger;
 }

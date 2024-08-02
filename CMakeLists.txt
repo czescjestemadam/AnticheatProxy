@@ -516,8 +516,6 @@ add_executable(AnticheatProxy
 	src/network/protocol/protocol_mapping.hh
 	src/util/logger/i_logger.hh
 	src/util/logger/log_level.hh
-	src/util/logger/logger.cc
-	src/util/logger/logger.hh
 	src/util/thread/thread_pool_executor.cc
 	src/util/thread/thread_pool_executor.hh
 	src/util/vec3.hh
@@ -572,6 +570,10 @@ add_executable(AnticheatProxy
 	src/util/signal.cc
 	src/util/signal.hh
 	src/util/bounding_box.hh
+	src/util/logger/root_logger.cc
+	src/util/logger/root_logger.hh
+	src/util/logger/sub_logger.cc
+	src/util/logger/sub_logger.hh
 )
 
 find_package(OpenSSL REQUIRED)
