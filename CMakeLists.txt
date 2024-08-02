@@ -571,6 +571,7 @@ add_executable(AnticheatProxy
 	src/util/terminal/format.hh
 	src/util/signal.cc
 	src/util/signal.hh
+	src/util/bounding_box.hh
 )
 
 find_package(OpenSSL REQUIRED)
