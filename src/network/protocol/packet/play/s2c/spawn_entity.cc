@@ -9,8 +9,8 @@ void acp::packet::play::s2c::SpawnEntity::read(const ProtocolVersion* version)
 	entityUuid = buf.readUuid();
 	type = buf.readVarint();
 	position = buf.readVec3d();
-	yaw = buf.readAngle();
 	pitch = buf.readAngle();
+	yaw = buf.readAngle();
 	if (*version >= ProtocolVersion::v1_19)
 		headYaw = buf.readAngle();
 	data = buf.readVarint();
@@ -23,8 +23,8 @@ void acp::packet::play::s2c::SpawnEntity::write(const ProtocolVersion* version)
 	buf.writeUuid(entityUuid);
 	buf.writeVarint(type);
 	buf.writeVec3d(position);
-	buf.writeAngle(yaw);
 	buf.writeAngle(pitch);
+	buf.writeAngle(yaw);
 	if (*version >= ProtocolVersion::v1_19)
 		buf.writeAngle(headYaw.value());
 	buf.writeVarint(data);
@@ -87,16 +87,6 @@ void acp::packet::play::s2c::SpawnEntity::setPosition(const Vec3d& position)
 	this->position = position;
 }
 
-float acp::packet::play::s2c::SpawnEntity::getYaw() const
-{
-	return yaw;
-}
-
-void acp::packet::play::s2c::SpawnEntity::setYaw(const float yaw)
-{
-	this->yaw = yaw;
-}
-
 float acp::packet::play::s2c::SpawnEntity::getPitch() const
 {
 	return pitch;
@@ -105,6 +95,16 @@ float acp::packet::play::s2c::SpawnEntity::getPitch() const
 void acp::packet::play::s2c::SpawnEntity::setPitch(const float pitch)
 {
 	this->pitch = pitch;
+}
+
+float acp::packet::play::s2c::SpawnEntity::getYaw() const
+{
+	return yaw;
+}
+
+void acp::packet::play::s2c::SpawnEntity::setYaw(const float yaw)
+{
+	this->yaw = yaw;
 }
 
 const std::optional<float>& acp::packet::play::s2c::SpawnEntity::getHeadYaw() const

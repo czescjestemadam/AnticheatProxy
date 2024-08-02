@@ -9,7 +9,7 @@ namespace acp::packet::play::s2c
 		UUID entityUuid;
 		int type;
 		Vec3d position;
-		float yaw, pitch;
+		float pitch, yaw;
 		/// 1.19 - now
 		std::optional<float> headYaw;
 		int data;
@@ -37,11 +37,11 @@ namespace acp::packet::play::s2c
 		Vec3d getPosition() const;
 		void setPosition(const Vec3d& position);
 
-		float getYaw() const;
-		void setYaw(float yaw);
-
 		float getPitch() const;
 		void setPitch(float pitch);
+
+		float getYaw() const;
+		void setYaw(float yaw);
 
 		const std::optional<float>& getHeadYaw() const;
 		void setHeadYaw(const std::optional<float>& head_yaw);
