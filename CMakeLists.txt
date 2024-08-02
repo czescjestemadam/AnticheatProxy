@@ -584,6 +584,22 @@ add_executable(AnticheatProxy
 	src/game/entity/player.hh
 	src/anticheat/acp_player.cc
 	src/anticheat/acp_player.hh
+	src/util/command/command_node.cc
+	src/util/command/command_node.hh
+	src/util/command/properties/i_properties.cc
+	src/util/command/properties/i_properties.hh
+	src/util/command/properties/empty_properties.cc
+	src/util/command/properties/empty_properties.hh
+	src/util/command/properties/number_properties.cc
+	src/util/command/properties/number_properties.hh
+	src/util/command/properties/string_properties.cc
+	src/util/command/properties/string_properties.hh
+	src/util/command/properties/flags_properties.cc
+	src/util/command/properties/flags_properties.hh
+	src/util/command/properties/time_properties.cc
+	src/util/command/properties/time_properties.hh
+	src/util/command/properties/identifier_properties.cc
+	src/util/command/properties/identifier_properties.hh
 )
 
 find_package(OpenSSL REQUIRED)

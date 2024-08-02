@@ -382,6 +382,9 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CommandSuggestions
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Commands* packet)
 {
+	// connection->getLogger().info("Received commands: {}", packet->toString());
+	// TODO inject acp commands
+
 	return HandleResult::FORWARD;
 }
 
