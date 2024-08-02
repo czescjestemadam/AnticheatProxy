@@ -2,6 +2,7 @@
 
 #include "sub_logger.hh"
 #include "util/terminal/format.hh"
+#include "util/terminal/prompt.hh"
 
 #include <chrono>
 #include <iostream>
@@ -58,6 +59,8 @@ void acp::RootLogger::log(LogLevel level, const std::string& message)
 
 	std::ostream& os = level >= LogLevel::ERROR ? std::cerr : std::cout;
 	os << std::format("\r{}{}{}\n", formatPrefix.toString(), rawLine, terminal::Format::RESET.toString());
+
+	terminal::prompt::print();
 
 	if (filename != getFilename())
 	{

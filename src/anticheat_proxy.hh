@@ -19,6 +19,7 @@ namespace acp
 
 		void start();
 		void stop();
+		void wait();
 
 		const RunArgs& getArgs() const;
 		ConfigManager& getConfigManager();

@@ -574,6 +574,8 @@ add_executable(AnticheatProxy
 	src/util/logger/root_logger.hh
 	src/util/logger/sub_logger.cc
 	src/util/logger/sub_logger.hh
+	src/util/terminal/prompt.cc
+	src/util/terminal/prompt.hh
 )
 
 find_package(OpenSSL REQUIRED)
