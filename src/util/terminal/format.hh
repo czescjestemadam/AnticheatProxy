@@ -18,6 +18,8 @@ namespace acp::terminal
 		std::string toString() const;
 
 
+		static std::string stripped(std::string str);
+
 		/**
 		 * creates color formatting
 		 * @param type @c SET_FOREGROUND_COLOR or @c SET_BACKGROUND_COLOR

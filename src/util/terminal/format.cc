@@ -15,6 +15,24 @@ std::string acp::terminal::Format::toString() const
 }
 
 
+std::string acp::terminal::Format::stripped(std::string str)
+{
+	while (true)
+	{
+		const size_t startPos = str.find("\033[");
+		if (startPos == std::string::npos)
+			break;
+
+		const size_t endPos = str.find('m', startPos);
+		if (endPos == std::string::npos)
+			break;
+
+		str = str.erase(startPos, endPos - startPos + 1);
+	}
+
+	return str;
+}
+
 acp::terminal::Format acp::terminal::Format::color(const Format& type, const ColorB& color)
 {
 	return {
