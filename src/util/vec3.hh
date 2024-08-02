@@ -12,9 +12,19 @@ namespace acp
 			return { x + rhs.x, y + rhs.y, z + rhs.z };
 		}
 
+		Vec3 operator+(const T& rhs) const
+		{
+			return { x + rhs, y + rhs, z + rhs };
+		}
+
 		Vec3 operator-(const Vec3& rhs) const
 		{
 			return { x - rhs.x, y - rhs.y, z - rhs.z };
+		}
+
+		Vec3 operator-(const T& rhs) const
+		{
+			return { x - rhs, y - rhs, z - rhs };
 		}
 
 		Vec3 operator*(const Vec3& rhs) const
@@ -22,9 +32,19 @@ namespace acp
 			return { x * rhs.x, y * rhs.y, z * rhs.z };
 		}
 
+		Vec3 operator*(const T& rhs) const
+		{
+			return { x * rhs, y * rhs, z * rhs };
+		}
+
 		Vec3 operator/(const Vec3& rhs) const
 		{
 			return { x / rhs.x, y / rhs.y, z / rhs.z };
+		}
+
+		Vec3 operator/(const T& rhs) const
+		{
+			return { x / rhs, y / rhs, z / rhs };
 		}
 
 		bool operator==(const Vec3& rhs) const
