@@ -8,11 +8,39 @@
 
 acp::RootLogger::RootLogger()
 {
+	const auto logsDir = getLogsDir();
+
+	if (!exists(logsDir))
+		create_directory(logsDir);
+
+	filename = getFilename();
+	openFile();
 }
 
 acp::RootLogger::~RootLogger()
 {
+	ofs.close();
 }
+
+std::filesystem::path acp::RootLogger::getLogsDir() const
+{
+	return std::filesystem::current_path() / "logs";
+}
+
+std::string acp::RootLogger::getFilename() const
+{
+	return std::format("{:%Y-%m-%d}.log", std::chrono::current_zone()->to_local(std::chrono::system_clock::now()));
+}
+
+void acp::RootLogger::openFile()
+{
+	ofs.close();
+
+	ofs = { getLogsDir() / filename, std::ios::app };
+	if (!ofs.good())
+		throw std::runtime_error("RootLogger fstream::good() = false");
+}
+
 
 void acp::RootLogger::log(LogLevel level, const std::string& message)
 {
@@ -20,7 +48,7 @@ void acp::RootLogger::log(LogLevel level, const std::string& message)
 		std::chrono::current_zone()->to_local(std::chrono::system_clock::now())
 	);
 
-	const std::string rawLine = std::format("[{:%T} {}]: {}\n", time, EnumNames<LogLevel>::get(level), message);
+	const std::string rawLine = std::format("[{:%T} {}]: {}", time, EnumNames<LogLevel>::get(level), message);
 
 	const auto formatPrefix = level >= LogLevel::ERROR
 								  ? terminal::Format::FG_RED
@@ -29,9 +57,16 @@ void acp::RootLogger::log(LogLevel level, const std::string& message)
 										: terminal::Format::RESET;
 
 	std::ostream& os = level >= LogLevel::ERROR ? std::cerr : std::cout;
-	os << std::format("\r{}{}{}", formatPrefix.toString(), rawLine, terminal::Format::RESET.toString());
+	os << std::format("\r{}{}{}\n", formatPrefix.toString(), rawLine, terminal::Format::RESET.toString());
 
-	// TODO file
+	if (filename != getFilename())
+	{
+		filename = getFilename();
+		openFile();
+	}
+
+	if (ofs.is_open())
+		ofs << rawLine << std::endl;
 }
 
 acp::SubLogger acp::RootLogger::getSubLogger(const std::string& name)
