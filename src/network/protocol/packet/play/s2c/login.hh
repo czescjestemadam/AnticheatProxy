@@ -12,21 +12,20 @@ namespace acp::packet::play::s2c
 		std::vector<Identifier> dimensionNames;
 		int maxPlayers;
 		int viewDistance;
-		int simulationDistance;
+		std::optional<int> simulationDistance;
 		bool reducedDebugInfo;
 		bool enableRespawnScreen;
 		bool doLimitedCrafting;
-		int dimensionType;
+		std::variant<Identifier, int> dimensionType;
 		Identifier dimensionName;
 		long hashedSeed;
 		byte_t gameMode;
 		byte_t previousGameMode;
 		bool isDebug;
 		bool isFlat;
-		std::optional<Identifier> deathDimensionName;
-		std::optional<size_t> deathPosition;
-		int portalCooldown;
-		bool enforcesSecureChat;
+		std::optional<std::pair<Identifier, Vec3i>> deathDimensionNamePosition;
+		std::optional<int> portalCooldown;
+		std::optional<bool> enforcesSecureChat;
 
 	public:
 		using IPacket::IPacket;
@@ -38,65 +37,62 @@ namespace acp::packet::play::s2c
 
 		int getId(const ProtocolVersion* version) const override;
 
-		int& getEntityId();
+		int getEntityId() const;
 		void setEntityId(int entity_id);
 
-		bool& isHardcore();
+		bool isHardcore() const;
 		void setHardcore(bool hardcore);
 
-		std::vector<Identifier>& getDimensionNames();
+		const std::vector<Identifier>& getDimensionNames() const;
 		void setDimensionNames(const std::vector<Identifier>& dimension_names);
 
-		int& getMaxPlayers();
+		int getMaxPlayers() const;
 		void setMaxPlayers(int max_players);
 
-		int& getViewDistance();
+		int getViewDistance() const;
 		void setViewDistance(int view_distance);
 
-		int& getSimulationDistance();
-		void setSimulationDistance(int simulation_distance);
+		const std::optional<int>& getSimulationDistance() const;
+		void setSimulationDistance(const std::optional<int>& simulation_distance);
 
-		bool& isReducedDebugInfo();
+		bool isReducedDebugInfo() const;
 		void setReducedDebugInfo(bool reduced_debug_info);
 
-		bool& isEnableRespawnScreen();
+		bool isEnableRespawnScreen() const;
 		void setEnableRespawnScreen(bool enable_respawn_screen);
 
-		bool& isDoLimitedCrafting();
+		bool isDoLimitedCrafting() const;
 		void setDoLimitedCrafting(bool do_limited_crafting);
 
-		int& getDimensionType();
-		void setDimensionType(int dimension_type);
+		const std::variant<Identifier, int>& getDimensionType() const;
+		void setDimensionType(const std::variant<Identifier, int>& dimension_type);
 
-		Identifier& getDimensionName();
+		const Identifier& getDimensionName() const;
 		void setDimensionName(const Identifier& dimension_name);
 
-		long& getHashedSeed();
+		long getHashedSeed() const;
 		void setHashedSeed(long hashed_seed);
 
-		byte_t& getGameMode();
+		byte_t getGameMode() const;
 		void setGameMode(byte_t game_mode);
 
-		byte_t& getPreviousGameMode();
+		byte_t getPreviousGameMode() const;
 		void setPreviousGameMode(byte_t previous_game_mode);
 
-		bool& isIsDebug();
+		bool isIsDebug() const;
 		void setIsDebug(bool is_debug);
 
-		bool& isIsFlat();
+		bool isIsFlat() const;
 		void setIsFlat(bool is_flat);
 
-		std::optional<Identifier>& getDeathDimensionName();
-		void setDeathDimensionName(const std::optional<Identifier>& death_dimension_name);
+		const std::optional<std::pair<Identifier, Vec3i>>& getDeathDimensionNamePosition() const;
+		void setDeathDimensionNamePosition(const std::optional<std::pair<Identifier, Vec3i>>& death_dimension_name_position);
 
-		std::optional<size_t>& getDeathPosition();
-		void setDeathPosition(const std::optional<size_t>& death_position);
+		const std::optional<int>& getPortalCooldown() const;
+		void setPortalCooldown(const std::optional<int>& portal_cooldown);
 
-		int& getPortalCooldown();
-		void setPortalCooldown(int portal_cooldown);
-
-		bool& isEnforcesSecureChat();
-		void setEnforcesSecureChat(bool enforces_secure_chat);
+		const std::optional<bool>& getEnforcesSecureChat() const;
+		void setEnforcesSecureChat(const std::optional<bool>& enforces_secure_chat);
 
 		std::string toString() const override;
 	};
