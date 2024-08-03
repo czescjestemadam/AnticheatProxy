@@ -103,5 +103,5 @@ void acp::terminal::prompt::print()
 {
 	std::cout << "\033[2K"; // erase line
 	std::cout << "\r" + Format::FG_GREEN + PROMPT + Format::RESET + inp;
-	std::cout << "\033[" + std::to_string(PROMPT.length() + cursor + 1) + 'G'; // move cursor to column
+	std::cout << "\033[" + std::to_string(PROMPT.length() + cursor + 1) + 'G' << std::flush; // move cursor to column
 }
