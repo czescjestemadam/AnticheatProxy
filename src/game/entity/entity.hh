@@ -12,6 +12,7 @@ namespace acp::game
 		// TODO type
 		Vec3d position;
 		float yaw, pitch;
+		bool onGround;
 
 	public:
 		Entity(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch);
@@ -23,6 +24,7 @@ namespace acp::game
 		const UUID& getUuid() const;
 		void setUuid(const UUID& uuid);
 
+		Vec3d& getPosition();
 		const Vec3d& getPosition() const;
 		void setPosition(const Vec3d& position);
 
@@ -31,6 +33,9 @@ namespace acp::game
 
 		float getPitch() const;
 		void setPitch(float pitch);
+
+		bool isOnGround() const;
+		void setOnGround(bool on_ground);
 
 		virtual std::string toString();
 	};

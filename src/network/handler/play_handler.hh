@@ -187,6 +187,8 @@ namespace acp
 {
 	class PlayHandler : public INetworkHandler
 	{
+		std::unordered_map<int, packet::play::s2c::SynchronizePlayerPosition> pendingTeleports;
+
 	public:
 		using INetworkHandler::INetworkHandler;
 

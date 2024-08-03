@@ -11,6 +11,8 @@
 #include <optional>
 #include <memory>
 
+#include "anticheat/acp_player.hh"
+
 namespace acp
 {
 	class Connection
@@ -27,6 +29,7 @@ namespace acp
 		std::optional<int> compressionThreshold;
 
 		GameProfile gameProfile;
+		AcpPlayer player;
 
 	public:
 		Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket);
@@ -53,6 +56,9 @@ namespace acp
 
 		GameProfile& getGameProfile();
 		void setGameProfile(const GameProfile& game_profile);
+
+		AcpPlayer& getPlayer();
+		void setPlayer(const AcpPlayer& player);
 
 		std::string toString(NetworkSide dest = NetworkSide::DEST) const;
 

@@ -4,6 +4,23 @@
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ConfirmTeleportation* packet)
 {
+	if (pendingTeleports.contains(packet->getTeleportId()))
+	{
+		auto& pending = pendingTeleports[packet->getTeleportId()];
+
+		AcpPlayer& player = connection->getPlayer();
+
+		const byte_t fl = pending.getFlags();
+		player.getPosition().x = fl & 0x01 ? player.getPosition().x + pending.getPosition().x : pending.getPosition().x;
+		player.getPosition().y = fl & 0x02 ? player.getPosition().y + pending.getPosition().y : pending.getPosition().y;
+		player.getPosition().z = fl & 0x04 ? player.getPosition().z + pending.getPosition().z : pending.getPosition().z;
+
+		player.setPitch(fl & 0x08 ? player.getPitch() + pending.getPitch() : pending.getPitch());
+		player.setYaw(fl & 0x10 ? player.getYaw() + pending.getYaw() : pending.getYaw());
+
+		pendingTeleports.erase(packet->getTeleportId());
+	}
+
 	return HandleResult::FORWARD;
 }
 
@@ -136,21 +153,39 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::LockDifficulty* pa
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerPosition* packet)
 {
+	AcpPlayer& player = connection->getPlayer();
+	player.setPosition(packet->getPosition());
+	player.setOnGround(packet->isOnGround());
+
 	return HandleResult::FORWARD;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerPositionRotation* packet)
 {
+	AcpPlayer& player = connection->getPlayer();
+	player.setPosition(packet->getPosition());
+	player.setPitch(packet->getPitch());
+	player.setYaw(packet->getYaw());
+	player.setOnGround(packet->isOnGround());
+
 	return HandleResult::FORWARD;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerRotation* packet)
 {
+	AcpPlayer& player = connection->getPlayer();
+	player.setPitch(packet->getPitch());
+	player.setYaw(packet->getYaw());
+	player.setOnGround(packet->isOnGround());
+
 	return HandleResult::FORWARD;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SetPlayerOnGround* packet)
 {
+	AcpPlayer& player = connection->getPlayer();
+	player.setOnGround(packet->isOnGround());
+
 	return HandleResult::FORWARD;
 }
 
@@ -181,6 +216,8 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlaceRecipe* packe
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerAbilities* packet)
 {
+	connection->getPlayer().setFlying(packet->getFlags() & 0x02);
+
 	return HandleResult::FORWARD;
 }
 
@@ -191,6 +228,18 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerAction* pack
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PlayerCommand* packet)
 {
+	AcpPlayer& player = connection->getPlayer();
+
+	if (packet->getAction() == 0)
+		player.setSneaking(true);
+	else if (packet->getAction() == 1)
+		player.setSneaking(false);
+
+	else if (packet->getAction() == 3)
+		player.setSprinting(true);
+	else if (packet->getAction() == 4)
+		player.setSprinting(false);
+
 	return HandleResult::FORWARD;
 }
 
@@ -515,6 +564,8 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateLight* packe
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Login* packet)
 {
+	connection->setPlayer({ packet->getEntityId(), connection->getGameProfile() });
+
 	connection->getLogger().info("{} ({}) logged in with id {} in {}",
 								 connection->getGameProfile().username,
 								 connection->getGameProfile().uuid.toString(),
@@ -587,6 +638,11 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PlaceGhostRecipe* 
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PlayerAbilities* packet)
 {
+	AcpPlayer& player = connection->getPlayer();
+	player.setFlying(packet->getFlags() & 0x02);
+	player.setCanFly(packet->getFlags() & 0x04);
+	player.setInstantBreak(packet->getFlags() & 0x08);
+
 	return HandleResult::FORWARD;
 }
 
@@ -627,6 +683,8 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::LookAt* packet)
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SynchronizePlayerPosition* packet)
 {
+	pendingTeleports[packet->getTeleportId()] = *packet;
+
 	return HandleResult::FORWARD;
 }
 
@@ -772,6 +830,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetExperience* pac
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SetHealth* packet)
 {
+	AcpPlayer& player = connection->getPlayer();
+	player.setHealth(packet->getHealth());
+	player.setFood(packet->getFood());
+
 	return HandleResult::FORWARD;
 }
 

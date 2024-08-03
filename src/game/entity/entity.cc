@@ -27,6 +27,11 @@ void acp::game::Entity::setUuid(const UUID& uuid)
 	this->uuid = uuid;
 }
 
+acp::Vec3d& acp::game::Entity::getPosition()
+{
+	return position;
+}
+
 const acp::Vec3d& acp::game::Entity::getPosition() const
 {
 	return position;
@@ -57,7 +62,23 @@ void acp::game::Entity::setPitch(const float pitch)
 	this->pitch = pitch;
 }
 
+bool acp::game::Entity::isOnGround() const
+{
+	return onGround;
+}
+
+void acp::game::Entity::setOnGround(const bool on_ground)
+{
+	onGround = on_ground;
+}
+
 std::string acp::game::Entity::toString()
 {
-	return std::format("Entity[id={}, uuid={}, pos={} {} {}, rot={} {}]", id, uuid.toString(), position.x, position.y, position.z, yaw, pitch);
+	return std::format("Entity[id={}, uuid={}, pos={} {} {}, rot={} {}, ground={}]",
+					   id,
+					   uuid.toString(),
+					   position.x, position.y, position.z,
+					   yaw, pitch,
+					   onGround
+	);
 }

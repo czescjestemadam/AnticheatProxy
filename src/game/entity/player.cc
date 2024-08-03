@@ -17,7 +17,21 @@ void acp::game::Player::setProfile(const GameProfile& profile)
 	this->profile = profile;
 }
 
+bool acp::game::Player::isSneaking() const
+{
+	return sneaking;
+}
+
+void acp::game::Player::setSneaking(const bool sneaking)
+{
+	this->sneaking = sneaking;
+}
+
 std::string acp::game::Player::toString()
 {
-	return std::format("Player[profile={} {} {}, {}]", profile.username, profile.uuid.toString(), profile.properties.size(), LivingEntity::toString());
+	return std::format("Player[sneaking={}, profile={} {} {}, {}]",
+					   sneaking,
+					   profile.username, profile.uuid.toString(), profile.properties.size(),
+					   LivingEntity::toString()
+	);
 }

@@ -208,6 +208,16 @@ void acp::Connection::setGameProfile(const GameProfile& game_profile)
 	gameProfile = game_profile;
 }
 
+acp::AcpPlayer& acp::Connection::getPlayer()
+{
+	return player;
+}
+
+void acp::Connection::setPlayer(const AcpPlayer& player)
+{
+	this->player = player;
+}
+
 
 std::string acp::Connection::toString(NetworkSide dest) const
 {
