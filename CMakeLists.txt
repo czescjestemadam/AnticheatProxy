@@ -612,6 +612,8 @@ add_executable(AnticheatProxy
 	src/game/world/chunk.hh
 	src/game/world/chunk_key.cc
 	src/game/world/chunk_key.hh
+	src/util/registry/dimension_type.cc
+	src/util/registry/dimension_type.hh
 )
 
 find_package(OpenSSL REQUIRED)

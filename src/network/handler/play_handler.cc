@@ -561,10 +561,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChunkDataAndUpdate
 	game::Chunk chunk(key);
 
 	// TODO load blocks
-	connection->getLogger().info("chunk: {}", packet->toString());
+	// connection->getLogger().info("chunk: {}", packet->toString());
 
 	game::World& world = connection->getPlayer().getTrackedWorld();
-	world.getChunks()[key] = std::move(chunk);
+	world.getChunks().insert_or_assign(key, chunk);
 
 	return HandleResult::FORWARD;
 }

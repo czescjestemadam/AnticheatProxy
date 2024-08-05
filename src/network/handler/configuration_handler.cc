@@ -1,6 +1,9 @@
 #include "configuration_handler.hh"
 
 #include "network/connection.hh"
+#include "util/nbt/tag/tag_list.hh"
+#include "util/nbt/tag/tag_number.hh"
+#include "util/registry/dimension_type.hh"
 
 acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::ClientInformation* packet)
 {
@@ -82,6 +85,39 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::
 
 acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::RegistryData* packet)
 {
+	if (*connection->getProtocolVersion() < ProtocolVersion::v1_20_5)
+	{
+		if (auto* codec = dynamic_cast<nbt::TagCompound*>(packet->getCodec().get()))
+		{
+			if (codec->get().contains("damage_type"))
+			{
+				if (auto* damage = dynamic_cast<nbt::TagCompound*>(codec->get()["damage_type"].get()))
+					connection->getLogger().debug("damage: {}", damage->toString());
+			}
+
+			if (codec->get().contains("dimension_type"))
+			{
+				if (auto* dimensions = dynamic_cast<nbt::TagCompound*>(codec->get()["dimension_type"].get()))
+				{
+					if (auto* list = dynamic_cast<nbt::TagList*>(dimensions->get("value").get()))
+					{
+						for (std::unique_ptr<nbt::Tag>& tag : list->get())
+						{
+							registry::DimensionTypeEntry entry;
+							entry.deserialize(tag);
+
+							connection->getDimensionTypes().push_back(std::move(entry));
+						}
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		// TODO
+	}
+
 	return HandleResult::FORWARD;
 }
 

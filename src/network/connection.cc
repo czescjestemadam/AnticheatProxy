@@ -211,6 +211,26 @@ void acp::Connection::setGameProfile(const GameProfile& game_profile)
 	gameProfile = game_profile;
 }
 
+const std::vector<std::unique_ptr<acp::nbt::Tag>>& acp::Connection::getDamageTypes() const
+{
+	return damageTypes;
+}
+
+std::vector<std::unique_ptr<acp::nbt::Tag>>& acp::Connection::getDamageTypes()
+{
+	return damageTypes;
+}
+
+std::vector<acp::registry::DimensionTypeEntry>& acp::Connection::getDimensionTypes()
+{
+	return dimensionTypes;
+}
+
+const std::vector<acp::registry::DimensionTypeEntry>& acp::Connection::getDimensionTypes() const
+{
+	return dimensionTypes;
+}
+
 acp::AcpPlayer& acp::Connection::getPlayer()
 {
 	return player;

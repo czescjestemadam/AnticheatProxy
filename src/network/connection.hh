@@ -7,11 +7,11 @@
 #include "util/logger/sub_logger.hh"
 #include "util/game_profile.hh"
 #include "util/text/component.hh"
+#include "anticheat/acp_player.hh"
+#include "util/registry/dimension_type.hh"
 
 #include <optional>
 #include <memory>
-
-#include "anticheat/acp_player.hh"
 
 namespace acp
 {
@@ -29,6 +29,8 @@ namespace acp
 		std::optional<int> compressionThreshold;
 
 		GameProfile gameProfile;
+		std::vector<std::unique_ptr<nbt::Tag>> damageTypes;
+		std::vector<registry::DimensionTypeEntry> dimensionTypes;
 		AcpPlayer player;
 
 	public:
@@ -56,6 +58,12 @@ namespace acp
 
 		GameProfile& getGameProfile();
 		void setGameProfile(const GameProfile& game_profile);
+
+		std::vector<std::unique_ptr<nbt::Tag>>& getDamageTypes();
+		const std::vector<std::unique_ptr<nbt::Tag>>& getDamageTypes() const;
+
+		std::vector<registry::DimensionTypeEntry>& getDimensionTypes();
+		const std::vector<registry::DimensionTypeEntry>& getDimensionTypes() const;
 
 		AcpPlayer& getPlayer();
 		void setPlayer(AcpPlayer&& player);
