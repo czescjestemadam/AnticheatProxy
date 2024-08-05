@@ -19,7 +19,25 @@ namespace acp::nbt
 
 		std::unordered_map<std::string, std::unique_ptr<Tag>>& get();
 		const std::unordered_map<std::string, std::unique_ptr<Tag>>& get() const;
-		void set(std::unordered_map<std::string, std::unique_ptr<Tag>>&& tags);
+
+		std::unique_ptr<Tag>& get(const std::string& name);
+		const std::unique_ptr<Tag>& get(const std::string& name) const;
+
+		template<class T, class P>
+		T get(const std::string& name)
+		{
+			std::unique_ptr<Tag>& tag = tags[name];
+			P* ptr = dynamic_cast<P*>(tag.get());
+			return ptr->get();
+		}
+
+		void set(const std::string& name, std::unique_ptr<Tag>&& tag);
+
+		template<class T, class ...Args>
+		void set(const std::string& name, Args&& ...args)
+		{
+			set(name, std::make_unique<T>(std::forward<Args...>(args...)));
+		}
 
 		TagType getType() const override;
 

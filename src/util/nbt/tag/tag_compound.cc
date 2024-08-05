@@ -39,9 +39,19 @@ const std::unordered_map<std::string, std::unique_ptr<acp::nbt::Tag>>& acp::nbt:
 	return tags;
 }
 
-void acp::nbt::TagCompound::set(std::unordered_map<std::string, std::unique_ptr<Tag>>&& tags)
+std::unique_ptr<acp::nbt::Tag>& acp::nbt::TagCompound::get(const std::string& name)
 {
-	this->tags = std::move(tags);
+	return tags[name];
+}
+
+const std::unique_ptr<acp::nbt::Tag>& acp::nbt::TagCompound::get(const std::string& name) const
+{
+	return tags.at(name);
+}
+
+void acp::nbt::TagCompound::set(const std::string& name, std::unique_ptr<Tag>&& tag)
+{
+	tags[name] = std::move(tag);
 }
 
 acp::nbt::TagType acp::nbt::TagCompound::getType() const
