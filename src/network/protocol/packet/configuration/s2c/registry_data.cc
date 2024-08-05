@@ -66,6 +66,21 @@ int acp::packet::configuration::s2c::RegistryData::getId(const ProtocolVersion* 
 	return -1;
 }
 
+std::unique_ptr<acp::nbt::Tag>& acp::packet::configuration::s2c::RegistryData::getCodec()
+{
+	return codec;
+}
+
+const std::unique_ptr<acp::nbt::Tag>& acp::packet::configuration::s2c::RegistryData::getCodec() const
+{
+	return codec;
+}
+
+void acp::packet::configuration::s2c::RegistryData::setCodec(std::unique_ptr<nbt::Tag>&& codec)
+{
+	this->codec = std::move(codec);
+}
+
 acp::Identifier acp::packet::configuration::s2c::RegistryData::getRegistryId() const
 {
 	return registryId;

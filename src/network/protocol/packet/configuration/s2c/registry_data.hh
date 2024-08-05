@@ -20,6 +20,10 @@ namespace acp::packet::configuration::s2c
 
 		int getId(const ProtocolVersion* version) const override;
 
+		std::unique_ptr<nbt::Tag>& getCodec();
+		const std::unique_ptr<nbt::Tag>& getCodec() const;
+		void setCodec(std::unique_ptr<nbt::Tag>&& codec);
+
 		Identifier getRegistryId() const;
 		void setRegistryId(const Identifier& registry_id);
 
