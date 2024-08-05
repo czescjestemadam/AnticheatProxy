@@ -432,6 +432,46 @@ void acp::ByteBuf::writeGameProfile(const GameProfile& profile, bool writeProper
 	}
 }
 
+std::vector<bool> acp::ByteBuf::readBitset()
+{
+	const int len = readVarint();
+	std::vector<bool> v;
+	v.reserve(len);
+
+	for (int i = 0; i < len; ++i)
+	{
+		const ulong l = readLong();
+		for (int sh = 0; sh < 64; ++sh)
+			v.push_back((l & 1 << sh) != 0);
+	}
+
+	return v;
+}
+
+void acp::ByteBuf::writeBitset(const std::vector<bool>& v)
+{
+	// TODO test
+
+	const int size = static_cast<int>(v.size()) / 64;
+	writeVarint(size);
+
+	for (int i = 0; i < size; ++i)
+	{
+		ulong l = 0;
+		for (int sh = 0; sh < 64; ++sh)
+		{
+			const int idx = i * 64 + sh;
+			if (idx >= v.size())
+				break;
+
+			if (v[idx])
+				l |= 1 << sh;
+		}
+
+		writeLongU(l);
+	}
+}
+
 
 acp::ByteBuf acp::ByteBuf::compress(int level) const
 {

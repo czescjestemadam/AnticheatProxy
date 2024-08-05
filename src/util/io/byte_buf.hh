@@ -101,6 +101,9 @@ namespace acp
 		GameProfile readGameProfile(bool readProperties = true);
 		void writeGameProfile(const GameProfile& profile, bool writeProperties = true);
 
+		std::vector<bool> readBitset();
+		void writeBitset(const std::vector<bool>& v);
+
 		// zlib
 		ByteBuf compress(int level = -1) const;
 		ByteBuf decompress(int length) const;
