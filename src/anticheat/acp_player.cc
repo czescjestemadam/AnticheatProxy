@@ -60,6 +60,16 @@ void acp::AcpPlayer::setInstantBreak(const bool instant_break)
 	instantBreak = instant_break;
 }
 
+std::unordered_map<int, std::unique_ptr<acp::game::Entity>>& acp::AcpPlayer::getTrackedEntities()
+{
+	return trackedEntities;
+}
+
+const std::unordered_map<int, std::unique_ptr<acp::game::Entity>>& acp::AcpPlayer::getTrackedEntities() const
+{
+	return trackedEntities;
+}
+
 std::string acp::AcpPlayer::toString()
 {
 	return std::format("AcpPlayer[food={}, sprinting={}, flying={}, canFly={}, instantBreak={}, {}]",

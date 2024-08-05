@@ -58,7 +58,7 @@ namespace acp
 		void setGameProfile(const GameProfile& game_profile);
 
 		AcpPlayer& getPlayer();
-		void setPlayer(const AcpPlayer& player);
+		void setPlayer(AcpPlayer&& player);
 
 		std::string toString(NetworkSide dest = NetworkSide::DEST) const;
 

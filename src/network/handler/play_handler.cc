@@ -351,6 +351,16 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BundleDelimiter* p
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SpawnEntity* packet)
 {
+	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+	// TODO make some factory from type id
+	trackedEntities[packet->getEntityId()] = std::make_unique<game::Entity>(
+		packet->getEntityId(),
+		packet->getEntityUuid(),
+		packet->getPosition(),
+		packet->getYaw(),
+		packet->getPitch()
+	);
+
 	return HandleResult::FORWARD;
 }
 
@@ -588,16 +598,48 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::MerchantOffers* pa
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPosition* packet)
 {
+	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+	if (trackedEntities.contains(packet->getEntityId()))
+	{
+		const auto& entity = trackedEntities[packet->getEntityId()];
+
+		// TODO
+		// entity->setPosition(entity->getPosition() + packet->getDelta());
+		entity->setOnGround(packet->isOnGround());
+	}
+
 	return HandleResult::FORWARD;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositionRotation* packet)
 {
+	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+	if (trackedEntities.contains(packet->getEntityId()))
+	{
+		const auto& entity = trackedEntities[packet->getEntityId()];
+
+		// TODO
+		// entity->setPosition(entity->getPosition() + packet->getDelta());
+		entity->setYaw(packet->getYaw());
+		entity->setPitch(packet->getPitch());
+		entity->setOnGround(packet->isOnGround());
+	}
+
 	return HandleResult::FORWARD;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityRotation* packet)
 {
+	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+	if (trackedEntities.contains(packet->getEntityId()))
+	{
+		const auto& entity = trackedEntities[packet->getEntityId()];
+
+		entity->setYaw(packet->getYaw());
+		entity->setPitch(packet->getPitch());
+		entity->setOnGround(packet->isOnGround());
+	}
+
 	return HandleResult::FORWARD;
 }
 
@@ -695,6 +737,11 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateRecipeBook* 
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::RemoveEntities* packet)
 {
+	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+
+	for (int id : packet->getIds())
+		trackedEntities.erase(id);
+
 	return HandleResult::FORWARD;
 }
 
@@ -929,6 +976,15 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PickupItem* packet
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::TeleportEntity* packet)
 {
+	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+	if (trackedEntities.contains(packet->getEntityId()))
+	{
+		const auto& entity = trackedEntities[packet->getEntityId()];
+		entity->setPosition(packet->getPosition());
+		entity->setYaw(packet->getYaw());
+		entity->setPitch(packet->getPitch());
+	}
+
 	return HandleResult::FORWARD;
 }
 

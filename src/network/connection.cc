@@ -213,9 +213,9 @@ acp::AcpPlayer& acp::Connection::getPlayer()
 	return player;
 }
 
-void acp::Connection::setPlayer(const AcpPlayer& player)
+void acp::Connection::setPlayer(AcpPlayer&& player)
 {
-	this->player = player;
+	this->player = std::move(player);
 }
 
 
