@@ -116,6 +116,9 @@ void acp::Connection::handleEvent(int fd)
 
 void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write)
 {
+	if (!getSide(to).isValid())
+		return;
+
 	if (write)
 		packet->write(protocolVersion);
 
