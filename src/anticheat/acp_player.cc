@@ -90,6 +90,16 @@ void acp::AcpPlayer::setTrackedInventory(const game::PlayerInventory& tracked_in
 	trackedInventory = tracked_inventory;
 }
 
+acp::CheckManager& acp::AcpPlayer::getCheckManager()
+{
+	return checkManager;
+}
+
+const acp::CheckManager& acp::AcpPlayer::getCheckManager() const
+{
+	return checkManager;
+}
+
 std::string acp::AcpPlayer::toString()
 {
 	return std::format("AcpPlayer[food={}, sprinting={}, flying={}, canFly={}, instantBreak={}, {}]",

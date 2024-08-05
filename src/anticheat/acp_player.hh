@@ -1,10 +1,10 @@
 #pragma once
 #include "game/entity/player.hh"
 #include "game/world/world.hh"
+#include "game/item/player_inventory.hh"
+#include "check/check_manager.hh"
 
 #include <memory>
-
-#include "game/item/player_inventory.hh"
 
 namespace acp
 {
@@ -23,6 +23,7 @@ namespace acp
 
 		game::World trackedWorld;
 		game::PlayerInventory trackedInventory;
+		CheckManager checkManager;
 
 	public:
 		AcpPlayer();
@@ -50,6 +51,9 @@ namespace acp
 		game::PlayerInventory& getTrackedInventory();
 		const game::PlayerInventory& getTrackedInventory() const;
 		void setTrackedInventory(const game::PlayerInventory& tracked_inventory);
+
+		CheckManager& getCheckManager();
+		const CheckManager& getCheckManager() const;
 
 		std::string toString() override;
 	};
