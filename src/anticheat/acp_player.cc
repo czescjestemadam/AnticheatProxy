@@ -2,12 +2,18 @@
 
 #include <format>
 
-acp::AcpPlayer::AcpPlayer() : AcpPlayer(-1, {}, {})
+acp::AcpPlayer::AcpPlayer() : AcpPlayer(nullptr, -1, {}, {})
 {
 }
 
-acp::AcpPlayer::AcpPlayer(int id, const GameProfile& profile, const Identifier& worldName) : Player(id, profile.uuid, {}, 0, 0, 20, profile), trackedWorld(worldName)
+acp::AcpPlayer::AcpPlayer(Connection* connection, int id, const GameProfile& profile, const Identifier& worldName)
+	: Player(id, profile.uuid, {}, 0, 0, 20, profile), connection(connection), trackedWorld(worldName), checkManager(this)
 {
+}
+
+acp::Connection* acp::AcpPlayer::getConnection() const
+{
+	return connection;
 }
 
 int acp::AcpPlayer::getFood() const

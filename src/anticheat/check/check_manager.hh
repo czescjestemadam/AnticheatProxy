@@ -6,12 +6,20 @@
 
 namespace acp
 {
+	class AcpPlayer;
+
 	class CheckManager
 	{
+		AcpPlayer* player;
 		std::unordered_map<std::string, std::unique_ptr<ICheck>> checks;
 
 	public:
-		CheckManager();
+		explicit CheckManager(AcpPlayer* player);
+
+		AcpPlayer* getPlayer() const;
+
+		std::unordered_map<std::string, std::unique_ptr<ICheck>>& getChecks();
+		const std::unordered_map<std::string, std::unique_ptr<ICheck>>& getChecks() const;
 
 		ICheck* getByName(const std::string& name);
 	};

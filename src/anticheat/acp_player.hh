@@ -8,8 +8,12 @@
 
 namespace acp
 {
+	class Connection;
+
 	class AcpPlayer : public game::Player
 	{
+		Connection* connection;
+
 		int food = 0;
 
 		bool sprinting = false;
@@ -27,7 +31,9 @@ namespace acp
 
 	public:
 		AcpPlayer();
-		AcpPlayer(int id, const GameProfile& profile, const Identifier& worldName);
+		AcpPlayer(Connection* connection, int id, const GameProfile& profile, const Identifier& worldName);
+
+		Connection* getConnection() const;
 
 		int getFood() const;
 		void setFood(int food);

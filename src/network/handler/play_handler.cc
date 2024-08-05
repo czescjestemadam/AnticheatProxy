@@ -586,7 +586,7 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateLight* packe
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Login* packet)
 {
-	connection->setPlayer({ packet->getEntityId(), connection->getGameProfile(), packet->getDimensionName() });
+	connection->setPlayer({ connection, packet->getEntityId(), connection->getGameProfile(), packet->getDimensionName() });
 
 	connection->getLogger().info("{} ({}) logged in with id {} in {}",
 								 connection->getGameProfile().username,
