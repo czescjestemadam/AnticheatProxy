@@ -1,8 +1,8 @@
 #pragma once
 #include "game/entity/player.hh"
+#include "game/world/world.hh"
 
 #include <memory>
-#include <unordered_map>
 
 namespace acp
 {
@@ -19,12 +19,11 @@ namespace acp
 		/// from s2c::PlayerAbilities, Creative Mode (Instant Break) - 0x08
 		bool instantBreak = false;
 
-		std::unordered_map<int, std::unique_ptr<Entity>> trackedEntities;
+		game::World trackedWorld;
 
 	public:
 		AcpPlayer();
-		AcpPlayer(int id, const GameProfile& profile);
-		using Player::Player;
+		AcpPlayer(int id, const GameProfile& profile, const Identifier& worldName);
 
 		int getFood() const;
 		void setFood(int food);
@@ -41,8 +40,9 @@ namespace acp
 		bool isInstantBreak() const;
 		void setInstantBreak(bool instant_break);
 
-		std::unordered_map<int, std::unique_ptr<Entity>>& getTrackedEntities();
-		const std::unordered_map<int, std::unique_ptr<Entity>>& getTrackedEntities() const;
+		game::World& getTrackedWorld();
+		const game::World& getTrackedWorld() const;
+		void setTrackedWorld(game::World&& tracked_world);
 
 		std::string toString() override;
 	};

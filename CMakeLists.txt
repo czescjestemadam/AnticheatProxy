@@ -600,6 +600,18 @@ add_executable(AnticheatProxy
 	src/util/command/properties/time_properties.hh
 	src/util/command/properties/identifier_properties.cc
 	src/util/command/properties/identifier_properties.hh
+	src/game/item/item_stack.cc
+	src/game/item/item_stack.hh
+	src/game/item/inventory.cc
+	src/game/item/inventory.hh
+	src/game/item/player_inventory.cc
+	src/game/item/player_inventory.hh
+	src/game/world/world.cc
+	src/game/world/world.hh
+	src/game/world/chunk.cc
+	src/game/world/chunk.hh
+	src/game/world/chunk_key.cc
+	src/game/world/chunk_key.hh
 )
 
 find_package(OpenSSL REQUIRED)

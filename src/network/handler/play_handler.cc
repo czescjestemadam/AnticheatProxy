@@ -351,9 +351,9 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BundleDelimiter* p
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SpawnEntity* packet)
 {
-	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
 	// TODO make some factory from type id
-	trackedEntities[packet->getEntityId()] = std::make_unique<game::Entity>(
+	entities[packet->getEntityId()] = std::make_unique<game::Entity>(
 		packet->getEntityId(),
 		packet->getEntityUuid(),
 		packet->getPosition(),
@@ -524,6 +524,9 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Explosion* packet)
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UnloadChunk* packet)
 {
+	game::World& world = connection->getPlayer().getTrackedWorld();
+	world.getChunks().erase({ packet->getX(), packet->getZ() });
+
 	return HandleResult::FORWARD;
 }
 
@@ -554,6 +557,15 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::KeepAlive* packet)
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChunkDataAndUpdateLight* packet)
 {
+	const game::ChunkKey key(packet->getX(), packet->getZ());
+	game::Chunk chunk(key);
+
+	// TODO load blocks
+	connection->getLogger().info("chunk: {}", packet->toString());
+
+	game::World& world = connection->getPlayer().getTrackedWorld();
+	world.getChunks()[key] = std::move(chunk);
+
 	return HandleResult::FORWARD;
 }
 
@@ -574,7 +586,7 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateLight* packe
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Login* packet)
 {
-	connection->setPlayer({ packet->getEntityId(), connection->getGameProfile() });
+	connection->setPlayer({ packet->getEntityId(), connection->getGameProfile(), packet->getDimensionName() });
 
 	connection->getLogger().info("{} ({}) logged in with id {} in {}",
 								 connection->getGameProfile().username,
@@ -598,10 +610,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::MerchantOffers* pa
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPosition* packet)
 {
-	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
-	if (trackedEntities.contains(packet->getEntityId()))
+	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
+	if (entities.contains(packet->getEntityId()))
 	{
-		const auto& entity = trackedEntities[packet->getEntityId()];
+		const auto& entity = entities[packet->getEntityId()];
 
 		// TODO
 		// entity->setPosition(entity->getPosition() + packet->getDelta());
@@ -613,10 +625,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositi
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositionRotation* packet)
 {
-	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
-	if (trackedEntities.contains(packet->getEntityId()))
+	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
+	if (entities.contains(packet->getEntityId()))
 	{
-		const auto& entity = trackedEntities[packet->getEntityId()];
+		const auto& entity = entities[packet->getEntityId()];
 
 		// TODO
 		// entity->setPosition(entity->getPosition() + packet->getDelta());
@@ -630,10 +642,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositi
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityRotation* packet)
 {
-	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
-	if (trackedEntities.contains(packet->getEntityId()))
+	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
+	if (entities.contains(packet->getEntityId()))
 	{
-		const auto& entity = trackedEntities[packet->getEntityId()];
+		const auto& entity = entities[packet->getEntityId()];
 
 		entity->setYaw(packet->getYaw());
 		entity->setPitch(packet->getPitch());
@@ -737,10 +749,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateRecipeBook* 
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::RemoveEntities* packet)
 {
-	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
+	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
 
 	for (int id : packet->getIds())
-		trackedEntities.erase(id);
+		entities.erase(id);
 
 	return HandleResult::FORWARD;
 }
@@ -976,10 +988,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PickupItem* packet
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::TeleportEntity* packet)
 {
-	auto& trackedEntities = connection->getPlayer().getTrackedEntities();
-	if (trackedEntities.contains(packet->getEntityId()))
+	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
+	if (entities.contains(packet->getEntityId()))
 	{
-		const auto& entity = trackedEntities[packet->getEntityId()];
+		const auto& entity = entities[packet->getEntityId()];
 		entity->setPosition(packet->getPosition());
 		entity->setYaw(packet->getYaw());
 		entity->setPitch(packet->getPitch());

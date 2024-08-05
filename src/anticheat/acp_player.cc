@@ -2,11 +2,11 @@
 
 #include <format>
 
-acp::AcpPlayer::AcpPlayer() : AcpPlayer(-1, {})
+acp::AcpPlayer::AcpPlayer() : AcpPlayer(-1, {}, {})
 {
 }
 
-acp::AcpPlayer::AcpPlayer(int id, const GameProfile& profile) : AcpPlayer(id, profile.uuid, {}, 0, 0, 20, profile)
+acp::AcpPlayer::AcpPlayer(int id, const GameProfile& profile, const Identifier& worldName) : Player(id, profile.uuid, {}, 0, 0, 20, profile), trackedWorld(worldName)
 {
 }
 
@@ -60,14 +60,19 @@ void acp::AcpPlayer::setInstantBreak(const bool instant_break)
 	instantBreak = instant_break;
 }
 
-std::unordered_map<int, std::unique_ptr<acp::game::Entity>>& acp::AcpPlayer::getTrackedEntities()
+acp::game::World& acp::AcpPlayer::getTrackedWorld()
 {
-	return trackedEntities;
+	return trackedWorld;
 }
 
-const std::unordered_map<int, std::unique_ptr<acp::game::Entity>>& acp::AcpPlayer::getTrackedEntities() const
+const acp::game::World& acp::AcpPlayer::getTrackedWorld() const
 {
-	return trackedEntities;
+	return trackedWorld;
+}
+
+void acp::AcpPlayer::setTrackedWorld(game::World&& tracked_world)
+{
+	trackedWorld = std::move(tracked_world);
 }
 
 std::string acp::AcpPlayer::toString()
