@@ -75,6 +75,21 @@ void acp::AcpPlayer::setTrackedWorld(game::World&& tracked_world)
 	trackedWorld = std::move(tracked_world);
 }
 
+acp::game::PlayerInventory& acp::AcpPlayer::getTrackedInventory()
+{
+	return trackedInventory;
+}
+
+const acp::game::PlayerInventory& acp::AcpPlayer::getTrackedInventory() const
+{
+	return trackedInventory;
+}
+
+void acp::AcpPlayer::setTrackedInventory(const game::PlayerInventory& tracked_inventory)
+{
+	trackedInventory = tracked_inventory;
+}
+
 std::string acp::AcpPlayer::toString()
 {
 	return std::format("AcpPlayer[food={}, sprinting={}, flying={}, canFly={}, instantBreak={}, {}]",

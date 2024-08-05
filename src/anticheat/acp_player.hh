@@ -4,6 +4,8 @@
 
 #include <memory>
 
+#include "game/item/player_inventory.hh"
+
 namespace acp
 {
 	class AcpPlayer : public game::Player
@@ -20,6 +22,7 @@ namespace acp
 		bool instantBreak = false;
 
 		game::World trackedWorld;
+		game::PlayerInventory trackedInventory;
 
 	public:
 		AcpPlayer();
@@ -43,6 +46,10 @@ namespace acp
 		game::World& getTrackedWorld();
 		const game::World& getTrackedWorld() const;
 		void setTrackedWorld(game::World&& tracked_world);
+
+		game::PlayerInventory& getTrackedInventory();
+		const game::PlayerInventory& getTrackedInventory() const;
+		void setTrackedInventory(const game::PlayerInventory& tracked_inventory);
 
 		std::string toString() override;
 	};
