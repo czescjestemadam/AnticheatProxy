@@ -174,12 +174,16 @@ void acp::ByteBuf::writeInt(int v)
 
 long acp::ByteBuf::readLong()
 {
-	BUF_READ(long, ntohl);
+	BUF_UNION(long);
+	readBytesR(bytes, sizeof(long));
+	return val;
 }
 
 void acp::ByteBuf::writeLong(long v)
 {
-	BUF_WRITE(long, htonl);
+	BUF_UNION(long);
+	val = v;
+	writeBytesR(bytes, sizeof(long));
 }
 
 
@@ -205,12 +209,16 @@ void acp::ByteBuf::writeIntU(unsigned int v)
 
 unsigned long acp::ByteBuf::readLongU()
 {
-	BUF_READ(unsigned long, ntohl);
+	BUF_UNION(unsigned long);
+	readBytesR(bytes, sizeof(unsigned long));
+	return val;
 }
 
 void acp::ByteBuf::writeLongU(unsigned long v)
 {
-	BUF_WRITE(unsigned long, htonl);
+	BUF_UNION(unsigned long);
+	val = v;
+	writeBytesR(bytes, sizeof(unsigned long));
 }
 
 float acp::ByteBuf::readFloat()
