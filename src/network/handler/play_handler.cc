@@ -2,6 +2,8 @@
 
 #include "network/connection.hh"
 
+#include <cmath>
+
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ConfirmTeleportation* packet)
 {
 	if (pendingTeleports.contains(packet->getTeleportId()))
@@ -618,13 +620,13 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::MerchantOffers* pa
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPosition* packet)
 {
-	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
-	if (entities.contains(packet->getEntityId()))
+	if (game::Entity* entity = connection->getPlayer().getTrackedWorld().getEntity(packet->getEntityId()))
 	{
-		const auto& entity = entities[packet->getEntityId()];
-
-		// TODO
-		// entity->setPosition(entity->getPosition() + packet->getDelta());
+		entity->setPosition({
+			packet->getDelta().x == 0 ? entity->getPosition().x : (std::round(entity->getPosition().x * 4096.0) + packet->getDelta().x) / 4096.0,
+			packet->getDelta().y == 0 ? entity->getPosition().y : (std::round(entity->getPosition().y * 4096.0) + packet->getDelta().y) / 4096.0,
+			packet->getDelta().z == 0 ? entity->getPosition().z : (std::round(entity->getPosition().z * 4096.0) + packet->getDelta().z) / 4096.0
+		});
 		entity->setOnGround(packet->isOnGround());
 	}
 
@@ -633,13 +635,13 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositi
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositionRotation* packet)
 {
-	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
-	if (entities.contains(packet->getEntityId()))
+	if (game::Entity* entity = connection->getPlayer().getTrackedWorld().getEntity(packet->getEntityId()))
 	{
-		const auto& entity = entities[packet->getEntityId()];
-
-		// TODO
-		// entity->setPosition(entity->getPosition() + packet->getDelta());
+		entity->setPosition({
+			packet->getDelta().x == 0 ? entity->getPosition().x : (std::round(entity->getPosition().x * 4096.0) + packet->getDelta().x) / 4096.0,
+			packet->getDelta().y == 0 ? entity->getPosition().y : (std::round(entity->getPosition().y * 4096.0) + packet->getDelta().y) / 4096.0,
+			packet->getDelta().z == 0 ? entity->getPosition().z : (std::round(entity->getPosition().z * 4096.0) + packet->getDelta().z) / 4096.0
+		});
 		entity->setYaw(packet->getYaw());
 		entity->setPitch(packet->getPitch());
 		entity->setOnGround(packet->isOnGround());
@@ -650,11 +652,8 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityPositi
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::UpdateEntityRotation* packet)
 {
-	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
-	if (entities.contains(packet->getEntityId()))
+	if (game::Entity* entity = connection->getPlayer().getTrackedWorld().getEntity(packet->getEntityId()))
 	{
-		const auto& entity = entities[packet->getEntityId()];
-
 		entity->setYaw(packet->getYaw());
 		entity->setPitch(packet->getPitch());
 		entity->setOnGround(packet->isOnGround());
@@ -996,10 +995,8 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PickupItem* packet
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::TeleportEntity* packet)
 {
-	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
-	if (entities.contains(packet->getEntityId()))
+	if (game::Entity* entity = connection->getPlayer().getTrackedWorld().getEntity(packet->getEntityId()))
 	{
-		const auto& entity = entities[packet->getEntityId()];
 		entity->setPosition(packet->getPosition());
 		entity->setYaw(packet->getYaw());
 		entity->setPitch(packet->getPitch());
