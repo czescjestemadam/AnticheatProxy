@@ -3,6 +3,7 @@
 
 namespace acp::packet::play::c2s
 {
+	/// block mining
 	class PlayerAction : public IPacket
 	{
 		int status;
