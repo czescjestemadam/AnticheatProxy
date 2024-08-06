@@ -614,14 +614,12 @@ add_executable(AnticheatProxy
 	src/game/world/chunk_key.hh
 	src/util/registry/dimension_type.cc
 	src/util/registry/dimension_type.hh
-	src/anticheat/check/i_check.cc
 	src/anticheat/check/i_check.hh
 	src/anticheat/check/check_manager.cc
 	src/anticheat/check/check_manager.hh
-	src/anticheat/check/i_movement_check.cc
 	src/anticheat/check/i_movement_check.hh
-	src/anticheat/check/i_interact_check.cc
 	src/anticheat/check/i_interact_check.hh
+	src/anticheat/check/i_inventory_check.hh
 )
 
 find_package(OpenSSL REQUIRED)
