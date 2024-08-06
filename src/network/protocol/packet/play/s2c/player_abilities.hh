@@ -7,6 +7,7 @@ namespace acp::packet::play::s2c
 	{
 		byte_t flags;
 		float flyingSpeed;
+		/// same as walk speed from @c UpdateAttributes
 		float fovModifier;
 
 	public:
