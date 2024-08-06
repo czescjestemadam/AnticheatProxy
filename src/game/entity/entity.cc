@@ -12,11 +12,6 @@ int acp::game::Entity::getId() const
 	return id;
 }
 
-void acp::game::Entity::setId(const int id)
-{
-	this->id = id;
-}
-
 const acp::UUID& acp::game::Entity::getUuid() const
 {
 	return uuid;
@@ -30,11 +25,6 @@ void acp::game::Entity::setUuid(const UUID& uuid)
 acp::game::EntityType acp::game::Entity::getType() const
 {
 	return type;
-}
-
-void acp::game::Entity::setType(const EntityType type)
-{
-	this->type = type;
 }
 
 acp::Vec3d& acp::game::Entity::getPosition()

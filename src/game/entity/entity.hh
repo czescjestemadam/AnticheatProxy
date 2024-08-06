@@ -20,13 +20,11 @@ namespace acp::game
 		virtual ~Entity() = default;
 
 		int getId() const;
-		void setId(int id);
 
 		const UUID& getUuid() const;
 		void setUuid(const UUID& uuid);
 
 		EntityType getType() const;
-		void setType(EntityType type);
 
 		Vec3d& getPosition();
 		const Vec3d& getPosition() const;
