@@ -51,7 +51,7 @@ void acp::Connection::handleEvent(int fd)
 	const int id = buf.readVarint();
 	std::unique_ptr<packet::IPacket> packet = protocolVersion == nullptr
 												  ? std::make_unique<packet::handshake::Handshake>(buf)
-												  : protocolVersion->getMapping().create(state, fromSide, id, buf);
+												  : protocolVersion->getProtocolMapping().create(state, fromSide, id, buf);
 
 	if (!packet)
 	{

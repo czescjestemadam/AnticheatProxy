@@ -19,9 +19,9 @@ std::string acp::ProtocolVersion::getName() const
 	return name;
 }
 
-const acp::ProtocolMapping& acp::ProtocolVersion::getMapping() const
+const acp::ProtocolMapping& acp::ProtocolVersion::getProtocolMapping() const
 {
-	return mapping;
+	return protocolMapping;
 }
 
 bool acp::ProtocolVersion::operator==(const ProtocolVersion& rhs) const
@@ -60,8 +60,8 @@ void acp::ProtocolVersion::compileMappings(SubLogger&& logger)
 
 	for (auto& [idx, version] : versionByIdx)
 	{
-		version->mapping = ProtocolMapping(version);
-		logger.info("Compiled {} packet ids for {}", version->mapping.size(), version->getName());
+		version->protocolMapping = ProtocolMapping(version);
+		logger.info("Compiled {} packet ids for {}", version->protocolMapping.size(), version->getName());
 	}
 }
 
