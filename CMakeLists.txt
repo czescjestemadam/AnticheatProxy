@@ -621,6 +621,8 @@ add_executable(AnticheatProxy
 	src/anticheat/check/i_movement_check.hh
 	src/anticheat/check/i_interact_check.hh
 	src/anticheat/check/i_inventory_check.hh
+	src/anticheat/check/interact/reach.cc
+	src/anticheat/check/interact/reach.hh
 )
 
 find_package(OpenSSL REQUIRED)
