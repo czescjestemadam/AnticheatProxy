@@ -1,5 +1,7 @@
 #pragma once
+#include "network/protocol/protocol_version.hh"
 #include "type/entity_type.hh"
+#include "util/bounding_box.hh"
 #include "util/uuid.hh"
 #include "util/vec3.hh"
 
@@ -25,6 +27,8 @@ namespace acp::game
 		void setUuid(const UUID& uuid);
 
 		const EntityType* getType() const;
+
+		BoundingBoxD getBoundingBox(const ProtocolVersion* version) const;
 
 		Vec3d& getPosition();
 		const Vec3d& getPosition() const;

@@ -27,6 +27,11 @@ const acp::game::EntityType* acp::game::Entity::getType() const
 	return type;
 }
 
+acp::BoundingBoxD acp::game::Entity::getBoundingBox(const ProtocolVersion* version) const
+{
+	return BoundingBoxD::fromPos(position, type->getBoundingBoxSize(version));
+}
+
 acp::Vec3d& acp::game::Entity::getPosition()
 {
 	return position;
