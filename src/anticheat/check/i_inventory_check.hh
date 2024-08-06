@@ -6,6 +6,6 @@ namespace acp
 	class IInventoryCheck : public ICheck
 	{
 	public:
-
+		using ICheck::ICheck;
 	};
 }

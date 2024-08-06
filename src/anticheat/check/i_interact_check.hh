@@ -11,6 +11,8 @@ namespace acp
 	class IInteractCheck : public ICheck
 	{
 	public:
+		using ICheck::ICheck;
+
 		virtual void check(packet::play::c2s::Interact* packet) = 0;
 
 		virtual void check(packet::play::c2s::UseItem* packet) = 0;

@@ -13,6 +13,8 @@ namespace acp
 	class IMovementCheck : public ICheck
 	{
 	public:
+		using ICheck::ICheck;
+
 		virtual void check(packet::play::c2s::SetPlayerPosition* packet) = 0;
 
 		virtual void check(packet::play::c2s::SetPlayerPositionRotation* packet) = 0;
