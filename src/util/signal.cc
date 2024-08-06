@@ -16,6 +16,7 @@ void sigintHandler(int i)
 	logger.warn("SIGINT caught");
 	if (clk::now() - lastSigint < DOUBLE_PRESS_TIME)
 	{
+		signal(SIGINT, SIG_DFL);
 		acp::AnticheatProxy::get()->stop();
 		return;
 	}
