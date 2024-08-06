@@ -3,12 +3,18 @@
 
 namespace acp
 {
+	class CheckManager;
+
 	class ICheck
 	{
+	protected:
+		CheckManager* checkManager;
+
 	public:
+		explicit ICheck(CheckManager* checkManager);
 		virtual ~ICheck() = default;
 
-		virtual std::string getName() const = 0;
+		void fail();
 
 		virtual std::string toString() const = 0;
 	};

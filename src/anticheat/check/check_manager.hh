@@ -16,6 +16,8 @@ namespace acp
 	public:
 		explicit CheckManager(AcpPlayer* player);
 
+		void fail(ICheck* check);
+
 		AcpPlayer* getPlayer() const;
 
 		std::unordered_map<std::string, std::unique_ptr<ICheck>>& getChecks();

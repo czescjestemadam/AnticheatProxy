@@ -5,6 +5,11 @@ acp::CheckManager::CheckManager(AcpPlayer* player) : player(player)
 
 }
 
+void acp::CheckManager::fail(ICheck* check)
+{
+
+}
+
 acp::AcpPlayer* acp::CheckManager::getPlayer() const
 {
 	return player;
