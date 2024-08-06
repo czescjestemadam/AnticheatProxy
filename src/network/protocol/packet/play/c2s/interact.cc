@@ -9,11 +9,7 @@ void acp::packet::play::c2s::Interact::read(const ProtocolVersion* version)
 	type = buf.readVarint();
 
 	if (type == 2)
-	{
-		targetX = buf.readFloat();
-		targetY = buf.readFloat();
-		targetZ = buf.readFloat();
-	}
+		target = buf.readVec3f();
 
 	if (type == 0 || type == 2)
 		hand = buf.readVarint();
@@ -27,11 +23,7 @@ void acp::packet::play::c2s::Interact::write(const ProtocolVersion* version)
 	buf.writeVarint(type);
 
 	if (type == 2)
-	{
-		buf.writeFloat(targetX.value_or(0));
-		buf.writeFloat(targetY.value_or(0));
-		buf.writeFloat(targetZ.value_or(0));
-	}
+		buf.writeVec3f(target.value_or(Vec3f{}));
 
 	if (type == 0 || type == 2)
 		buf.writeVarint(hand.value_or(0));
@@ -89,34 +81,14 @@ void acp::packet::play::c2s::Interact::setType(int type)
 	this->type = type;
 }
 
-std::optional<float>& acp::packet::play::c2s::Interact::getTargetX()
+const std::optional<acp::Vec3f>& acp::packet::play::c2s::Interact::getTarget() const
 {
-	return targetX;
+	return target;
 }
 
-void acp::packet::play::c2s::Interact::setTargetX(const std::optional<float>& target_x)
+void acp::packet::play::c2s::Interact::setTarget(const std::optional<Vec3f>& target)
 {
-	targetX = target_x;
-}
-
-std::optional<float>& acp::packet::play::c2s::Interact::getTargetY()
-{
-	return targetY;
-}
-
-void acp::packet::play::c2s::Interact::setTargetY(const std::optional<float>& target_y)
-{
-	targetY = target_y;
-}
-
-std::optional<float>& acp::packet::play::c2s::Interact::getTargetZ()
-{
-	return targetZ;
-}
-
-void acp::packet::play::c2s::Interact::setTargetZ(const std::optional<float>& target_z)
-{
-	targetZ = target_z;
+	this->target = target;
 }
 
 std::optional<int>& acp::packet::play::c2s::Interact::getHand()
@@ -141,12 +113,11 @@ void acp::packet::play::c2s::Interact::setSneaking(bool sneaking)
 
 std::string acp::packet::play::c2s::Interact::toString() const
 {
+	const auto& target = this->target.value_or(Vec3f{});
 	return std::format("Interact[id={}, type={}, target={} {} {}, hand={}, sneak={}]",
 					   entityId,
 					   type,
-					   targetX.value_or(0),
-					   targetY.value_or(0),
-					   targetZ.value_or(0),
+					   target.x, target.y, target.z,
 					   hand.value_or(-1),
 					   sneaking
 	);

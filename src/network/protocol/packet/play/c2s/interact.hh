@@ -12,9 +12,9 @@ namespace acp::packet::play::c2s
 		 * - 2: interact at
 		 */
 		int type;
-		std::optional<float> targetX;
-		std::optional<float> targetY;
-		std::optional<float> targetZ;
+		/// type == 2
+		std::optional<Vec3f> target;
+		/// type == 0 || type == 2
 		std::optional<int> hand;
 		bool sneaking;
 
@@ -34,14 +34,8 @@ namespace acp::packet::play::c2s
 		int& getType();
 		void setType(int type);
 
-		std::optional<float>& getTargetX();
-		void setTargetX(const std::optional<float>& target_x);
-
-		std::optional<float>& getTargetY();
-		void setTargetY(const std::optional<float>& target_y);
-
-		std::optional<float>& getTargetZ();
-		void setTargetZ(const std::optional<float>& target_z);
+		const std::optional<Vec3f>& getTarget() const;
+		void setTarget(const std::optional<Vec3f>& target);
 
 		std::optional<int>& getHand();
 		void setHand(const std::optional<int>& hand);
