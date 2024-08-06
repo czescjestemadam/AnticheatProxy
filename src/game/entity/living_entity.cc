@@ -2,8 +2,8 @@
 
 #include <format>
 
-acp::game::LivingEntity::LivingEntity(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch, double health)
-	: Entity(id, uuid, position, yaw, pitch), health(health)
+acp::game::LivingEntity::LivingEntity(int id, const UUID& uuid, EntityType type, const Vec3d& position, float yaw, float pitch, double health)
+	: Entity(id, uuid, type, position, yaw, pitch), health(health)
 {
 }
 

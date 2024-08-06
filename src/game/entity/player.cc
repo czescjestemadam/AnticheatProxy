@@ -3,7 +3,7 @@
 #include <format>
 
 acp::game::Player::Player(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch, double health, const GameProfile& profile)
-	: LivingEntity(id, uuid, position, yaw, pitch, health), profile(profile)
+	: LivingEntity(id, uuid, EntityType::PLAYER, position, yaw, pitch, health), profile(profile)
 {
 }
 

@@ -356,6 +356,7 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SpawnEntity* packe
 	entities[packet->getEntityId()] = std::make_unique<game::Entity>(
 		packet->getEntityId(),
 		packet->getEntityUuid(),
+		game::EntityType::ITEM, // TODO factory from id
 		packet->getPosition(),
 		packet->getYaw(),
 		packet->getPitch()

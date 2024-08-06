@@ -9,7 +9,7 @@ namespace acp::game
 		double health;
 
 	public:
-		LivingEntity(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch, double health);
+		LivingEntity(int id, const UUID& uuid, EntityType type, const Vec3d& position, float yaw, float pitch, double health);
 
 		double getHealth() const;
 		void setHealth(double health);

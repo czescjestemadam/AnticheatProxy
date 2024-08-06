@@ -2,8 +2,8 @@
 
 #include <format>
 
-acp::game::Entity::Entity(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch)
-	: id(id), uuid(uuid), position(position), yaw(yaw), pitch(pitch)
+acp::game::Entity::Entity(int id, const UUID& uuid, EntityType type, const Vec3d& position, float yaw, float pitch)
+	: id(id), uuid(uuid), type(type), position(position), yaw(yaw), pitch(pitch)
 {
 }
 
@@ -25,6 +25,16 @@ const acp::UUID& acp::game::Entity::getUuid() const
 void acp::game::Entity::setUuid(const UUID& uuid)
 {
 	this->uuid = uuid;
+}
+
+acp::game::EntityType acp::game::Entity::getType() const
+{
+	return type;
+}
+
+void acp::game::Entity::setType(const EntityType type)
+{
+	this->type = type;
 }
 
 acp::Vec3d& acp::game::Entity::getPosition()
@@ -74,9 +84,10 @@ void acp::game::Entity::setOnGround(const bool on_ground)
 
 std::string acp::game::Entity::toString()
 {
-	return std::format("Entity[id={}, uuid={}, pos={} {} {}, rot={} {}, ground={}]",
+	return std::format("Entity[id={}, uuid={}, type={}, pos={} {} {}, rot={} {}, ground={}]",
 					   id,
 					   uuid.toString(),
+					   EnumNames<EntityType>::get(type),
 					   position.x, position.y, position.z,
 					   yaw, pitch,
 					   onGround
