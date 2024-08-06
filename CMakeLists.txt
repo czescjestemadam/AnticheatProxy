@@ -623,8 +623,10 @@ add_executable(AnticheatProxy
 	src/anticheat/check/i_inventory_check.hh
 	src/anticheat/check/interact/reach.cc
 	src/anticheat/check/interact/reach.hh
-	src/game/entity/entity_type.cc
-	src/game/entity/entity_type.hh
+	src/game/entity/type/entity_type.cc
+	src/game/entity/type/entity_type.hh
+	src/game/entity/type/entity_type_mapping.cc
+	src/game/entity/type/entity_type_mapping.hh
 )
 
 find_package(OpenSSL REQUIRED)

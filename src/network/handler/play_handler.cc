@@ -351,15 +351,22 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::BundleDelimiter* p
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::SpawnEntity* packet)
 {
+	const game::EntityType* type = connection->getProtocolVersion()->getEntityTypeMapping().get(packet->getType());
+	if (!type)
+	{
+		connection->getLogger().error("Unknown entity type: {}", packet->toString());
+		return HandleResult::FORWARD;
+	}
+
 	auto& entities = connection->getPlayer().getTrackedWorld().getEntities();
-	// TODO make some factory from type id
 	entities[packet->getEntityId()] = std::make_unique<game::Entity>(
 		packet->getEntityId(),
 		packet->getEntityUuid(),
-		game::EntityType::ITEM, // TODO factory from id
+		type,
 		packet->getPosition(),
 		packet->getYaw(),
-		packet->getPitch()
+		packet->getPitch(),
+		true
 	);
 
 	return HandleResult::FORWARD;

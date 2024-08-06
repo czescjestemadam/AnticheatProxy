@@ -1,0 +1,151 @@
+#include "entity_type_mapping.hh"
+
+#define ADD_TYPE(type) {			\
+	int id = type.getId(version);	\
+	if (id >= 0)					\
+		mappings[id] = &type;		\
+}
+
+acp::game::EntityTypeMapping::EntityTypeMapping(const ProtocolVersion* version)
+{
+	ADD_TYPE(EntityType::ALLAY);
+	ADD_TYPE(EntityType::AREA_EFFECT_CLOUD);
+	ADD_TYPE(EntityType::ARMADILLO);
+	ADD_TYPE(EntityType::ARMOR_STAND);
+	ADD_TYPE(EntityType::ARROW);
+	ADD_TYPE(EntityType::AXOLOTL);
+	ADD_TYPE(EntityType::BAT);
+	ADD_TYPE(EntityType::BEE);
+	ADD_TYPE(EntityType::BLAZE);
+	ADD_TYPE(EntityType::BLOCK_DISPLAY);
+	ADD_TYPE(EntityType::BOAT);
+	ADD_TYPE(EntityType::BOGGED);
+	ADD_TYPE(EntityType::BREEZE);
+	ADD_TYPE(EntityType::BREEZE_WIND_CHARGE);
+	ADD_TYPE(EntityType::CAMEL);
+	ADD_TYPE(EntityType::CAT);
+	ADD_TYPE(EntityType::CAVE_SPIDER);
+	ADD_TYPE(EntityType::CHEST_BOAT);
+	ADD_TYPE(EntityType::CHEST_MINECART);
+	ADD_TYPE(EntityType::CHICKEN);
+	ADD_TYPE(EntityType::COD);
+	ADD_TYPE(EntityType::COMMAND_BLOCK_MINECART);
+	ADD_TYPE(EntityType::COW);
+	ADD_TYPE(EntityType::CREEPER);
+	ADD_TYPE(EntityType::DOLPHIN);
+	ADD_TYPE(EntityType::DONKEY);
+	ADD_TYPE(EntityType::DRAGON_FIREBALL);
+	ADD_TYPE(EntityType::DROWNED);
+	ADD_TYPE(EntityType::EGG);
+	ADD_TYPE(EntityType::ELDER_GUARDIAN);
+	ADD_TYPE(EntityType::END_CRYSTAL);
+	ADD_TYPE(EntityType::ENDER_DRAGON);
+	ADD_TYPE(EntityType::ENDER_PEARL);
+	ADD_TYPE(EntityType::ENDERMAN);
+	ADD_TYPE(EntityType::ENDERMITE);
+	ADD_TYPE(EntityType::EVOKER);
+	ADD_TYPE(EntityType::EVOKER_FANGS);
+	ADD_TYPE(EntityType::EXPERIENCE_BOTTLE);
+	ADD_TYPE(EntityType::EXPERIENCE_ORB);
+	ADD_TYPE(EntityType::EYE_OF_ENDER);
+	ADD_TYPE(EntityType::FALLING_BLOCK);
+	ADD_TYPE(EntityType::FIREBALL);
+	ADD_TYPE(EntityType::FIREWORK_ROCKET);
+	ADD_TYPE(EntityType::FISHING_BOBBER);
+	ADD_TYPE(EntityType::FOX);
+	ADD_TYPE(EntityType::FROG);
+	ADD_TYPE(EntityType::FURNACE_MINECART);
+	ADD_TYPE(EntityType::GHAST);
+	ADD_TYPE(EntityType::GIANT);
+	ADD_TYPE(EntityType::GLOW_ITEM_FRAME);
+	ADD_TYPE(EntityType::GLOW_SQUID);
+	ADD_TYPE(EntityType::GOAT);
+	ADD_TYPE(EntityType::GUARDIAN);
+	ADD_TYPE(EntityType::HOGLIN);
+	ADD_TYPE(EntityType::HOPPER_MINECART);
+	ADD_TYPE(EntityType::HORSE);
+	ADD_TYPE(EntityType::HUSK);
+	ADD_TYPE(EntityType::ILLUSIONER);
+	ADD_TYPE(EntityType::INTERACTION);
+	ADD_TYPE(EntityType::IRON_GOLEM);
+	ADD_TYPE(EntityType::ITEM);
+	ADD_TYPE(EntityType::ITEM_DISPLAY);
+	ADD_TYPE(EntityType::ITEM_FRAME);
+	ADD_TYPE(EntityType::LEASH_KNOT);
+	ADD_TYPE(EntityType::LIGHTNING_BOLT);
+	ADD_TYPE(EntityType::LLAMA);
+	ADD_TYPE(EntityType::LLAMA_SPIT);
+	ADD_TYPE(EntityType::MAGMA_CUBE);
+	ADD_TYPE(EntityType::MARKER);
+	ADD_TYPE(EntityType::MINECART);
+	ADD_TYPE(EntityType::MOOSHROOM);
+	ADD_TYPE(EntityType::MULE);
+	ADD_TYPE(EntityType::OCELOT);
+	ADD_TYPE(EntityType::OMINOUS_ITEM_SPAWNER);
+	ADD_TYPE(EntityType::PAINTING);
+	ADD_TYPE(EntityType::PANDA);
+	ADD_TYPE(EntityType::PARROT);
+	ADD_TYPE(EntityType::PHANTOM);
+	ADD_TYPE(EntityType::PIG);
+	ADD_TYPE(EntityType::PIGLIN);
+	ADD_TYPE(EntityType::PIGLIN_BRUTE);
+	ADD_TYPE(EntityType::PILLAGER);
+	ADD_TYPE(EntityType::PLAYER);
+	ADD_TYPE(EntityType::POLAR_BEAR);
+	ADD_TYPE(EntityType::POTION);
+	ADD_TYPE(EntityType::PUFFERFISH);
+	ADD_TYPE(EntityType::RABBIT);
+	ADD_TYPE(EntityType::RAVAGER);
+	ADD_TYPE(EntityType::SALMON);
+	ADD_TYPE(EntityType::SHEEP);
+	ADD_TYPE(EntityType::SHULKER);
+	ADD_TYPE(EntityType::SHULKER_BULLET);
+	ADD_TYPE(EntityType::SILVERFISH);
+	ADD_TYPE(EntityType::SKELETON);
+	ADD_TYPE(EntityType::SKELETON_HORSE);
+	ADD_TYPE(EntityType::SLIME);
+	ADD_TYPE(EntityType::SMALL_FIREBALL);
+	ADD_TYPE(EntityType::SNIFFER);
+	ADD_TYPE(EntityType::SNOW_GOLEM);
+	ADD_TYPE(EntityType::SNOWBALL);
+	ADD_TYPE(EntityType::SPAWNER_MINECART);
+	ADD_TYPE(EntityType::SPECTRAL_ARROW);
+	ADD_TYPE(EntityType::SPIDER);
+	ADD_TYPE(EntityType::SQUID);
+	ADD_TYPE(EntityType::STRAY);
+	ADD_TYPE(EntityType::STRIDER);
+	ADD_TYPE(EntityType::TADPOLE);
+	ADD_TYPE(EntityType::TEXT_DISPLAY);
+	ADD_TYPE(EntityType::TNT);
+	ADD_TYPE(EntityType::TNT_MINECART);
+	ADD_TYPE(EntityType::TRADER_LLAMA);
+	ADD_TYPE(EntityType::TRIDENT);
+	ADD_TYPE(EntityType::TROPICAL_FISH);
+	ADD_TYPE(EntityType::TURTLE);
+	ADD_TYPE(EntityType::VEX);
+	ADD_TYPE(EntityType::VILLAGER);
+	ADD_TYPE(EntityType::VINDICATOR);
+	ADD_TYPE(EntityType::WANDERING_TRADER);
+	ADD_TYPE(EntityType::WARDEN);
+	ADD_TYPE(EntityType::WIND_CHARGE);
+	ADD_TYPE(EntityType::WITCH);
+	ADD_TYPE(EntityType::WITHER);
+	ADD_TYPE(EntityType::WITHER_SKELETON);
+	ADD_TYPE(EntityType::WITHER_SKULL);
+	ADD_TYPE(EntityType::WOLF);
+	ADD_TYPE(EntityType::ZOGLIN);
+	ADD_TYPE(EntityType::ZOMBIE);
+	ADD_TYPE(EntityType::ZOMBIE_HORSE);
+	ADD_TYPE(EntityType::ZOMBIE_VILLAGER);
+	ADD_TYPE(EntityType::ZOMBIFIED_PIGLIN);
+}
+
+const acp::game::EntityType* acp::game::EntityTypeMapping::get(int idx) const
+{
+	return mappings.contains(idx) ? mappings.at(idx) : nullptr;
+}
+
+size_t acp::game::EntityTypeMapping::size() const
+{
+	return mappings.size();
+}

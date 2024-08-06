@@ -24,6 +24,11 @@ const acp::ProtocolMapping& acp::ProtocolVersion::getProtocolMapping() const
 	return protocolMapping;
 }
 
+const acp::game::EntityTypeMapping& acp::ProtocolVersion::getEntityTypeMapping() const
+{
+	return entityTypeMapping;
+}
+
 bool acp::ProtocolVersion::operator==(const ProtocolVersion& rhs) const
 {
 	return idx == rhs.idx;
@@ -61,7 +66,18 @@ void acp::ProtocolVersion::compileMappings(SubLogger&& logger)
 	for (auto& [idx, version] : versionByIdx)
 	{
 		version->protocolMapping = ProtocolMapping(version);
-		logger.info("Compiled {} packet ids for {}", version->protocolMapping.size(), version->getName());
+		version->entityTypeMapping = game::EntityTypeMapping(version);
+
+		std::string name = version->getName();
+		if (name.length() < 6)
+			name += "  ";
+
+		logger.info("Compiled {} packet, {} entity ids for {} ({})",
+					version->protocolMapping.size(),
+					version->entityTypeMapping.size(),
+					name,
+					idx
+		);
 	}
 }
 

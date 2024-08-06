@@ -1,5 +1,6 @@
 #pragma once
 #include "protocol_mapping.hh"
+#include "game/entity/type/entity_type_mapping.hh"
 #include "util/logger/sub_logger.hh"
 
 #include <string>
@@ -11,6 +12,7 @@ namespace acp
 		int idx;
 		std::string name;
 		ProtocolMapping protocolMapping;
+		game::EntityTypeMapping entityTypeMapping;
 
 	public:
 		ProtocolVersion(int idx, std::string&& name);
@@ -18,6 +20,7 @@ namespace acp
 		int getIdx() const;
 		std::string getName() const;
 		const ProtocolMapping& getProtocolMapping() const;
+		const game::EntityTypeMapping& getEntityTypeMapping() const;
 
 		bool operator==(const ProtocolVersion& rhs) const;
 		bool operator!=(const ProtocolVersion& rhs) const;

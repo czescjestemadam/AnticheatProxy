@@ -1,5 +1,5 @@
 #pragma once
-#include "entity_type.hh"
+#include "type/entity_type.hh"
 #include "util/uuid.hh"
 #include "util/vec3.hh"
 
@@ -10,13 +10,13 @@ namespace acp::game
 	protected:
 		int id;
 		UUID uuid;
-		EntityType type;
+		const EntityType* type;
 		Vec3d position;
 		float yaw, pitch;
 		bool onGround;
 
 	public:
-		Entity(int id, const UUID& uuid, EntityType type, const Vec3d& position, float yaw, float pitch);
+		Entity(int id, const UUID& uuid, const EntityType* type, const Vec3d& position, float yaw, float pitch, bool onGround);
 		virtual ~Entity() = default;
 
 		int getId() const;
@@ -24,7 +24,7 @@ namespace acp::game
 		const UUID& getUuid() const;
 		void setUuid(const UUID& uuid);
 
-		EntityType getType() const;
+		const EntityType* getType() const;
 
 		Vec3d& getPosition();
 		const Vec3d& getPosition() const;
