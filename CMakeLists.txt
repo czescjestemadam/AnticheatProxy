@@ -627,6 +627,8 @@ add_executable(AnticheatProxy
 	src/game/entity/type/entity_type.hh
 	src/game/entity/type/entity_type_mapping.cc
 	src/game/entity/type/entity_type_mapping.hh
+	src/util/profiler/profiler.cc
+	src/util/profiler/profiler.hh
 )
 
 find_package(OpenSSL REQUIRED)
