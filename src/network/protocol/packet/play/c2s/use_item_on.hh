@@ -1,5 +1,6 @@
 #pragma once
 #include "network/protocol/packet/i_packet.hh"
+#include "util/block_face.hh"
 #include "util/vec3.hh"
 
 namespace acp::packet::play::c2s
@@ -12,7 +13,7 @@ namespace acp::packet::play::c2s
 		 */
 		int hand;
 		Vec3i blockPosition;
-		int face;
+		BlockFace face;
 		Vec3f cursorPosition;
 		bool insideBlock;
 		std::optional<int> sequence;
@@ -33,8 +34,8 @@ namespace acp::packet::play::c2s
 		Vec3i getBlockPosition() const;
 		void setBlockPosition(const Vec3i& block_position);
 
-		int getFace() const;
-		void setFace(int face);
+		BlockFace getFace() const;
+		void setFace(BlockFace face);
 
 		Vec3f getCursorPosition() const;
 		void setCursorPosition(const Vec3f& cursor_position);

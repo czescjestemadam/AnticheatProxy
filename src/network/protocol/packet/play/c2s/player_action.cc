@@ -7,7 +7,7 @@ void acp::packet::play::c2s::PlayerAction::read(const ProtocolVersion* version)
 {
 	status = buf.readVarint();
 	blockPosition = buf.readPosition();
-	face = buf.readByte();
+	face = static_cast<BlockFace>(buf.readByte());
 
 	if (*version >= ProtocolVersion::v1_19)
 		sequence = buf.readVarint();
@@ -17,7 +17,7 @@ void acp::packet::play::c2s::PlayerAction::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(status);
 	buf.writePosition(blockPosition);
-	buf.writeByte(face);
+	buf.writeByte(static_cast<byte_t>(face));
 
 	if (*version >= ProtocolVersion::v1_19)
 		buf.writeVarint(sequence.value());
@@ -69,12 +69,12 @@ void acp::packet::play::c2s::PlayerAction::setBlockPosition(const Vec3i& block_p
 	blockPosition = block_position;
 }
 
-byte_t acp::packet::play::c2s::PlayerAction::getFace() const
+acp::BlockFace acp::packet::play::c2s::PlayerAction::getFace() const
 {
 	return face;
 }
 
-void acp::packet::play::c2s::PlayerAction::setFace(const byte_t face)
+void acp::packet::play::c2s::PlayerAction::setFace(const BlockFace face)
 {
 	this->face = face;
 }
@@ -94,7 +94,7 @@ std::string acp::packet::play::c2s::PlayerAction::toString() const
 	return std::format("PlayerAction[status={}, pos={} {} {}, face={}, seq={}]",
 					   status,
 					   blockPosition.x, blockPosition.y, blockPosition.z,
-					   face,
+					   EnumNames<BlockFace>::get(face),
 					   sequence.value_or(-1)
 	);
 }
