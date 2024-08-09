@@ -44,6 +44,12 @@ acp::ProfilerSample acp::Profiler::pop()
 	return sample;
 }
 
+acp::ProfilerStackGuard acp::Profiler::pushGuard(const std::string& name)
+{
+	push(name);
+	return ProfilerStackGuard(*this);
+}
+
 const std::unordered_map<std::string, std::vector<acp::ProfilerSample>>& acp::Profiler::getSamples() const
 {
 	return finished;
@@ -84,4 +90,14 @@ std::unordered_map<std::string, acp::CompiledProfilerSample> acp::Profiler::getC
 	}
 
 	return compiledSamples;
+}
+
+
+acp::ProfilerStackGuard::ProfilerStackGuard(Profiler& profiler) : profiler(profiler)
+{
+}
+
+acp::ProfilerStackGuard::~ProfilerStackGuard()
+{
+	profiler.pop();
 }

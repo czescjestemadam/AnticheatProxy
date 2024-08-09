@@ -5,8 +5,6 @@
 
 namespace acp
 {
-	struct CompiledProfilerSample;
-
 	struct ProfilerSample
 	{
 		using clk = std::chrono::steady_clock;
@@ -28,6 +26,8 @@ namespace acp
 		explicit CompiledProfilerSample(size_t count, const clk::duration& min, const clk::duration& max);
 	};
 
+	class ProfilerStackGuard;
+
 	class Profiler
 	{
 		std::unordered_map<std::string, std::vector<ProfilerSample>> finished;
@@ -37,7 +37,18 @@ namespace acp
 		void push(const std::string& name);
 		ProfilerSample pop();
 
+		ProfilerStackGuard pushGuard(const std::string& name);
+
 		const std::unordered_map<std::string, std::vector<ProfilerSample>>& getSamples() const;
 		std::unordered_map<std::string, CompiledProfilerSample> getCompiledSamples();
+	};
+
+	class ProfilerStackGuard
+	{
+		Profiler& profiler;
+
+	public:
+		explicit ProfilerStackGuard(Profiler& profiler);
+		~ProfilerStackGuard();
 	};
 }
