@@ -55,27 +55,29 @@ void acp::NetworkManager::wait()
 		epollThread.join();
 }
 
-std::weak_ptr<acp::Connection> acp::NetworkManager::getByFd(int fd)
+std::weak_ptr<acp::Connection> acp::NetworkManager::getByFd(int fd) const
 {
-	return connectionByFd[fd];
+	if (connectionByFd.contains(fd))
+		return connectionByFd.at(fd);
+	return {};
 }
 
-acp::Connection* acp::NetworkManager::getByUuid(const UUID& uuid)
+std::weak_ptr<acp::Connection> acp::NetworkManager::getByUuid(const UUID& uuid) const
 {
 	for (const std::shared_ptr<Connection>& connection : connections)
 		if (connection->getGameProfile().uuid == uuid)
-			return connection.get();
+			return connection;
 
-	return nullptr;
+	return {};
 }
 
-acp::Connection* acp::NetworkManager::getByUsername(const std::string& username)
+std::weak_ptr<acp::Connection> acp::NetworkManager::getByUsername(const std::string& username) const
 {
 	for (const std::shared_ptr<Connection>& connection : connections)
 		if (connection->getGameProfile().username == username)
-			return connection.get();
+			return connection;
 
-	return nullptr;
+	return {};
 }
 
 void acp::NetworkManager::addConnection(std::shared_ptr<Connection>&& connection)
