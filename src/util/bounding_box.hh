@@ -8,9 +8,19 @@ namespace acp
 	{
 		Vec3<T> min, max;
 
-		bool contains(const Vec3<T>& vec)
+		bool contains(const Vec3<T>& vec) const
 		{
 			return min <= vec && vec <= max;
+		}
+
+		bool contains(const BoundingBox<T>& box) const
+		{
+			return contains(box.min) && contains(box.max);
+		}
+
+		bool intersects(const BoundingBox<T>& box) const
+		{
+			return contains(box.min) || contains(box.max);
 		}
 
 		static BoundingBox from(Vec3<T> center, Vec3<T> size)
