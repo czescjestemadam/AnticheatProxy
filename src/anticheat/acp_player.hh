@@ -34,7 +34,7 @@ namespace acp
 		AcpPlayer();
 		AcpPlayer(Connection* connection, int id, const GameProfile& profile, const Identifier& worldName);
 
-		std::vector<std::unique_ptr<RaycastResult>> raycast(double distance, const std::vector<RaycastResult::Type>& types, bool includeFluids) const override;
+		std::vector<std::unique_ptr<RaycastResult>> raycast(const RaycastingOptions& options) const override;
 
 		Connection* getConnection() const;
 

@@ -11,7 +11,7 @@ acp::AcpPlayer::AcpPlayer(Connection* connection, int id, const GameProfile& pro
 {
 }
 
-std::vector<std::unique_ptr<acp::RaycastResult>> acp::AcpPlayer::raycast(double distance, const std::vector<RaycastResult::Type>& types, bool includeFluids) const
+std::vector<std::unique_ptr<acp::RaycastResult>> acp::AcpPlayer::raycast(const RaycastingOptions& options) const
 {
 	std::vector<std::unique_ptr<RaycastResult>> results;
 
