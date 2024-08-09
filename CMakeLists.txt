@@ -637,6 +637,7 @@ add_executable(AnticheatProxy
 	src/util/command/parser/parser.hh
 	src/util/command/parser/parser_mapping.cc
 	src/util/command/parser/parser_mapping.hh
+	src/util/block_face.hh
 )
 
 find_package(OpenSSL REQUIRED)
