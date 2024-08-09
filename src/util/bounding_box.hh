@@ -8,6 +8,11 @@ namespace acp
 	{
 		Vec3<T> min, max;
 
+		bool contains(const Vec3<T>& vec)
+		{
+			return min <= vec && vec <= max;
+		}
+
 		static BoundingBox from(Vec3<T> center, Vec3<T> size)
 		{
 			const Vec3<T> halfSize = size / 2;
