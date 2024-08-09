@@ -1,8 +1,9 @@
 #pragma once
-#include "game/entity/player.hh"
-#include "game/world/world.hh"
-#include "game/item/player_inventory.hh"
 #include "check/check_manager.hh"
+#include "game/entity/player.hh"
+#include "game/item/player_inventory.hh"
+#include "game/world/world.hh"
+#include "util/raycast/i_raycastable.hh"
 
 #include <memory>
 
@@ -10,7 +11,7 @@ namespace acp
 {
 	class Connection;
 
-	class AcpPlayer : public game::Player
+	class AcpPlayer : public game::Player, public IRaycastable
 	{
 		Connection* connection;
 
@@ -32,6 +33,8 @@ namespace acp
 	public:
 		AcpPlayer();
 		AcpPlayer(Connection* connection, int id, const GameProfile& profile, const Identifier& worldName);
+
+		std::vector<std::unique_ptr<RaycastResult>> raycast(double distance, const std::vector<RaycastResult::Type>& types, bool includeFluids) const override;
 
 		Connection* getConnection() const;
 
