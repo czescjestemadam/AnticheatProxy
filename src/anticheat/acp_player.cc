@@ -7,7 +7,7 @@ acp::AcpPlayer::AcpPlayer() : AcpPlayer(nullptr, -1, {}, {})
 }
 
 acp::AcpPlayer::AcpPlayer(Connection* connection, int id, const GameProfile& profile, const Identifier& worldName)
-	: Player(id, profile.uuid, {}, 0, 0, true, 20, profile), connection(connection), trackedWorld(worldName), checkManager(this)
+	: Player(id, profile.uuid, {}, 0, 0, true, 0, 20, profile), connection(connection), trackedWorld(worldName), checkManager(this)
 {
 }
 

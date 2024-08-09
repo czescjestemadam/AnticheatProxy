@@ -12,7 +12,7 @@ namespace acp::game
 		bool sneaking = false;
 
 	public:
-		Player(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch, bool onGround, double health, const GameProfile& profile);
+		Player(int id, const UUID& uuid, const Vec3d& position, float yaw, float pitch, bool onGround, float headYaw, double health, const GameProfile& profile);
 
 		const GameProfile& getProfile() const;
 		void setProfile(const GameProfile& profile);
