@@ -8,6 +8,12 @@ namespace acp
 	{
 		Vec3<T> min, max;
 
+		BoundingBox(Vec3<T> min, Vec3<T> max)
+			: min({ std::min(min.x, max.x), std::min(min.y, max.y), std::min(min.z, max.z) }),
+			  max({ std::max(min.x, max.x), std::max(min.y, max.y), std::max(min.z, max.z) })
+		{
+		}
+
 		bool contains(const Vec3<T>& vec) const
 		{
 			return min <= vec && vec <= max;
