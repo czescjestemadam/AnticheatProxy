@@ -52,5 +52,13 @@ namespace acp::command
 		void deserialize(ByteBuf& v) override;
 
 		std::string toString() const;
+
+
+		static constexpr byte_t ROOT = 0x00;
+		static constexpr byte_t LITERAL = 0x01;
+		static constexpr byte_t ARGUMENT = 0x02;
+		static constexpr byte_t EXECUTABLE = 0x04;
+		static constexpr byte_t REDIRECT = 0x08;
+		static constexpr byte_t SUGGESTIONS = 0x10;
 	};
 }

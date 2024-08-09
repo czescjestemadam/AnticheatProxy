@@ -97,20 +97,20 @@ acp::ByteBuf acp::command::Node::serialize()
 	for (const int child : children)
 		buf.writeVarint(child);
 
-	if (flags & 0x08)
+	if (flags & REDIRECT)
 		buf.writeVarint(redirectNode.value());
 
 	const byte_t type = flags & 0x03;
-	if (type > 0)
+	if (type > ROOT)
 		buf.writeStr(name);
 
-	if (type == 2)
+	if (type == ARGUMENT)
 	{
 		buf.writeVarint(parserId.value());
 		buf.writeBuf(properties->serialize());
 	}
 
-	if (flags & 0x10)
+	if (flags & SUGGESTIONS)
 		buf.writeIdentifier(suggestionsType.value());
 
 	return buf;
@@ -124,14 +124,14 @@ void acp::command::Node::deserialize(ByteBuf& v)
 	for (int i = 0; i < len; ++i)
 		children.push_back(v.readVarint());
 
-	if (flags & 0x08)
+	if (flags & REDIRECT)
 		redirectNode = v.readVarint();
 
 	const byte_t type = flags & 0x03;
-	if (type > 0)
+	if (type > ROOT)
 		name = v.readStr();
 
-	if (type == 2)
+	if (type == ARGUMENT)
 	{
 		const int id = v.readVarint();
 		parserId = id;
@@ -139,7 +139,7 @@ void acp::command::Node::deserialize(ByteBuf& v)
 		properties->deserialize(v);
 	}
 
-	if (flags & 0x10)
+	if (flags & SUGGESTIONS)
 		suggestionsType = v.readIdentifier();
 }
 
