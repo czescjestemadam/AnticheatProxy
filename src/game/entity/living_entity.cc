@@ -27,6 +27,12 @@ void acp::game::LivingEntity::setHealth(const double health)
 	this->health = health;
 }
 
+acp::Vec3d acp::game::LivingEntity::getEyePosition() const
+{
+	// TODO
+	return position;
+}
+
 std::string acp::game::LivingEntity::toString()
 {
 	return std::format("LivingEntity[headYaw={}, hp={}, {}]", headYaw, health, Entity::toString());

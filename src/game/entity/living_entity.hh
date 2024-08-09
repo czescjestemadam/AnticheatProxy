@@ -18,6 +18,8 @@ namespace acp::game
 		double getHealth() const;
 		void setHealth(double health);
 
+		virtual Vec3d getEyePosition() const;
+
 		std::string toString() override;
 	};
 }
