@@ -9,7 +9,7 @@ void acp::packet::play::s2c::Commands::read(const ProtocolVersion* version)
 	for (int i = 0; i < len; ++i)
 	{
 		command::Node node;
-		node.deserialize(buf);
+		node.deserialize(buf, version);
 		nodes.push_back(std::move(node));
 	}
 
@@ -20,7 +20,7 @@ void acp::packet::play::s2c::Commands::write(const ProtocolVersion* version)
 {
 	buf.writeVarint(static_cast<int>(nodes.size()));
 	for (command::Node& node : nodes)
-		buf.writeBuf(node.serialize());
+		node.serialize(buf, version);
 
 	buf.writeVarint(rootIndex);
 }

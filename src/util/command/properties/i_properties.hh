@@ -6,6 +6,5 @@ namespace acp::command
 {
 	struct IProperties : ISerializable<ByteBuf>
 	{
-		static std::unique_ptr<IProperties> fromParserId(int id);
 	};
 }

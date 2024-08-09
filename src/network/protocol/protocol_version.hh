@@ -1,6 +1,7 @@
 #pragma once
 #include "protocol_mapping.hh"
 #include "game/entity/type/entity_type_mapping.hh"
+#include "util/command/parser/parser_mapping.hh"
 #include "util/logger/sub_logger.hh"
 
 #include <string>
@@ -13,6 +14,7 @@ namespace acp
 		std::string name;
 		ProtocolMapping protocolMapping;
 		game::EntityTypeMapping entityTypeMapping;
+		command::ParserMapping commandParserMapping;
 
 	public:
 		ProtocolVersion(int idx, std::string&& name);
@@ -21,6 +23,7 @@ namespace acp
 		std::string getName() const;
 		const ProtocolMapping& getProtocolMapping() const;
 		const game::EntityTypeMapping& getEntityTypeMapping() const;
+		const command::ParserMapping& getCommandParserMapping() const;
 
 		bool operator==(const ProtocolVersion& rhs) const;
 		bool operator!=(const ProtocolVersion& rhs) const;

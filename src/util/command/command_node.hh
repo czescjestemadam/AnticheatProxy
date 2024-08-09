@@ -1,9 +1,14 @@
 #pragma once
-#include "properties/i_properties.hh"
+#include "parser/parser.hh"
+
+namespace acp
+{
+	class ProtocolVersion;
+}
 
 namespace acp::command
 {
-	class Node : ISerializable<ByteBuf>
+	class Node
 	{
 		/// mask
 		/// - @c 0x03: node type (0 - root, 1 - literal, 2 - argument)
@@ -48,8 +53,8 @@ namespace acp::command
 		const std::optional<Identifier>& getSuggestionsType() const;
 		void setSuggestionsType(const std::optional<Identifier>& suggestions_type);
 
-		ByteBuf serialize() override;
-		void deserialize(ByteBuf& v) override;
+		void serialize(ByteBuf& buf, const ProtocolVersion* version);
+		void deserialize(ByteBuf& buf, const ProtocolVersion* version);
 
 		std::string toString() const;
 

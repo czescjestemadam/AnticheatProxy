@@ -633,6 +633,10 @@ add_executable(AnticheatProxy
 	src/util/raycast/i_raycastable.hh
 	src/util/raycast/raycast_result.cc
 	src/util/raycast/raycast_result.hh
+	src/util/command/parser/parser.cc
+	src/util/command/parser/parser.hh
+	src/util/command/parser/parser_mapping.cc
+	src/util/command/parser/parser_mapping.hh
 )
 
 find_package(OpenSSL REQUIRED)

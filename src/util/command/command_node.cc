@@ -1,5 +1,7 @@
 #include "command_node.hh"
 
+#include "network/protocol/protocol_version.hh"
+
 acp::command::Node::Node(byte_t flags, const std::vector<int>& children, const std::optional<int>& redirect_node, const std::string& name,
 						 const std::optional<int>& parser_id, std::unique_ptr<IProperties>&& properties, const std::optional<Identifier>& suggestions_type)
 	: flags(flags),
@@ -87,10 +89,8 @@ void acp::command::Node::setSuggestionsType(const std::optional<Identifier>& sug
 	suggestionsType = suggestions_type;
 }
 
-acp::ByteBuf acp::command::Node::serialize()
+void acp::command::Node::serialize(ByteBuf& buf, const ProtocolVersion* version)
 {
-	ByteBuf buf;
-
 	buf.writeByte(flags);
 
 	buf.writeVarint(static_cast<int>(children.size()));
@@ -107,40 +107,41 @@ acp::ByteBuf acp::command::Node::serialize()
 	if (type == ARGUMENT)
 	{
 		buf.writeVarint(parserId.value());
-		buf.writeBuf(properties->serialize());
+		if (properties)
+			buf.writeBuf(properties->serialize());
 	}
 
 	if (flags & SUGGESTIONS)
 		buf.writeIdentifier(suggestionsType.value());
-
-	return buf;
 }
 
-void acp::command::Node::deserialize(ByteBuf& v)
+void acp::command::Node::deserialize(ByteBuf& buf, const ProtocolVersion* version)
 {
-	flags = v.readByte();
+	flags = buf.readByte();
 
-	const int len = v.readVarint();
+	const int len = buf.readVarint();
 	for (int i = 0; i < len; ++i)
-		children.push_back(v.readVarint());
+		children.push_back(buf.readVarint());
 
 	if (flags & REDIRECT)
-		redirectNode = v.readVarint();
+		redirectNode = buf.readVarint();
 
 	const byte_t type = flags & 0x03;
 	if (type > ROOT)
-		name = v.readStr();
+		name = buf.readStr();
 
 	if (type == ARGUMENT)
 	{
-		const int id = v.readVarint();
-		parserId = id;
-		properties = IProperties::fromParserId(id);
-		properties->deserialize(v);
+		parserId = buf.readVarint();
+		if (const Parser* parser = version->getCommandParserMapping().get(parserId.value()))
+		{
+			properties = parser->createProperties();
+			properties->deserialize(buf);
+		}
 	}
 
 	if (flags & SUGGESTIONS)
-		suggestionsType = v.readIdentifier();
+		suggestionsType = buf.readIdentifier();
 }
 
 std::string acp::command::Node::toString() const
@@ -154,13 +155,12 @@ std::string acp::command::Node::toString() const
 			childStr += ", ";
 	}
 
-	return std::format("Node[fl=0x{:02x}, child={}, redir={}, name={}, parser={}, prop={}, suggest={}]",
+	return std::format("Node[fl=0x{:02x}, child={}, redir={}, name={}, parser={}, suggest={}]",
 					   flags,
 					   childStr,
 					   redirectNode.value_or(-1),
 					   name,
 					   parserId.value_or(-1),
-					   sizeof(*properties),
 					   suggestionsType.value_or(Identifier{ "", "empty" }).toString()
 	);
 }

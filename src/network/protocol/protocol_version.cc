@@ -29,6 +29,11 @@ const acp::game::EntityTypeMapping& acp::ProtocolVersion::getEntityTypeMapping()
 	return entityTypeMapping;
 }
 
+const acp::command::ParserMapping& acp::ProtocolVersion::getCommandParserMapping() const
+{
+	return commandParserMapping;
+}
+
 bool acp::ProtocolVersion::operator==(const ProtocolVersion& rhs) const
 {
 	return idx == rhs.idx;
@@ -67,6 +72,7 @@ void acp::ProtocolVersion::compileMappings(SubLogger&& logger)
 	{
 		version->protocolMapping = ProtocolMapping(version);
 		version->entityTypeMapping = game::EntityTypeMapping(version);
+		version->commandParserMapping = command::ParserMapping(version);
 
 		std::string name = version->getName();
 		if (name.length() < 6)
