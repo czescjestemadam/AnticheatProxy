@@ -60,6 +60,24 @@ std::weak_ptr<acp::Connection> acp::NetworkManager::getByFd(int fd)
 	return connectionByFd[fd];
 }
 
+acp::Connection* acp::NetworkManager::getByUuid(const UUID& uuid)
+{
+	for (const std::shared_ptr<Connection>& connection : connections)
+		if (connection->getGameProfile().uuid == uuid)
+			return connection.get();
+
+	return nullptr;
+}
+
+acp::Connection* acp::NetworkManager::getByUsername(const std::string& username)
+{
+	for (const std::shared_ptr<Connection>& connection : connections)
+		if (connection->getGameProfile().username == username)
+			return connection.get();
+
+	return nullptr;
+}
+
 void acp::NetworkManager::addConnection(std::shared_ptr<Connection>&& connection)
 {
 	connectionByFd[connection->getSide(NetworkSide::CLIENT).getFd()] = connection;

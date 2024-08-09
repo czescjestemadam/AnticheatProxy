@@ -34,6 +34,8 @@ namespace acp
 		void wait();
 
 		std::weak_ptr<Connection> getByFd(int fd);
+		Connection* getByUuid(const UUID& uuid);
+		Connection* getByUsername(const std::string& username);
 		void addConnection(std::shared_ptr<Connection>&& connection);
 		void removeConnection(const std::weak_ptr<Connection>& connection, const std::unique_ptr<text::Component>& reason);
 
