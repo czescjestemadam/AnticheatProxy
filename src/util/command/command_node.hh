@@ -29,6 +29,7 @@ namespace acp::command
 		byte_t getFlags() const;
 		void setFlags(byte_t flags);
 
+		std::vector<int>& getChildren();
 		const std::vector<int>& getChildren() const;
 		void setChildren(const std::vector<int>& children);
 

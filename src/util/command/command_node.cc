@@ -22,6 +22,11 @@ void acp::command::Node::setFlags(const byte_t flags)
 	this->flags = flags;
 }
 
+std::vector<int>& acp::command::Node::getChildren()
+{
+	return children;
+}
+
 const std::vector<int>& acp::command::Node::getChildren() const
 {
 	return children;
