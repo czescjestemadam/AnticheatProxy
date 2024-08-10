@@ -38,6 +38,9 @@ namespace acp::registry
 		DimensionType type;
 		std::string name;
 
+		DimensionTypeEntry() = default;
+		DimensionTypeEntry(int id, const DimensionType& type, const std::string& name);
+
 		std::unique_ptr<nbt::Tag> serialize() override;
 		void deserialize(std::unique_ptr<nbt::Tag>& v) override;
 	};

@@ -84,6 +84,11 @@ void acp::registry::DimensionType::deserialize(std::unique_ptr<nbt::Tag>& v)
 }
 
 
+acp::registry::DimensionTypeEntry::DimensionTypeEntry(int id, const DimensionType& type, const std::string& name)
+	: id(id), type(type), name(name)
+{
+}
+
 std::unique_ptr<acp::nbt::Tag> acp::registry::DimensionTypeEntry::serialize()
 {
 	auto tag = std::make_unique<nbt::TagCompound>();

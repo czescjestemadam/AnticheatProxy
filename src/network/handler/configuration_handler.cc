@@ -115,7 +115,29 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::
 	}
 	else
 	{
-		// TODO
+		auto& entries = packet->getEntries();
+
+		if (packet->getRegistryId() == Identifier("minecraft", "dimension_type"))
+		{
+			for (int i = 0; i < entries.size(); ++i)
+			{
+				auto& [id, tag] = entries[i];
+
+				registry::DimensionType type;
+				type.deserialize(tag);
+
+				connection->getDimensionTypes().emplace_back(i, type, id.toString());
+			}
+		}
+		if (packet->getRegistryId() == Identifier("minecraft", "damage_type"))
+		{
+			for (int i = 0; i < entries.size(); ++i)
+			{
+				auto& [id, tag] = entries[i];
+
+				connection->getLogger().debug("dmg {}: {}", id.toString(), tag ? tag->toString() : "nullptr");
+			}
+		}
 	}
 
 	return HandleResult::FORWARD;
