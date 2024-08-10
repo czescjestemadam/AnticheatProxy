@@ -2,13 +2,13 @@
 
 #include "varint_exception.hh"
 #include "z_lib_exception.hh"
+#include "network/protocol/protocol_version.hh"
 #include "util/nbt/tag.hh"
 
+#include <cmath>
 #include <format>
 #include <zlib.h>
 #include <netinet/in.h>
-
-#include "network/protocol/protocol_version.hh"
 
 #define BUF_UNION(type) union { byte_t bytes[sizeof(type)]; type val; }
 
@@ -452,7 +452,7 @@ void acp::ByteBuf::writeBitset(const std::vector<bool>& v)
 {
 	// TODO test
 
-	const int size = static_cast<int>(v.size()) / 64;
+	const int size = std::ceil(static_cast<double>(v.size()) / 64.0);
 	writeVarint(size);
 
 	for (int i = 0; i < size; ++i)
@@ -469,6 +469,44 @@ void acp::ByteBuf::writeBitset(const std::vector<bool>& v)
 		}
 
 		writeLongU(l);
+	}
+}
+
+std::vector<bool> acp::ByteBuf::readFixedBitset(int len)
+{
+	std::vector<bool> v;
+	v.reserve(len);
+
+	for (int i = 0; i < len; ++i)
+	{
+		const byte_t b = readByte();
+		for (int sh = 0; sh < 8; ++sh)
+			v.push_back((b & 1 << sh) != 0);
+	}
+
+	return v;
+}
+
+void acp::ByteBuf::writeFixedBitset(const std::vector<bool>& v, int len)
+{
+	// TODO test
+
+	const size_t bytes = std::ceil(len / 8.0);
+
+	for (int i = 0; i < bytes; ++i)
+	{
+		byte_t b = 0;
+		for (int sh = 0; sh < 8; ++sh)
+		{
+			const int idx = i * 8 + sh;
+			if (idx >= v.size())
+				break;
+
+			if (v[idx])
+				b |= 1 << sh;
+		}
+
+		writeByte(b);
 	}
 }
 

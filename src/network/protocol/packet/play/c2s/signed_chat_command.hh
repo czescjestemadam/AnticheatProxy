@@ -13,7 +13,8 @@ namespace acp::packet::play::c2s
 		std::optional<bool> signedPreview;
 		/// 1.19.3 - now
 		std::optional<int> messageCount;
-		// TODO bitset
+		/// 1.19.3 - now
+		std::vector<bool> acknowledged;
 
 	public:
 		using IPacket::IPacket;
@@ -42,6 +43,9 @@ namespace acp::packet::play::c2s
 
 		std::optional<int>& getMessageCount();
 		void setMessageCount(const std::optional<int>& message_count);
+
+		const std::vector<bool>& getAcknowledged() const;
+		void setAcknowledged(const std::vector<bool>& acknowledged);
 
 		std::string toString() const override;
 	};

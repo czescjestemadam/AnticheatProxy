@@ -25,6 +25,7 @@ void acp::packet::play::c2s::SignedChatCommand::read(const ProtocolVersion* vers
 	else
 	{
 		messageCount = buf.readVarint();
+		acknowledged = buf.readFixedBitset(20);
 	}
 }
 
@@ -50,6 +51,7 @@ void acp::packet::play::c2s::SignedChatCommand::write(const ProtocolVersion* ver
 	else
 	{
 		buf.writeVarint(messageCount.value());
+		buf.writeFixedBitset(acknowledged, 20);
 	}
 }
 
@@ -131,6 +133,16 @@ std::optional<int>& acp::packet::play::c2s::SignedChatCommand::getMessageCount()
 void acp::packet::play::c2s::SignedChatCommand::setMessageCount(const std::optional<int>& message_count)
 {
 	messageCount = message_count;
+}
+
+const std::vector<bool>& acp::packet::play::c2s::SignedChatCommand::getAcknowledged() const
+{
+	return acknowledged;
+}
+
+void acp::packet::play::c2s::SignedChatCommand::setAcknowledged(const std::vector<bool>& acknowledged)
+{
+	this->acknowledged = acknowledged;
 }
 
 std::string acp::packet::play::c2s::SignedChatCommand::toString() const

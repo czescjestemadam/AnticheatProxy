@@ -104,6 +104,9 @@ namespace acp
 		std::vector<bool> readBitset();
 		void writeBitset(const std::vector<bool>& v);
 
+		std::vector<bool> readFixedBitset(int len);
+		void writeFixedBitset(const std::vector<bool>& v, int len);
+
 		// zlib
 		ByteBuf compress(int level = -1) const;
 		ByteBuf decompress(int length) const;
