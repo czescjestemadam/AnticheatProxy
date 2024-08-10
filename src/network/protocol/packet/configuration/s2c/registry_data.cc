@@ -108,5 +108,9 @@ void acp::packet::configuration::s2c::RegistryData::setEntries(std::vector<std::
 
 std::string acp::packet::configuration::s2c::RegistryData::toString() const
 {
-	return std::format("RegistryData[codec={} / id={}, entries={}]", codec->toString(), registryId.toString(), entries.size());
+	return std::format("RegistryData[codec={} / id={}, entries={}]",
+					   codec ? codec->toString() : "nullptr",
+					   registryId.toString(),
+					   entries.size()
+	);
 }
