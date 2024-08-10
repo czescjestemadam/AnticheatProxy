@@ -103,7 +103,13 @@ void acp::NetworkManager::removeConnection(const std::weak_ptr<Connection>& conn
 	connectionByFd.erase(conn->getSide(NetworkSide::CLIENT).getFd());
 	connectionByFd.erase(conn->getSide(NetworkSide::DEST).getFd());
 
-	conn->close(reason);
+	try
+	{
+		conn->close(reason);
+	}
+	catch (const SocketException& ex)
+	{
+	}
 }
 
 
