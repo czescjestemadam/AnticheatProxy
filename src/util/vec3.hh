@@ -8,6 +8,16 @@ namespace acp
 	{
 		T x, y, z;
 
+		Vec3() = default;
+
+		Vec3(T x, T y, T z) : x(x), y(y), z(z)
+		{
+		}
+
+		explicit Vec3(T v) : Vec3(v, v, v)
+		{
+		}
+
 		Vec3 operator+(const Vec3& rhs) const
 		{
 			return { static_cast<T>(x + rhs.x), static_cast<T>(y + rhs.y), static_cast<T>(z + rhs.z) };
