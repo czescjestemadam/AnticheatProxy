@@ -73,6 +73,7 @@ void acp::Connection::handleEvent(int fd)
 					 ex.what()
 		);
 		to.write(ogBuf);
+		packetCount[toSide]++;
 		return;
 	}
 
@@ -91,19 +92,18 @@ void acp::Connection::handleEvent(int fd)
 					 ex.what()
 		);
 		to.write(ogBuf);
+		packetCount[toSide]++;
 		return;
 	}
 
 	if (result == HandleResult::FORWARD)
 	{
-		// sendPacket(toSide, std::move(packet)); // strict read/write
+		// sendPacket(toSide, std::move(packet)); // strict read/write TODO fix some packets
 		to.write(ogBuf);
+		packetCount[toSide]++;
 	}
 	else if (result == HandleResult::REWRITE)
-	{
-		packet->getBuf().clear();
 		sendPacket(toSide, std::move(packet));
-	}
 
 	// logger.debug("[{}] {} -> {}: {} {}",
 	// 			 EnumNames<NetworkState>::get(state),
@@ -155,6 +155,8 @@ void acp::Connection::sendPacket(NetworkSide to, ByteBuf&& data)
 	{
 		getSide(to).write(data);
 	}
+
+	packetCount[to]++;
 }
 
 acp::SubLogger& acp::Connection::getLogger()
@@ -165,6 +167,11 @@ acp::SubLogger& acp::Connection::getLogger()
 acp::PlayerSocket& acp::Connection::getSide(NetworkSide side)
 {
 	return side == NetworkSide::CLIENT ? clientSocket : destSocket;
+}
+
+size_t acp::Connection::getPacketCount(NetworkSide to) const
+{
+	return packetCount.at(to);
 }
 
 acp::NetworkState acp::Connection::getState() const

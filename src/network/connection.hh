@@ -22,6 +22,8 @@ namespace acp
 		PlayerSocket clientSocket;
 		PlayerSocket destSocket;
 
+		std::unordered_map<NetworkSide, size_t> packetCount;
+
 		std::unique_ptr<INetworkHandler> networkHandler = std::make_unique<HandshakeHandler>(this);
 
 		NetworkState state = NetworkState::HANDSHAKE;
@@ -48,6 +50,8 @@ namespace acp
 		SubLogger& getLogger();
 
 		PlayerSocket& getSide(NetworkSide side);
+
+		size_t getPacketCount(NetworkSide to) const;
 
 		NetworkState getState() const;
 		void setState(NetworkState state);
