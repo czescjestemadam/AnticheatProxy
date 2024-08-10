@@ -27,6 +27,16 @@ void acp::game::Player::setSneaking(const bool sneaking)
 	this->sneaking = sneaking;
 }
 
+acp::Vec3d acp::game::Player::getEyePosition(const ProtocolVersion* version) const
+{
+	// TODO poses: swimming, fall_flying, spin_attack = 0.4
+
+	if (sneaking)
+		return position + Vec3d(0, 1.27, 0);
+
+	return position + Vec3d(0, 1.62, 0);
+}
+
 acp::BoundingBoxD acp::game::Player::getBoundingBox(const ProtocolVersion* version) const
 {
 	if (sneaking)

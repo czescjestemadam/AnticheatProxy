@@ -20,6 +20,7 @@ namespace acp::game
 		bool isSneaking() const;
 		void setSneaking(bool sneaking);
 
+		Vec3d getEyePosition(const ProtocolVersion* version) const override;
 		BoundingBoxD getBoundingBox(const ProtocolVersion* version) const override;
 
 		std::string toString() override;
