@@ -1,4 +1,5 @@
 #pragma once
+#include "util/box_face.hh"
 #include "util/enum_names.hh"
 #include "util/vec3.hh"
 
@@ -14,6 +15,7 @@ namespace acp
 
 		Vec3d hitPosition;
 
+		explicit RaycastResult(const Vec3d& hit_position);
 		virtual ~RaycastResult() = default;
 
 		virtual Type getType() const = 0;
@@ -22,7 +24,9 @@ namespace acp
 	struct RaycastBlockResult : RaycastResult
 	{
 		Vec3i blockPos;
-		// TODO block face
+		BoxFace face;
+
+		RaycastBlockResult(const Vec3d& hit_position, const Vec3i& block_pos, BoxFace face);
 
 		Type getType() const override;
 	};
@@ -30,6 +34,8 @@ namespace acp
 	struct RaycastEntityResult : RaycastResult
 	{
 		int entityId;
+
+		RaycastEntityResult(const Vec3d& hit_position, int entity_id);
 
 		Type getType() const override;
 	};
