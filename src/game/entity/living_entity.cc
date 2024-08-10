@@ -1,5 +1,6 @@
 #include "living_entity.hh"
 
+#include <cmath>
 #include <format>
 
 acp::game::LivingEntity::LivingEntity(int id, const UUID& uuid, const EntityType* type, const Vec3d& position, float yaw, float pitch, bool onGround, float headYaw, double health)
@@ -31,6 +32,18 @@ acp::Vec3d acp::game::LivingEntity::getEyePosition() const
 {
 	// TODO
 	return position;
+}
+
+acp::Vec3d acp::game::LivingEntity::getDirection() const
+{
+	const double radYaw = yaw * std::numbers::pi / 180;
+	const double radPitch = pitch * std::numbers::pi / 180;
+	const double xz = std::cos(radPitch);
+	return {
+		-xz * std::sin(radYaw),
+		-std::sin(radPitch),
+		xz * std::cos(radYaw)
+	};
 }
 
 std::string acp::game::LivingEntity::toString()
