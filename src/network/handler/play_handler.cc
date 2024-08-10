@@ -1,6 +1,7 @@
 #include "play_handler.hh"
 
 #include "network/connection.hh"
+#include "util/command/properties/string_properties.hh"
 
 #include <cmath>
 
@@ -43,11 +44,23 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::AcknowledgeMessage
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChatCommand* packet)
 {
+	if (packet->getCommand().starts_with("acp"))
+	{
+		connection->getLogger().info("Executed: {}", packet->getCommand());
+		return HandleResult::CANCEL;
+	}
+
 	return HandleResult::FORWARD;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SignedChatCommand* packet)
 {
+	if (packet->getCommand().starts_with("acp"))
+	{
+		connection->getLogger().info("Executed signed: {}", packet->getCommand());
+		return HandleResult::CANCEL;
+	}
+
 	return HandleResult::FORWARD;
 }
 
@@ -78,6 +91,11 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ClientInformation*
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CommandSuggestionsRequest* packet)
 {
+	if (packet->getText().starts_with("acp"))
+	{
+		return HandleResult::CANCEL;
+	}
+
 	return HandleResult::FORWARD;
 }
 
@@ -451,10 +469,34 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CommandSuggestions
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Commands* packet)
 {
-	// connection->getLogger().info("Received commands: {}", packet->toString());
-	// TODO inject acp commands
+	std::vector<command::Node>& nodes = packet->getNodes();
 
-	return HandleResult::FORWARD;
+	const int acpNodeIdx = static_cast<int>(nodes.size());
+	command::Node& acpNode = nodes.emplace_back(command::Node(
+		command::Node::LITERAL | command::Node::EXECUTABLE,
+		{},
+		std::nullopt,
+		"acp",
+		std::nullopt,
+		nullptr,
+		std::nullopt
+	));
+
+	const int acpArgsNodeIdx = static_cast<int>(nodes.size());
+	command::Node& acpArgsNode = nodes.emplace_back(command::Node(
+		command::Node::ARGUMENT | command::Node::EXECUTABLE | command::Node::SUGGESTIONS,
+		{},
+		std::nullopt,
+		"args",
+		command::Parser::STRING.getId(connection->getProtocolVersion()),
+		std::make_unique<command::StringProperties>(command::StringProperties::Type::SINGLE_WORD),
+		Identifier("minecraft", "ask_server")
+	));
+
+	nodes[packet->getRootIndex()].getChildren().push_back(acpNodeIdx);
+	acpNode.setChildren({ acpArgsNodeIdx });
+
+	return HandleResult::REWRITE;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CloseContainer* packet)
