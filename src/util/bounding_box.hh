@@ -26,7 +26,12 @@ namespace acp
 
 		bool intersects(const BoundingBox& box) const
 		{
-			return contains(box.min) || contains(box.max);
+			return min <= box.max && box.min <= max;
+		}
+
+		Vec3<T> size() const
+		{
+			return max - min;
 		}
 
 		std::string toString() const
