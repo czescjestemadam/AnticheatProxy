@@ -1,25 +1,30 @@
 #pragma once
 #include <string>
 
-class Permission
+namespace acp
 {
-	int idx;
-	std::string name;
+	class Permission
+	{
+		int idx;
+		std::string name;
 
-public:
-	Permission(int idx, const std::string& name);
+	public:
+		Permission(int idx, const std::string& name);
 
-	const std::string& getName() const;
+		const std::string& getName() const;
 
-	bool operator==(const Permission& rhs) const;
-	bool operator!=(const Permission& rhs) const;
+		bool operator==(const Permission& rhs) const;
+		bool operator!=(const Permission& rhs) const;
 
 
-	static Permission* getByName(const std::string& name);
+		static Permission* getByName(const std::string& name);
 
-	static const Permission ALERT;
-	static const Permission CMD;
-	static const Permission PROFILE;
-	static const Permission LOGS;
-	static const Permission EXEMPT;
-};
+		static const Permission ALERT;
+		static const Permission CMD;
+		static const Permission CMD_IP;
+		static const Permission CMD_ADMIN;
+		static const Permission PROFILE;
+		static const Permission LOGS;
+		static const Permission EXEMPT;
+	};
+}

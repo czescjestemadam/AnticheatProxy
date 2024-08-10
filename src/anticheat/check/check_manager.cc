@@ -15,6 +15,16 @@ acp::AcpPlayer* acp::CheckManager::getPlayer() const
 	return player;
 }
 
+bool acp::CheckManager::isExempt() const
+{
+	return exempt;
+}
+
+void acp::CheckManager::setExempt(const bool exempt)
+{
+	this->exempt = exempt;
+}
+
 std::unordered_map<std::string, std::unique_ptr<acp::ICheck>>& acp::CheckManager::getChecks()
 {
 	return checks;

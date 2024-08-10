@@ -2,38 +2,38 @@
 
 #include <unordered_map>
 
-static std::unordered_map<std::string, Permission*> permissionByName;
+static std::unordered_map<std::string, acp::Permission*> permissionByName;
 
-Permission::Permission(int idx, const std::string& name) : idx(idx), name(name)
+acp::Permission::Permission(int idx, const std::string& name) : idx(idx), name(name)
 {
 	permissionByName[name] = this;
 }
 
-const std::string& Permission::getName() const
+const std::string& acp::Permission::getName() const
 {
 	return name;
 }
 
-bool Permission::operator==(const Permission& rhs) const
+bool acp::Permission::operator==(const Permission& rhs) const
 {
 	return idx == rhs.idx;
 }
 
-bool Permission::operator!=(const Permission& rhs) const
+bool acp::Permission::operator!=(const Permission& rhs) const
 {
 	return !(*this == rhs);
 }
 
 
-Permission* Permission::getByName(const std::string& name)
+acp::Permission* acp::Permission::getByName(const std::string& name)
 {
-	return permissionByName[name];
+	return permissionByName.contains(name) ? permissionByName[name] : nullptr;
 }
 
-static int idx = 0;
-
-const Permission ALERT = { idx++, "acp.alert" };
-const Permission CMD = { idx++, "acp.cmd" };
-const Permission PROFILE = { idx++, "acp.profile" };
-const Permission LOGS = { idx++, "acp.logs" };
-const Permission EXEMPT = { idx++, "acp.exempt" };
+const acp::Permission acp::Permission::ALERT = { 0, "acp.alert" };
+const acp::Permission acp::Permission::CMD = { 1, "acp.cmd" };
+const acp::Permission acp::Permission::CMD_IP = { 1, "acp.cmd.ip" };
+const acp::Permission acp::Permission::CMD_ADMIN = { 1, "acp.cmd.admin" };
+const acp::Permission acp::Permission::PROFILE = { 2, "acp.profile" };
+const acp::Permission acp::Permission::LOGS = { 3, "acp.logs" };
+const acp::Permission acp::Permission::EXEMPT = { 4, "acp.exempt" };

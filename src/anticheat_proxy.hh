@@ -2,6 +2,7 @@
 #include "run_args.hh"
 #include "config/config_manager.hh"
 #include "network/network_manager.hh"
+#include "permission/permission_manager.hh"
 #include "util/pid_file_lock.hh"
 
 namespace acp
@@ -12,6 +13,7 @@ namespace acp
 
 		RunArgs args;
 		ConfigManager configManager;
+		PermissionManager permissionManager;
 		NetworkManager networkManager;
 
 	public:
@@ -23,6 +25,7 @@ namespace acp
 
 		const RunArgs& getArgs() const;
 		ConfigManager& getConfigManager();
+		PermissionManager& getPermissionManager();
 		NetworkManager& getNetworkManager();
 
 		static AnticheatProxy* get();

@@ -11,6 +11,7 @@ namespace acp
 	class CheckManager
 	{
 		AcpPlayer* player;
+		bool exempt;
 		std::unordered_map<std::string, std::unique_ptr<ICheck>> checks;
 
 	public:
@@ -19,6 +20,9 @@ namespace acp
 		void fail(ICheck* check);
 
 		AcpPlayer* getPlayer() const;
+
+		bool isExempt() const;
+		void setExempt(bool exempt);
 
 		std::unordered_map<std::string, std::unique_ptr<ICheck>>& getChecks();
 		const std::unordered_map<std::string, std::unique_ptr<ICheck>>& getChecks() const;

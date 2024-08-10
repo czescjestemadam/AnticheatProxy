@@ -1,5 +1,6 @@
 #include "play_handler.hh"
 
+#include "anticheat_proxy.hh"
 #include "network/connection.hh"
 #include "util/command/properties/string_properties.hh"
 
@@ -640,7 +641,11 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Login* packet)
 {
 	connection->setPlayer({ connection, packet->getEntityId(), connection->getGameProfile(), packet->getDimensionName() });
 
-	connection->getLogger().info("{} ({}) logged in with id {} in {}",
+	const bool exempt = AnticheatProxy::get()->getPermissionManager().hasPermission(connection->getGameProfile().username, Permission::EXEMPT);
+	connection->getPlayer().getCheckManager().setExempt(exempt);
+
+	connection->getLogger().info("{}{} ({}) logged in with id {} in {}",
+								 exempt ? "[EXEMPT] " : "",
 								 connection->getGameProfile().username,
 								 connection->getGameProfile().uuid.toString(),
 								 packet->getEntityId(),
