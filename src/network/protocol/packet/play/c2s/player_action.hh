@@ -1,6 +1,6 @@
 #pragma once
 #include "network/protocol/packet/i_packet.hh"
-#include "util/block_face.hh"
+#include "util/box_face.hh"
 
 namespace acp::packet::play::c2s
 {
@@ -9,7 +9,7 @@ namespace acp::packet::play::c2s
 	{
 		int status;
 		Vec3i blockPosition;
-		BlockFace face;
+		BoxFace face;
 		/// 1.19 - now
 		std::optional<int> sequence;
 
@@ -29,8 +29,8 @@ namespace acp::packet::play::c2s
 		Vec3i getBlockPosition() const;
 		void setBlockPosition(const Vec3i& block_position);
 
-		BlockFace getFace() const;
-		void setFace(BlockFace face);
+		BoxFace getFace() const;
+		void setFace(BoxFace face);
 
 		const std::optional<int>& getSequence() const;
 		void setSequence(const std::optional<int>& sequence);

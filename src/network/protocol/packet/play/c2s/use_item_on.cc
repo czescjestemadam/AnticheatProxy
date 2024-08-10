@@ -7,7 +7,7 @@ void acp::packet::play::c2s::UseItemOn::read(const ProtocolVersion* version)
 {
 	hand = buf.readVarint();
 	blockPosition = buf.readPosition();
-	face = static_cast<BlockFace>(buf.readVarint());
+	face = static_cast<BoxFace>(buf.readVarint());
 	cursorPosition = buf.readVec3f();
 	insideBlock = buf.readByte();
 
@@ -71,12 +71,12 @@ void acp::packet::play::c2s::UseItemOn::setBlockPosition(const Vec3i& block_posi
 	blockPosition = block_position;
 }
 
-acp::BlockFace acp::packet::play::c2s::UseItemOn::getFace() const
+acp::BoxFace acp::packet::play::c2s::UseItemOn::getFace() const
 {
 	return face;
 }
 
-void acp::packet::play::c2s::UseItemOn::setFace(const BlockFace face)
+void acp::packet::play::c2s::UseItemOn::setFace(const BoxFace face)
 {
 	this->face = face;
 }
@@ -116,7 +116,7 @@ std::string acp::packet::play::c2s::UseItemOn::toString() const
 	return std::format("UseItemOn[hand={}, pos={} {} {}, face={}, cursorPos={} {} {}, insideBlock={}, seq={}]",
 					   hand,
 					   blockPosition.x, blockPosition.y, blockPosition.z,
-					   EnumNames<BlockFace>::get(face),
+					   EnumNames<BoxFace>::get(face),
 					   cursorPosition.x, cursorPosition.y, cursorPosition.z,
 					   insideBlock,
 					   sequence.value_or(-1)
