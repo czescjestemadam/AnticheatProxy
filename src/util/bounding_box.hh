@@ -19,15 +19,21 @@ namespace acp
 			return min <= vec && vec <= max;
 		}
 
-		bool contains(const BoundingBox<T>& box) const
+		bool contains(const BoundingBox& box) const
 		{
 			return contains(box.min) && contains(box.max);
 		}
 
-		bool intersects(const BoundingBox<T>& box) const
+		bool intersects(const BoundingBox& box) const
 		{
 			return contains(box.min) || contains(box.max);
 		}
+
+		std::string toString() const
+		{
+			return std::format("{} -> {}", min.toString(), max.toString());
+		}
+
 
 		static BoundingBox from(Vec3<T> center, Vec3<T> size)
 		{

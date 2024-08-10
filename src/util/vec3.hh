@@ -1,4 +1,5 @@
 #pragma once
+#include <format>
 
 namespace acp
 {
@@ -75,6 +76,11 @@ namespace acp
 		bool operator!=(const Vec3& rhs)
 		{
 			return !(*this == rhs);
+		}
+
+		std::string toString() const
+		{
+			return std::format("{}:{}:{}", x, y, z);
 		}
 
 
