@@ -1,5 +1,8 @@
 #include "acp_player.hh"
 
+#include "network/connection.hh"
+
+#include <complex>
 #include <format>
 
 acp::AcpPlayer::AcpPlayer() : AcpPlayer(nullptr, -1, {}, {})
@@ -13,8 +16,35 @@ acp::AcpPlayer::AcpPlayer(Connection* connection, int id, const GameProfile& pro
 
 std::vector<std::unique_ptr<acp::RaycastResult>> acp::AcpPlayer::raycast(const RaycastingOptions& options) const
 {
-	std::vector<std::unique_ptr<RaycastResult>> results;
+	SubLogger logger = connection->getLogger().getSubLogger("Raycasting");
 
+	const Vec3d startPos = getEyePosition(connection->getProtocolVersion());
+	const Vec3d endPos = startPos + getDirection() * options.distance;
+
+	const BoundingBoxD possibleResultsBox(startPos, endPos);
+	logger.debug("results box: {}", possibleResultsBox.toString());
+
+	std::vector<std::pair<BoundingBoxD, std::unique_ptr<RaycastResult>>> possibleResults;
+	if (options.blocks)
+	{
+		// TODO
+	}
+
+	if (options.entities)
+	{
+		for (const auto& [id, entity] : trackedWorld.getEntities())
+		{
+			const BoundingBoxD entityBox = entity->getBoundingBox(connection->getProtocolVersion());
+			if (entityBox.contains(startPos) || possibleResultsBox.intersects(entityBox))
+			{
+				logger.debug("entity box: {}", entityBox.toString());
+				possibleResults.emplace_back(entityBox, std::make_unique<RaycastEntityResult>(Vec3d{}, id));
+			}
+		}
+	}
+
+
+	std::vector<std::unique_ptr<RaycastResult>> results;
 
 
 	return results;

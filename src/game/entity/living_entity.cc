@@ -28,10 +28,9 @@ void acp::game::LivingEntity::setHealth(const double health)
 	this->health = health;
 }
 
-acp::Vec3d acp::game::LivingEntity::getEyePosition() const
+acp::Vec3d acp::game::LivingEntity::getEyePosition(const ProtocolVersion* version) const
 {
-	// TODO
-	return position;
+	return position + getBoundingBox(version).size().y * 0.85;
 }
 
 acp::Vec3d acp::game::LivingEntity::getDirection() const
@@ -44,6 +43,12 @@ acp::Vec3d acp::game::LivingEntity::getDirection() const
 		-std::sin(radPitch),
 		xz * std::cos(radYaw)
 	};
+}
+
+acp::BoundingBoxD acp::game::LivingEntity::getBoundingBox(const ProtocolVersion* version) const
+{
+	// TODO if (this.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.DRAGON_HEAD)) expand(0.5)
+	return Entity::getBoundingBox(version);
 }
 
 std::string acp::game::LivingEntity::toString()

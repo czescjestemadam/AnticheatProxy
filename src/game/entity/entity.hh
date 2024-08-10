@@ -28,7 +28,7 @@ namespace acp::game
 
 		const EntityType* getType() const;
 
-		BoundingBoxD getBoundingBox(const ProtocolVersion* version) const;
+		virtual BoundingBoxD getBoundingBox(const ProtocolVersion* version) const;
 
 		Vec3d& getPosition();
 		const Vec3d& getPosition() const;

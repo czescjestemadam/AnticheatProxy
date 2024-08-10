@@ -18,8 +18,10 @@ namespace acp::game
 		double getHealth() const;
 		void setHealth(double health);
 
-		virtual Vec3d getEyePosition() const;
+		virtual Vec3d getEyePosition(const ProtocolVersion* version) const;
 		Vec3d getDirection() const;
+
+		BoundingBoxD getBoundingBox(const ProtocolVersion* version) const override;
 
 		std::string toString() override;
 	};

@@ -20,6 +20,8 @@ namespace acp::game
 		bool isSneaking() const;
 		void setSneaking(bool sneaking);
 
+		BoundingBoxD getBoundingBox(const ProtocolVersion* version) const override;
+
 		std::string toString() override;
 	};
 }

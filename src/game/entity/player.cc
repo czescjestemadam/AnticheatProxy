@@ -27,6 +27,15 @@ void acp::game::Player::setSneaking(const bool sneaking)
 	this->sneaking = sneaking;
 }
 
+acp::BoundingBoxD acp::game::Player::getBoundingBox(const ProtocolVersion* version) const
+{
+	if (sneaking)
+		return BoundingBoxD::fromPos(position, { 0.6, 1.5, 0.6 });
+	// TODO other poses
+
+	return LivingEntity::getBoundingBox(version);
+}
+
 std::string acp::game::Player::toString()
 {
 	return std::format("Player[sneaking={}, profile={} {} {}, {}]",
