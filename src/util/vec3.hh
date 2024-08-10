@@ -55,17 +55,17 @@ namespace acp
 
 		bool operator<=(const Vec3& rhs) const
 		{
-			return !(rhs < *this);
+			return x <= rhs.x && y <= rhs.y && z <= rhs.z;
 		}
 
 		bool operator>(const Vec3& rhs) const
 		{
-			return rhs < *this;
+			return x > rhs.x && y > rhs.y && z > rhs.z;
 		}
 
 		bool operator>=(const Vec3& rhs) const
 		{
-			return !(*this < rhs);
+			return x >= rhs.x && y >= rhs.y && z >= rhs.z;
 		}
 
 		bool operator==(const Vec3& rhs) const
