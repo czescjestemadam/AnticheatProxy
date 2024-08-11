@@ -13,9 +13,12 @@ namespace acp
 			ENTITY
 		};
 
-		Vec3d hitPosition;
+		/// v < 0 means ray startPos was inside BoundingBox
+		double hitDistanceMin;
+		double hitDistanceMax;
+		Vec3d hitPositionMin;
+		Vec3d hitPositionMax;
 
-		explicit RaycastResult(const Vec3d& hit_position);
 		virtual ~RaycastResult() = default;
 
 		virtual Type getType() const = 0;
@@ -26,7 +29,7 @@ namespace acp
 		Vec3i blockPos;
 		BoxFace face;
 
-		RaycastBlockResult(const Vec3d& hit_position, const Vec3i& block_pos, BoxFace face);
+		RaycastBlockResult(const Vec3i& block_pos, BoxFace face);
 
 		Type getType() const override;
 	};
@@ -35,7 +38,7 @@ namespace acp
 	{
 		int entityId;
 
-		RaycastEntityResult(const Vec3d& hit_position, int entity_id);
+		RaycastEntityResult(int entity_id);
 
 		Type getType() const override;
 	};

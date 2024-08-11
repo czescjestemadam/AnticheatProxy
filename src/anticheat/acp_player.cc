@@ -16,13 +16,13 @@ acp::AcpPlayer::AcpPlayer(Connection* connection, int id, const GameProfile& pro
 
 std::vector<std::unique_ptr<acp::RaycastResult>> acp::AcpPlayer::raycast(const RaycastingOptions& options) const
 {
-	SubLogger logger = connection->getLogger().getSubLogger("Raycasting");
-
 	const Vec3d startPos = getEyePosition(connection->getProtocolVersion());
-	const Vec3d endPos = startPos + getDirection() * options.distance;
+	const Vec3d direction = getDirection();
+	const Vec3d invDirection = 1.0 / direction;
+	const Vec3i sign(invDirection.x < 0, invDirection.y < 0, invDirection.z < 0);
+	const Vec3d endPos = startPos + direction * options.distance;
 
 	const BoundingBoxD possibleResultsBox(startPos, endPos);
-	logger.debug("results box: {}", possibleResultsBox.toString());
 
 	std::vector<std::pair<BoundingBoxD, std::unique_ptr<RaycastResult>>> possibleResults;
 	if (options.blocks)
@@ -36,16 +36,58 @@ std::vector<std::unique_ptr<acp::RaycastResult>> acp::AcpPlayer::raycast(const R
 		{
 			const BoundingBoxD entityBox = entity->getBoundingBox(connection->getProtocolVersion());
 			if (entityBox.contains(startPos) || possibleResultsBox.intersects(entityBox))
-			{
-				logger.debug("entity box: {}", entityBox.toString());
-				possibleResults.emplace_back(entityBox, std::make_unique<RaycastEntityResult>(Vec3d{}, id));
-			}
+				possibleResults.emplace_back(entityBox, std::make_unique<RaycastEntityResult>(id));
 		}
 	}
 
 
 	std::vector<std::unique_ptr<RaycastResult>> results;
 
+	for (auto& [box, result] : possibleResults)
+	{
+		const Vec3d bounds[2] = { box.min, box.max };
+
+		Vec3d tmin{
+			(bounds[sign.x].x - startPos.x) * invDirection.x,
+			(bounds[sign.y].y - startPos.y) * invDirection.y,
+			0
+		};
+
+		Vec3d tmax{
+			(bounds[1 - sign.x].x - startPos.x) * invDirection.x,
+			(bounds[1 - sign.y].y - startPos.y) * invDirection.y,
+			0
+		};
+
+		if (tmin.x > tmax.y || tmin.y > tmax.x)
+			continue;
+
+		if (tmin.y > tmin.x)
+			tmin.x = tmin.y;
+		if (tmax.y < tmax.x)
+			tmax.x = tmax.y;
+
+		tmin.z = (bounds[sign.z].z - startPos.z) * invDirection.z;
+		tmax.z = (bounds[1 - sign.z].z - startPos.z) * invDirection.z;
+
+		if (tmin.x > tmax.z || tmin.z > tmax.x)
+			continue;
+
+		if (tmin.z > tmin.x)
+			tmin.x = tmin.z;
+		if (tmax.z < tmax.x)
+			tmax.x = tmax.z;
+
+		result->hitDistanceMin = tmin.x;
+		result->hitDistanceMax = tmax.x;
+		result->hitPositionMin = startPos + direction * tmin.x;
+		result->hitPositionMax = startPos + direction * tmax.x;
+
+		results.push_back(std::move(result));
+
+		if (options.stopOnFirstResult)
+			break;
+	}
 
 	return results;
 }

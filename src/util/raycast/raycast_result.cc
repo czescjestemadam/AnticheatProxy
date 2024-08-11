@@ -1,12 +1,6 @@
 #include "raycast_result.hh"
 
-acp::RaycastResult::RaycastResult(const Vec3d& hit_position): hitPosition(hit_position)
-{
-}
-
-
-acp::RaycastBlockResult::RaycastBlockResult(const Vec3d& hit_position, const Vec3i& block_pos, BoxFace face)
-	: RaycastResult(hit_position), blockPos(block_pos), face(face)
+acp::RaycastBlockResult::RaycastBlockResult(const Vec3i& block_pos, BoxFace face) : blockPos(block_pos), face(face)
 {
 }
 
@@ -16,8 +10,7 @@ acp::RaycastResult::Type acp::RaycastBlockResult::getType() const
 }
 
 
-acp::RaycastEntityResult::RaycastEntityResult(const Vec3d& hit_position, int entity_id)
-	: RaycastResult(hit_position), entityId(entity_id)
+acp::RaycastEntityResult::RaycastEntityResult(int entity_id) : entityId(entity_id)
 {
 }
 
