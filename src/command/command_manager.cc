@@ -1,5 +1,7 @@
 #include "command_manager.hh"
 
+#include "util/profiler/profiler.hh"
+
 acp::CommandManager::CommandManager()
 {
 	// TODO add commands
@@ -7,6 +9,8 @@ acp::CommandManager::CommandManager()
 
 void acp::CommandManager::execute(ICommandSource* source, const std::string& name, const std::vector<std::string>& args)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("CommandManager::execute()");
+
 	if (commandByName.contains(name))
 	{
 		auto& command = commandByName[name];
@@ -17,6 +21,8 @@ void acp::CommandManager::execute(ICommandSource* source, const std::string& nam
 
 std::vector<std::string> acp::CommandManager::complete(ICommandSource* source, const std::string& name, const std::vector<std::string>& args)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("CommandManager::complete");
+
 	if (commandByName.contains(name))
 	{
 		auto& command = commandByName[name];

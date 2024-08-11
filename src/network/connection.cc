@@ -6,6 +6,7 @@
 #include "handler/play_handler.hh"
 #include "handler/status_handler.hh"
 #include "protocol/packet/i_packet.hh"
+#include "util/profiler/profiler.hh"
 #include "util/text/translatable_component.hh"
 
 acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket)
@@ -32,6 +33,8 @@ void acp::Connection::close(const std::unique_ptr<text::Component>& reason)
 
 void acp::Connection::handleEvent(int fd)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("Connection::handleEvent()");
+
 	const NetworkSide fromSide = fd == clientSocket.getFd() ? NetworkSide::CLIENT : NetworkSide::DEST;
 	const NetworkSide toSide = getOppositeSide(fromSide);
 	PlayerSocket& from = getSide(fromSide);
@@ -116,6 +119,8 @@ void acp::Connection::handleEvent(int fd)
 
 void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("Connection::sendPacket(to, packet, write)");
+
 	if (!getSide(to).isValid())
 		return;
 
@@ -127,6 +132,8 @@ void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket
 
 void acp::Connection::sendPacket(NetworkSide to, int packetId, const ByteBuf& packetData)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("Connection::sendPacket(to, pId, pData)");
+
 	ByteBuf data;
 	data.writeVarint(packetId);
 	data.writeBuf(packetData);
@@ -136,6 +143,8 @@ void acp::Connection::sendPacket(NetworkSide to, int packetId, const ByteBuf& pa
 
 void acp::Connection::sendPacket(NetworkSide to, ByteBuf&& data)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("Connection::sendPacket(to, data)");
+
 	if (compressionThreshold.has_value())
 	{
 		ByteBuf buf;

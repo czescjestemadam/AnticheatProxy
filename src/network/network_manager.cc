@@ -1,6 +1,7 @@
 #include "network_manager.hh"
 
 #include "socket/exception/socket_close_exception.hh"
+#include "util/profiler/profiler.hh"
 #include "util/text/translatable_component.hh"
 
 #include <memory>
@@ -21,6 +22,8 @@ acp::NetworkManager::~NetworkManager()
 
 void acp::NetworkManager::start()
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::start()");
+
 	logger.info("Starting NetworkManager");
 
 	ProtocolVersion::compileMappings(logger.getSubLogger("ProtocolVersion"));
@@ -36,6 +39,8 @@ void acp::NetworkManager::start()
 
 void acp::NetworkManager::stop()
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::stop()");
+
 	logger.info("Stopping NetworkManager");
 
 	serverSocket.close();
@@ -82,6 +87,8 @@ std::weak_ptr<acp::Connection> acp::NetworkManager::getByUsername(const std::str
 
 void acp::NetworkManager::addConnection(std::shared_ptr<Connection>&& connection)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::addConnection()");
+
 	connectionByFd[connection->getSide(NetworkSide::CLIENT).getFd()] = connection;
 	connectionByFd[connection->getSide(NetworkSide::DEST).getFd()] = connection;
 	epollSocket.add(connection);
@@ -90,6 +97,8 @@ void acp::NetworkManager::addConnection(std::shared_ptr<Connection>&& connection
 
 void acp::NetworkManager::removeConnection(const std::weak_ptr<Connection>& connection, const std::unique_ptr<text::Component>& reason)
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::removeConnection()");
+
 	const std::shared_ptr<Connection> conn = connection.lock();
 	if (!conn)
 		return;
@@ -121,6 +130,8 @@ void acp::NetworkManager::acceptLoop()
 	{
 		try
 		{
+			ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::acceptLoop() try{}");
+
 			PlayerSocket clientSocket = serverSocket.accept();
 
 			logger.info("Accepted connection from {}", clientSocket.getAddrStr());
@@ -156,6 +167,8 @@ void acp::NetworkManager::epollLoop()
 		{
 			if (std::shared_ptr<Connection> connection = getByFd(data.fd).lock())
 			{
+				ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::epollLoop() if (conn) {}");
+
 				try
 				{
 					connection->handleEvent(data.fd);

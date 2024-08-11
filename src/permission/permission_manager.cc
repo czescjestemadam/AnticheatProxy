@@ -1,5 +1,7 @@
 #include "permission_manager.hh"
 
+#include "util/profiler/profiler.hh"
+
 #include <filesystem>
 #include <fstream>
 #include <nlohmann/json.hpp>
@@ -11,6 +13,8 @@ acp::PermissionManager::PermissionManager()
 
 void acp::PermissionManager::load()
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("PermissionManager::load()");
+
 	const auto file = std::filesystem::current_path() / "permissions.json";
 	if (!exists(file))
 	{

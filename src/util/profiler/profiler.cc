@@ -55,7 +55,7 @@ const std::unordered_map<std::string, std::vector<acp::ProfilerSample>>& acp::Pr
 	return finished;
 }
 
-std::unordered_map<std::string, acp::CompiledProfilerSample> acp::Profiler::getCompiledSamples()
+std::unordered_map<std::string, acp::CompiledProfilerSample> acp::Profiler::compileSamples()
 {
 	std::unordered_map<std::string, CompiledProfilerSample> compiledSamples;
 
@@ -90,6 +90,12 @@ std::unordered_map<std::string, acp::CompiledProfilerSample> acp::Profiler::getC
 	}
 
 	return compiledSamples;
+}
+
+acp::Profiler& acp::Profiler::get()
+{
+	static Profiler profiler;
+	return profiler;
 }
 
 

@@ -1,5 +1,7 @@
 #include "config_manager.hh"
 
+#include "util/profiler/profiler.hh"
+
 acp::ConfigManager::ConfigManager(const RunArgs& args)
 {
 	if (args.hasFlag("default-configs"))
@@ -10,6 +12,8 @@ acp::ConfigManager::ConfigManager(const RunArgs& args)
 
 void acp::ConfigManager::load()
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("ConfigManager::load()");
+
 	const std::filesystem::path configsDir = std::filesystem::current_path() / "configs";
 	create_directory(configsDir);
 
@@ -20,6 +24,8 @@ void acp::ConfigManager::load()
 
 void acp::ConfigManager::save()
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("ConfigManager::save()");
+
 	logger.info("Saving configs");
 
 	network.save();

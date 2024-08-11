@@ -7,7 +7,7 @@ namespace acp
 {
 	struct ProfilerSample
 	{
-		using clk = std::chrono::steady_clock;
+		using clk = std::chrono::system_clock;
 
 		clk::time_point start, end;
 		clk::duration time;
@@ -17,7 +17,7 @@ namespace acp
 
 	struct CompiledProfilerSample
 	{
-		using clk = std::chrono::steady_clock;
+		using clk = std::chrono::system_clock;
 
 		size_t count;
 		clk::time_point first, last;
@@ -40,7 +40,10 @@ namespace acp
 		ProfilerStackGuard pushGuard(const std::string& name);
 
 		const std::unordered_map<std::string, std::vector<ProfilerSample>>& getSamples() const;
-		std::unordered_map<std::string, CompiledProfilerSample> getCompiledSamples();
+		std::unordered_map<std::string, CompiledProfilerSample> compileSamples();
+
+
+		static Profiler& get();
 	};
 
 	class ProfilerStackGuard

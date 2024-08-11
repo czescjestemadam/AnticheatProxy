@@ -1,9 +1,13 @@
 #include "run_args.hh"
 
+#include "util/profiler/profiler.hh"
+
 constexpr std::string_view PREFIX = "--";
 
 acp::RunArgs::RunArgs(int argc, char* argv[])
 {
+	ProfilerStackGuard guard = Profiler::get().pushGuard("RunArgs()");
+
 	std::string currentArg;
 	std::string currentVal;
 
