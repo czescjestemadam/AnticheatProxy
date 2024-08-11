@@ -28,6 +28,11 @@ namespace acp
 			return { static_cast<T>(x + rhs), static_cast<T>(y + rhs), static_cast<T>(z + rhs) };
 		}
 
+		friend Vec3 operator+(const T& lhs, const Vec3& rhs)
+		{
+			return operator+(rhs, lhs);
+		}
+
 		Vec3 operator-(const Vec3& rhs) const
 		{
 			return { x - rhs.x, y - rhs.y, z - rhs.z };
@@ -36,6 +41,11 @@ namespace acp
 		Vec3 operator-(const T& rhs) const
 		{
 			return { x - rhs, y - rhs, z - rhs };
+		}
+
+		friend Vec3 operator-(const T& lhs, const Vec3& rhs)
+		{
+			return operator-(rhs, lhs);
 		}
 
 		Vec3 operator*(const Vec3& rhs) const
@@ -48,6 +58,11 @@ namespace acp
 			return { static_cast<T>(x * rhs), static_cast<T>(y * rhs), static_cast<T>(z * rhs) };
 		}
 
+		friend Vec3 operator*(const T& lhs, const Vec3& rhs)
+		{
+			return operator*(rhs, lhs);
+		}
+
 		Vec3 operator/(const Vec3& rhs) const
 		{
 			return { x / rhs.x, y / rhs.y, z / rhs.z };
@@ -56,6 +71,11 @@ namespace acp
 		Vec3 operator/(const T& rhs) const
 		{
 			return { x / rhs, y / rhs, z / rhs };
+		}
+
+		friend Vec3 operator/(const T& lhs, const Vec3& rhs)
+		{
+			return { lhs / rhs.x, lhs / rhs.y, lhs / rhs.z };
 		}
 
 		bool operator<(const Vec3& rhs) const
