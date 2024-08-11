@@ -108,9 +108,11 @@ namespace acp
 			return !(*this == rhs);
 		}
 
-		std::string toString() const
+		std::string toString(const std::format_string<T>& fmt = "{}") const
 		{
-			return std::format("{}:{}:{}", x, y, z);
+			return std::vformat(fmt.get(), std::make_format_args<>(x)) + ':' +
+				   std::vformat(fmt.get(), std::make_format_args<>(y)) + ':' +
+				   std::vformat(fmt.get(), std::make_format_args<>(z));
 		}
 
 
