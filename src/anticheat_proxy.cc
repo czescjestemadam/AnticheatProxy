@@ -56,6 +56,11 @@ acp::NetworkManager& acp::AnticheatProxy::getNetworkManager()
 	return networkManager;
 }
 
+acp::CommandManager& acp::AnticheatProxy::getCommandManager()
+{
+	return commandManager;
+}
+
 
 acp::AnticheatProxy* acp::AnticheatProxy::get()
 {
