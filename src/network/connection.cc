@@ -117,7 +117,7 @@ void acp::Connection::handleEvent(int fd)
 	// );
 }
 
-void acp::Connection::sendPacket(NetworkSide to, std::unique_ptr<packet::IPacket>&& packet, bool write)
+void acp::Connection::sendPacket(NetworkSide to, const std::unique_ptr<packet::IPacket>& packet, bool write)
 {
 	ProfilerStackGuard guard = Profiler::get().pushGuard("Connection::sendPacket(to, packet, write)");
 
