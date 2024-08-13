@@ -130,9 +130,9 @@ void acp::NetworkManager::acceptLoop()
 	{
 		try
 		{
-			ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::acceptLoop() try{}");
-
 			PlayerSocket clientSocket = serverSocket.accept();
+
+			ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::acceptLoop() try{}");
 
 			logger.info("Accepted connection from {}", clientSocket.getAddrStr());
 
