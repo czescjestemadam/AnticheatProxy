@@ -20,6 +20,7 @@ void acp::ConfigManager::load()
 	logger.info("Loading configs from {}", configsDir.c_str());
 
 	network.load();
+	alert.load();
 }
 
 void acp::ConfigManager::save()
@@ -29,9 +30,15 @@ void acp::ConfigManager::save()
 	logger.info("Saving configs");
 
 	network.save();
+	alert.save();
 }
 
 acp::NetworkConfig& acp::ConfigManager::getNetwork()
 {
 	return network;
+}
+
+acp::AlertConfig& acp::ConfigManager::getAlert()
+{
+	return alert;
 }

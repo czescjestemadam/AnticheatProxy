@@ -1,4 +1,5 @@
 #pragma once
+#include "alert_config.hh"
 #include "network_config.hh"
 #include "run_args.hh"
 #include "util/logger/sub_logger.hh"
@@ -10,6 +11,7 @@ namespace acp
 		SubLogger logger = SubLogger::fromRoot("ConfigManager");
 
 		NetworkConfig network;
+		AlertConfig alert;
 
 	public:
 		explicit ConfigManager(const RunArgs& args);
@@ -18,5 +20,6 @@ namespace acp
 		void save();
 
 		NetworkConfig& getNetwork();
+		AlertConfig& getAlert();
 	};
 }

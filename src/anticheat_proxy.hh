@@ -1,5 +1,6 @@
 #pragma once
 #include "run_args.hh"
+#include "anticheat/alert/alert_manager.hh"
 #include "command/command_manager.hh"
 #include "config/config_manager.hh"
 #include "network/network_manager.hh"
@@ -16,6 +17,7 @@ namespace acp
 		ConfigManager configManager;
 		PermissionManager permissionManager;
 		NetworkManager networkManager;
+		AlertManager alertManager;
 		CommandManager commandManager;
 
 	public:
@@ -29,6 +31,7 @@ namespace acp
 		ConfigManager& getConfigManager();
 		PermissionManager& getPermissionManager();
 		NetworkManager& getNetworkManager();
+		AlertManager& getAlertManager();
 		CommandManager& getCommandManager();
 
 		static AnticheatProxy* get();
