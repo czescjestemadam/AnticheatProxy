@@ -85,6 +85,16 @@ std::weak_ptr<acp::Connection> acp::NetworkManager::getByUsername(const std::str
 	return {};
 }
 
+std::vector<std::shared_ptr<acp::Connection>>& acp::NetworkManager::getConnections()
+{
+	return connections;
+}
+
+const std::vector<std::shared_ptr<acp::Connection>>& acp::NetworkManager::getConnections() const
+{
+	return connections;
+}
+
 void acp::NetworkManager::addConnection(std::shared_ptr<Connection>&& connection)
 {
 	ProfilerStackGuard guard = Profiler::get().pushGuard("NetworkManager::addConnection()");

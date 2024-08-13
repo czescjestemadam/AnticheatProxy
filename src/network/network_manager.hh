@@ -36,6 +36,8 @@ namespace acp
 		std::weak_ptr<Connection> getByFd(int fd) const;
 		std::weak_ptr<Connection> getByUuid(const UUID& uuid) const;
 		std::weak_ptr<Connection> getByUsername(const std::string& username) const;
+		std::vector<std::shared_ptr<Connection>>& getConnections();
+		const std::vector<std::shared_ptr<Connection>>& getConnections() const;
 		void addConnection(std::shared_ptr<Connection>&& connection);
 		void removeConnection(const std::weak_ptr<Connection>& connection, const std::unique_ptr<text::Component>& reason);
 
