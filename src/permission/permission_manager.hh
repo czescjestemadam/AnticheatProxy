@@ -1,10 +1,9 @@
 #pragma once
 #include "permission.hh"
+#include "util/logger/sub_logger.hh"
 
 #include <unordered_map>
 #include <vector>
-
-#include "util/logger/sub_logger.hh"
 
 namespace acp
 {
