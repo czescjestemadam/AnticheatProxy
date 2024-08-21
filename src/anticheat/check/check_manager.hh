@@ -18,6 +18,7 @@ namespace acp
 		explicit CheckManager(AcpPlayer* player);
 
 		void fail(ICheck* check);
+		void alert(const ICheck* check, const std::string& info = "");
 
 		AcpPlayer* getPlayer() const;
 

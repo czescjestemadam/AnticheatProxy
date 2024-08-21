@@ -1,5 +1,9 @@
 #include "check_manager.hh"
 
+#include "anticheat_proxy.hh"
+#include "anticheat/acp_player.hh"
+#include "anticheat/alert/alert.hh"
+
 acp::CheckManager::CheckManager(AcpPlayer* player) : player(player)
 {
 
@@ -8,6 +12,12 @@ acp::CheckManager::CheckManager(AcpPlayer* player) : player(player)
 void acp::CheckManager::fail(ICheck* check)
 {
 
+}
+
+void acp::CheckManager::alert(const ICheck* check, const std::string& info)
+{
+	const Alert alert(player->getProfile().username, check->toString(), info, check->getFailCount());
+	AnticheatProxy::get()->getAlertManager().send(alert);
 }
 
 acp::AcpPlayer* acp::CheckManager::getPlayer() const
