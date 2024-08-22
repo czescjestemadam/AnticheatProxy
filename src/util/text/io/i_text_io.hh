@@ -7,6 +7,7 @@ namespace acp::text
 {
 	class PlaintextIO;
 	class LegacyIO;
+	class MinimessageIO;
 
 	class ITextIO
 	{
@@ -19,5 +20,6 @@ namespace acp::text
 
 		static PlaintextIO& plaintext();
 		static LegacyIO& legacy();
+		static MinimessageIO& minimessage();
 	};
 }
