@@ -12,6 +12,7 @@ namespace acp::text
 	{
 	protected:
 		Style style;
+		/// TextComponent only
 		std::vector<std::unique_ptr<Component>> extra;
 
 	public:

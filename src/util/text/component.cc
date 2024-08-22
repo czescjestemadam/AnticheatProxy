@@ -8,9 +8,13 @@ std::unique_ptr<acp::nbt::TagCompound> acp::text::Component::serialize()
 {
 	auto tag = style.serialize();
 
-	auto extraTag = std::make_unique<nbt::TagList>();
-	for (const std::unique_ptr<Component>& component : extra)
-		extraTag->get().push_back(component->serialize());
+	if (!extra.empty())
+	{
+		auto extraTag = std::make_unique<nbt::TagList>();
+		for (const std::unique_ptr<Component>& component : extra)
+			extraTag->get().push_back(component->serialize());
+		tag->set("extra", std::move(extraTag));
+	}
 
 	return tag;
 }
