@@ -67,12 +67,25 @@ std::string acp::text::LegacyIO::write(const std::unique_ptr<Component>& compone
 	{
 		if (const auto textComponent = dynamic_cast<TextComponent*>(component.get()))
 		{
-			for (const auto& tag : textComponent->getStyle().getIOTags())
+			if (!textComponent->getText().empty())
 			{
-				str += prefix;
-				str += tag->getLegacyCode();
+				const auto& tags = textComponent->getStyle().getIOTags();
+				if (tags.empty() && !str.empty())
+				{
+					str += prefix;
+					str += IOTag::RESET.getLegacyCode();
+				}
+				else
+				{
+					for (const auto& tag : tags)
+					{
+						str += prefix;
+						str += tag->getLegacyCode();
+					}
+				}
+
+				str += textComponent->getText();
 			}
-			str += textComponent->getText();
 
 			for (const auto& extra : textComponent->getExtra())
 				str += write(extra);
