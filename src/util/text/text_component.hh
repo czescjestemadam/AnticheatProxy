@@ -20,6 +20,6 @@ namespace acp::text
 		const std::string& getText() const;
 		void setText(const std::string& text);
 
-		const Type* getType() override;
+		const Type& getType() const override;
 	};
 }

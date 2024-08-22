@@ -43,7 +43,7 @@ void acp::text::TextComponent::setText(const std::string& text)
 	this->text = text;
 }
 
-const acp::text::Type* acp::text::TextComponent::getType()
+const acp::text::Type& acp::text::TextComponent::getType() const
 {
-	return &Type::TEXT;
+	return Type::TEXT;
 }

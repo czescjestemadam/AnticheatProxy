@@ -38,7 +38,7 @@ void acp::text::KeybindComponent::setKeybind(const std::string& keybind)
 	this->keybind = keybind;
 }
 
-const acp::text::Type* acp::text::KeybindComponent::getType()
+const acp::text::Type& acp::text::KeybindComponent::getType() const
 {
-	return &Type::KEYBIND;
+	return Type::KEYBIND;
 }

@@ -24,6 +24,6 @@ namespace acp::text
 		const std::vector<std::unique_ptr<TextComponent>>& getWith() const;
 		void setWith(std::vector<std::unique_ptr<TextComponent>>&& with);
 
-		const Type* getType() override;
+		const Type& getType() const override;
 	};
 }

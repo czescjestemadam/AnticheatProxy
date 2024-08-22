@@ -28,7 +28,7 @@ namespace acp::text
 		const std::vector<std::unique_ptr<Component>>& getExtra() const;
 		void setExtra(std::vector<std::unique_ptr<Component>>&& extra);
 
-		virtual const Type* getType() = 0;
+		virtual const Type& getType() const = 0;
 
 
 		static std::unique_ptr<Component> fromNbt(std::unique_ptr<nbt::Tag> tag);

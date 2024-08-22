@@ -18,6 +18,6 @@ namespace acp::text
 		const std::string& getKeybind() const;
 		void setKeybind(const std::string& keybind);
 
-		const Type* getType() override;
+		const Type& getType() const override;
 	};
 }

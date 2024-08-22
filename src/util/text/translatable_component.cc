@@ -63,7 +63,7 @@ void acp::text::TranslatableComponent::setWith(std::vector<std::unique_ptr<TextC
 	this->with = std::move(with);
 }
 
-const acp::text::Type* acp::text::TranslatableComponent::getType()
+const acp::text::Type& acp::text::TranslatableComponent::getType() const
 {
-	return &Type::TRANSLATABLE;
+	return Type::TRANSLATABLE;
 }
