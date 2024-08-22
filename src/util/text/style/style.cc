@@ -9,54 +9,63 @@ std::unique_ptr<acp::nbt::TagCompound> acp::text::Style::serialize()
 	auto tag = std::make_unique<nbt::TagCompound>();
 
 	if (!color.empty())
-		tag->get()["color"] = std::make_unique<nbt::TagString>(color);
+		tag->set<nbt::TagString>("color", color);
 
 	if (bold.has_value())
-		tag->get()["bold"] = std::make_unique<nbt::TagByte>(bold.value());
+		tag->set<nbt::TagByte>("bold", bold.value());
 
 	if (italic.has_value())
-		tag->get()["italic"] = std::make_unique<nbt::TagByte>(italic.value());
+		tag->set<nbt::TagByte>("italic", italic.value());
 
 	if (underlined.has_value())
-		tag->get()["underlined"] = std::make_unique<nbt::TagByte>(underlined.value());
+		tag->set<nbt::TagByte>("underlined", underlined.value());
 
 	if (strikethrough.has_value())
-		tag->get()["strikethrough"] = std::make_unique<nbt::TagByte>(strikethrough.value());
+		tag->set<nbt::TagByte>("strikethrough", strikethrough.value());
 
 	if (obfuscated.has_value())
-		tag->get()["obfuscated"] = std::make_unique<nbt::TagByte>(obfuscated.value());
+		tag->set<nbt::TagByte>("obfuscated", obfuscated.value());
 
 	if (!font.empty())
-		tag->get()["font"] = std::make_unique<nbt::TagString>(font);
+		tag->set<nbt::TagString>("font", font);
 
 	if (!insertion.empty())
-		tag->get()["insertion"] = std::make_unique<nbt::TagString>(insertion);
+		tag->set<nbt::TagString>("insertion", insertion);
 
 	if (clickEvent.has_value())
-		tag->get()["clickEvent"] = clickEvent->serialize();
+		tag->set("clickEvent", clickEvent->serialize());
 
 	if (hoverEvent.has_value())
-		tag->get()["hoverEvent"] = hoverEvent->serialize();
+		tag->set("hoverEvent", hoverEvent->serialize());
 
 	return tag;
 }
 
-#define DESERIALIZE(key, var, tagType) if (v->get().contains(key)) { \
-	nbt::Tag* tag = v->get()[key].get(); \
-	if (const auto* derivedTag = dynamic_cast<tagType*>(tag)) \
-		var = derivedTag->get(); \
-	}
-
 void acp::text::Style::deserialize(std::unique_ptr<nbt::TagCompound>& v)
 {
-	DESERIALIZE("color", color, nbt::TagString)
-	DESERIALIZE("bold", bold, nbt::TagByte)
-	DESERIALIZE("italic", italic, nbt::TagByte)
-	DESERIALIZE("underlined", underlined, nbt::TagByte)
-	DESERIALIZE("strikethrough", strikethrough, nbt::TagByte)
-	DESERIALIZE("obfuscated", obfuscated, nbt::TagByte)
-	DESERIALIZE("font", font, nbt::TagString)
-	DESERIALIZE("insertion", insertion, nbt::TagString)
+	if (v->contains("color"))
+		color = v->get<std::string, nbt::TagString>("color");
+
+	if (v->contains("bold"))
+		bold = v->get<bool, nbt::TagByte>("bold");
+
+	if (v->contains("italic"))
+		italic = v->get<bool, nbt::TagByte>("italic");
+
+	if (v->contains("underlined"))
+		underlined = v->get<bool, nbt::TagByte>("underlined");
+
+	if (v->contains("strikethrough"))
+		strikethrough = v->get<bool, nbt::TagByte>("strikethrough");
+
+	if (v->contains("obfuscated"))
+		obfuscated = v->get<bool, nbt::TagByte>("obfuscated");
+
+	if (v->contains("font"))
+		font = v->get<std::string, nbt::TagString>("font");
+
+	if (v->contains("insertion"))
+		insertion = v->get<std::string, nbt::TagString>("insertion");
 
 	// TODO fuckin unique_ptr wont cast
 	// if (v->get().contains("clickEvent"))

@@ -20,6 +20,8 @@ namespace acp::nbt
 		std::unordered_map<std::string, std::unique_ptr<Tag>>& get();
 		const std::unordered_map<std::string, std::unique_ptr<Tag>>& get() const;
 
+		bool contains(const std::string& name) const;
+
 		std::unique_ptr<Tag>& get(const std::string& name);
 		const std::unique_ptr<Tag>& get(const std::string& name) const;
 

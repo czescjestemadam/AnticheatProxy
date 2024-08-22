@@ -39,6 +39,11 @@ const std::unordered_map<std::string, std::unique_ptr<acp::nbt::Tag>>& acp::nbt:
 	return tags;
 }
 
+bool acp::nbt::TagCompound::contains(const std::string& name) const
+{
+	return tags.contains(name);
+}
+
 std::unique_ptr<acp::nbt::Tag>& acp::nbt::TagCompound::get(const std::string& name)
 {
 	return tags[name];
