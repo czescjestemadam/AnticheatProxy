@@ -1,22 +1,27 @@
 #pragma once
+#include <functional>
 #include <memory>
 #include <string>
 
 namespace acp::text
 {
+	struct Style;
+
 	class IOTag
 	{
 		int id;
 		char legacyCode;
 		std::string minimessageCode;
-		bool resetBefore;
+		bool reset;
+		std::function<void(Style&)> applier;
 
 	public:
-		IOTag(int id, char legacy_code, std::string&& mini_message_code, bool reset_before);
+		IOTag(int id, char legacy_code, const std::string& minimessage_code, bool reset, std::function<void(Style&)>&& applier);
 
 		char getLegacyCode() const;
 		const std::string& getMiniMessageCode() const;
-		bool isResetBefore() const;
+		bool isReset() const;
+		void apply(Style& style) const;
 
 		bool operator==(const IOTag& rhs) const;
 		bool operator!=(const IOTag& rhs) const;
