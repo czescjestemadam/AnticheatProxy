@@ -7,7 +7,51 @@
 
 std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::string& str, char prefix) const
 {
-	return nullptr;
+	std::unique_ptr<Component> component = std::make_unique<TextComponent>();
+
+	std::vector<const IOTag*> tags;
+	std::string text;
+
+	const auto appendExtra = [&]
+	{
+		if (!text.empty())
+		{
+			std::unique_ptr<Component> extra = std::make_unique<TextComponent>(text);
+			for (const IOTag* t : tags)
+				t->apply(extra->getStyle());
+
+			component->getExtra().push_back(std::move(extra));
+		}
+
+		tags.clear();
+		text.clear();
+	};
+
+	for (int i = 0; i < str.length(); ++i)
+	{
+		const char c = str[i];
+		if (c == prefix && i + 1 < str.length())
+		{
+			const char code = str[++i];
+			if (code == prefix) // parse && as &
+				text += prefix;
+			else if (const IOTag* tag = IOTag::byLegacyCode(code))
+			{
+				if (tag->isReset())
+					appendExtra();
+
+				tags.push_back(tag);
+			}
+			else
+				text += code;
+		}
+		else
+			text += c;
+	}
+
+	appendExtra();
+
+	return component;
 }
 
 std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::string& str) const
