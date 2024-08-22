@@ -649,6 +649,12 @@ add_executable(AnticheatProxy
 	src/anticheat/alert/alert.hh
 	src/config/alert_config.cc
 	src/config/alert_config.hh
+	src/util/text/io/i_text_io.cc
+	src/util/text/io/i_text_io.hh
+	src/util/text/io/legacy/legacy_io.cc
+	src/util/text/io/legacy/legacy_io.hh
+	src/util/text/io/plaintext/plaintext_io.cc
+	src/util/text/io/plaintext/plaintext_io.hh
 )
 
 find_package(OpenSSL REQUIRED)
