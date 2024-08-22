@@ -3,6 +3,32 @@
 #include "util/nbt/tag/tag_compound.hh"
 #include "util/nbt/tag/tag_number.hh"
 #include "util/nbt/tag/tag_string.hh"
+#include "util/text/io/io_tag.hh"
+
+std::vector<const acp::text::IOTag*> acp::text::Style::getIOTags() const
+{
+	std::vector<const IOTag*> tags;
+
+	if (!color.empty())
+		tags.push_back(IOTag::byMinimessageCode(color));
+
+	if (bold.has_value())
+		tags.push_back(&IOTag::BOLD);
+
+	if (italic.has_value())
+		tags.push_back(&IOTag::ITALIC);
+
+	if (underlined.has_value())
+		tags.push_back(&IOTag::UNDERLINED);
+
+	if (strikethrough.has_value())
+		tags.push_back(&IOTag::STRIKETHROUGH);
+
+	if (obfuscated.has_value())
+		tags.push_back(&IOTag::OBFUSCATED);
+
+	return tags;
+}
 
 std::unique_ptr<acp::nbt::TagCompound> acp::text::Style::serialize()
 {

@@ -655,6 +655,8 @@ add_executable(AnticheatProxy
 	src/util/text/io/legacy/legacy_io.hh
 	src/util/text/io/plaintext/plaintext_io.cc
 	src/util/text/io/plaintext/plaintext_io.hh
+	src/util/text/io/io_tag.cc
+	src/util/text/io/io_tag.hh
 )
 
 find_package(OpenSSL REQUIRED)

@@ -7,6 +7,8 @@
 
 namespace acp::text
 {
+	class IOTag;
+
 	struct Style : ISerializable<std::unique_ptr<nbt::TagCompound>>
 	{
 		std::string color;
@@ -15,6 +17,8 @@ namespace acp::text
 		std::string insertion;
 		std::optional<ClickEvent> clickEvent;
 		std::optional<HoverEvent> hoverEvent;
+
+		std::vector<const IOTag*> getIOTags() const;
 
 		std::unique_ptr<nbt::TagCompound> serialize() override;
 		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
