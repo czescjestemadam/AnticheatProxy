@@ -43,7 +43,10 @@ std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::stri
 				tags.push_back(tag);
 			}
 			else
+			{
+				text += c;
 				text += code;
+			}
 		}
 		else
 			text += c;
