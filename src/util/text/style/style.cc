@@ -10,7 +10,10 @@ std::vector<const acp::text::IOTag*> acp::text::Style::getIOTags() const
 	std::vector<const IOTag*> tags;
 
 	if (!color.empty())
-		tags.push_back(IOTag::byMinimessageCode(color));
+	{
+		if (const IOTag* tag = IOTag::byMinimessageCode(color))
+			tags.push_back(tag);
+	}
 
 	if (bold.has_value())
 		tags.push_back(&IOTag::BOLD);
@@ -26,6 +29,16 @@ std::vector<const acp::text::IOTag*> acp::text::Style::getIOTags() const
 
 	if (obfuscated.has_value())
 		tags.push_back(&IOTag::OBFUSCATED);
+
+	return tags;
+}
+
+std::vector<acp::text::IOTag> acp::text::Style::getCustomIOTags() const
+{
+	std::vector<IOTag> tags;
+
+	if (!color.empty() && !IOTag::byMinimessageCode(color))
+		tags.emplace_back(color);
 
 	return tags;
 }

@@ -19,6 +19,7 @@ namespace acp::text
 		std::optional<HoverEvent> hoverEvent;
 
 		std::vector<const IOTag*> getIOTags() const;
+		std::vector<IOTag> getCustomIOTags() const;
 
 		std::unique_ptr<nbt::TagCompound> serialize() override;
 		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;

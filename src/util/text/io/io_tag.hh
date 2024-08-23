@@ -17,6 +17,7 @@ namespace acp::text
 
 	public:
 		IOTag(int id, char legacy_code, const std::string& minimessage_code, bool reset, std::function<void(Style&)>&& applier);
+		explicit IOTag(const std::string& hexColor);
 
 		char getLegacyCode() const;
 		const std::string& getMiniMessageCode() const;

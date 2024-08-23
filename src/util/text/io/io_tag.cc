@@ -14,6 +14,11 @@ acp::text::IOTag::IOTag(int id, char legacy_code, const std::string& minimessage
 	tagByMinimessageCode[minimessage_code] = this;
 }
 
+acp::text::IOTag::IOTag(const std::string& hexColor)
+	: id(-1), legacyCode('-'), minimessageCode(hexColor), reset(true), applier([hexColor](Style& style) { style.color = hexColor; })
+{
+}
+
 char acp::text::IOTag::getLegacyCode() const
 {
 	return legacyCode;

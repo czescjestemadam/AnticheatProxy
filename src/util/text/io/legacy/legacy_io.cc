@@ -10,6 +10,7 @@ std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::stri
 	std::unique_ptr<Component> component = std::make_unique<TextComponent>();
 
 	std::vector<const IOTag*> tags;
+	std::vector<IOTag> customTags; // rgb hex only
 	std::string text;
 
 	const auto appendExtra = [&]
@@ -20,10 +21,14 @@ std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::stri
 			for (const IOTag* t : tags)
 				t->apply(extra->getStyle());
 
+			for (const IOTag& t : customTags)
+				t.apply(extra->getStyle());
+
 			component->getExtra().push_back(std::move(extra));
 		}
 
 		tags.clear();
+		customTags.clear();
 		text.clear();
 	};
 
@@ -35,6 +40,17 @@ std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::stri
 			const char code = str[++i];
 			if (code == prefix) // parse && as &
 				text += prefix;
+			else if (code == '#' && i + 6 < str.length())
+			{
+				const std::string hexCode = str.substr(i, 7);
+				i += 6;
+				const IOTag tag(hexCode);
+
+				if (tag.isReset())
+					appendExtra();
+
+				customTags.push_back(tag);
+			}
 			else if (const IOTag* tag = IOTag::byLegacyCode(code))
 			{
 				if (tag->isReset())
@@ -72,14 +88,21 @@ std::string acp::text::LegacyIO::write(const std::unique_ptr<Component>& compone
 		{
 			if (!textComponent->getText().empty())
 			{
-				const auto& tags = textComponent->getStyle().getIOTags();
-				if (tags.empty() && !str.empty())
+				const std::vector<const IOTag*> tags = textComponent->getStyle().getIOTags();
+				const std::vector<IOTag> customTags = textComponent->getStyle().getCustomIOTags(); // rgb hex only
+				if (tags.empty() && customTags.empty() && !str.empty())
 				{
 					str += prefix;
 					str += IOTag::RESET.getLegacyCode();
 				}
 				else
 				{
+					for (const auto& tag : customTags)
+					{
+						str += prefix;
+						str += tag.getMiniMessageCode();
+					}
+
 					for (const auto& tag : tags)
 					{
 						str += prefix;
