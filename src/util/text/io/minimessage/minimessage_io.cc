@@ -115,6 +115,19 @@ std::string acp::text::MinimessageIO::write(const std::unique_ptr<Component>& co
 		if (const auto translatableComponent = dynamic_cast<TranslatableComponent*>(component.get()))
 		{
 			str += translatableComponent->getKey();
+
+			const auto& with = translatableComponent->getWith();
+			for (int i = 0; i < with.size(); ++i)
+			{
+				str += write(with[i]->copy());
+
+				if (i + 1 < with.size())
+					str += ", ";
+			}
+
+			str += "; extra: ";
+			for (const auto& extra : translatableComponent->getExtra())
+				str += write(extra);
 		}
 	}
 	else if (component->getType() == Type::KEYBIND)
@@ -122,6 +135,10 @@ std::string acp::text::MinimessageIO::write(const std::unique_ptr<Component>& co
 		if (const auto keybindComponent = dynamic_cast<KeybindComponent*>(component.get()))
 		{
 			str += keybindComponent->getKeybind();
+
+			str += "; extra: ";
+			for (const auto& extra : keybindComponent->getExtra())
+				str += write(extra);
 		}
 	}
 
