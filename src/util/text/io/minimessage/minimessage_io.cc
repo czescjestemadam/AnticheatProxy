@@ -114,7 +114,7 @@ std::string acp::text::MinimessageIO::write(const std::unique_ptr<Component>& co
 	{
 		if (const auto translatableComponent = dynamic_cast<TranslatableComponent*>(component.get()))
 		{
-			str += translatableComponent->getKey();
+			str += translatableComponent->getKey() + ": ";
 
 			const auto& with = translatableComponent->getWith();
 			for (int i = 0; i < with.size(); ++i)
