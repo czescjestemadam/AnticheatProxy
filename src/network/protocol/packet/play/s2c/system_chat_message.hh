@@ -6,7 +6,7 @@ namespace acp::packet::play::s2c
 {
 	class SystemChatMessage : public IPacket
 	{
-		std::unique_ptr<nbt::Tag> message;
+		std::unique_ptr<text::Component> message;
 		bool overlay;
 
 	public:
@@ -19,8 +19,8 @@ namespace acp::packet::play::s2c
 
 		int getId(const ProtocolVersion* version) const override;
 
-		std::unique_ptr<nbt::Tag>& getMessage();
-		void setMessage(std::unique_ptr<nbt::Tag>&& message);
+		std::unique_ptr<text::Component>& getMessage();
+		void setMessage(std::unique_ptr<text::Component>&& message);
 
 		bool isOverlay() const;
 		void setOverlay(bool overlay);

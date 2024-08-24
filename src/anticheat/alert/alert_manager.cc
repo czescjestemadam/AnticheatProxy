@@ -30,9 +30,7 @@ void acp::AlertManager::send(const Alert& alert)
 void send(std::unique_ptr<acp::text::Component>&& text)
 {
 	auto packet = std::make_unique<acp::packet::play::s2c::SystemChatMessage>();
-	std::unique_ptr<acp::nbt::Tag> tag = std::make_unique<acp::nbt::TagCompound>();
-	text->serialize(tag);
-	packet->setMessage(std::move(tag));
+	packet->setMessage(std::move(text));
 	packet->setOverlay(false);
 
 	send(std::move(packet));

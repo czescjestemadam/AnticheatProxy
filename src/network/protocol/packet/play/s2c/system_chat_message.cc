@@ -2,16 +2,20 @@
 
 #include "network/handler/play_handler.hh"
 #include "network/protocol/protocol_version.hh"
+#include "util/text/io/i_text_io.hh"
+#include "util/text/io/plaintext/plaintext_io.hh"
 
 void acp::packet::play::s2c::SystemChatMessage::read(const ProtocolVersion* version)
 {
-	message = buf.readNbt(*version < ProtocolVersion::v1_20_2);
+	message = text::Component::fromNbt(buf.readNbt(*version < ProtocolVersion::v1_20_2));
 	overlay = buf.readByte();
 }
 
 void acp::packet::play::s2c::SystemChatMessage::write(const ProtocolVersion* version)
 {
-	buf.writeNbt(message, *version < ProtocolVersion::v1_20_2);
+	std::unique_ptr<nbt::Tag> tag = std::make_unique<nbt::TagCompound>();
+	message->serialize(tag);
+	buf.writeNbt(tag, *version < ProtocolVersion::v1_20_2);
 	buf.writeByte(overlay);
 }
 
@@ -43,12 +47,12 @@ int acp::packet::play::s2c::SystemChatMessage::getId(const ProtocolVersion* vers
 	return -1;
 }
 
-std::unique_ptr<acp::nbt::Tag>& acp::packet::play::s2c::SystemChatMessage::getMessage()
+std::unique_ptr<acp::text::Component>& acp::packet::play::s2c::SystemChatMessage::getMessage()
 {
 	return message;
 }
 
-void acp::packet::play::s2c::SystemChatMessage::setMessage(std::unique_ptr<nbt::Tag>&& message)
+void acp::packet::play::s2c::SystemChatMessage::setMessage(std::unique_ptr<text::Component>&& message)
 {
 	this->message = std::move(message);
 }
@@ -65,5 +69,5 @@ void acp::packet::play::s2c::SystemChatMessage::setOverlay(bool overlay)
 
 std::string acp::packet::play::s2c::SystemChatMessage::toString() const
 {
-	return std::format("SystemChatMessage[msg={}, overlay={}]", message->toString(), overlay);
+	return std::format("SystemChatMessage[msg={}, overlay={}]", text::ITextIO::plaintext().write(message), overlay);
 }
