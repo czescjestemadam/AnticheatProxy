@@ -7,7 +7,7 @@ namespace acp
 	{
 	public:
 		int antispamLogSize = 4;
-		std::string format = "<red><bold>[ACP]</bold></red> <player> <red>failed</red> <check> <gray>x<count></gray>";
+		std::string format = "<red><bold>[ACP] <reset><player> <red>failed <reset><check> <gray>x<count>";
 		std::string hoverFormat = "<yellow><check-info><newline><check-description>";
 		std::string clickFormat = "/tp <player>";
 
