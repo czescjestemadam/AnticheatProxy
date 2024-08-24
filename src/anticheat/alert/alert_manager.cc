@@ -2,11 +2,9 @@
 
 #include "anticheat_proxy.hh"
 #include "network/protocol/packet/play/s2c/system_chat_message.hh"
-#include "util/text/text_component.hh"
-
-void send(std::unique_ptr<acp::text::Component>&& text);
-void send(std::unique_ptr<acp::packet::IPacket>&& packet);
-
+#include "util/str_utils.hh"
+#include "util/text/io/i_text_io.hh"
+#include "util/text/io/minimessage/minimessage_io.hh"
 
 void acp::AlertManager::send(const Alert& alert)
 {
@@ -18,31 +16,49 @@ void acp::AlertManager::send(const Alert& alert)
 	if (lastSent.size() > config.antispamLogSize)
 		lastSent.erase(lastSent.begin());
 
-	// TODO formatting in config, TextComponentIO
+	const std::string format = formatString(config.format, alert);
+	const std::string hoverFormat = formatString(config.hoverFormat, alert);
+	const std::string clickFormat = formatString(config.clickFormat, alert);
 
-	auto text = std::make_unique<text::TextComponent>("[alert] user=" + alert.username);
-	text->getStyle().color = "red";
+	std::unique_ptr<text::Component> component = text::ITextIO::minimessage().parse(format);
+	component->getStyle().hoverEvent = {
+		text::HoverEvent::Action::SHOW_TEXT,
+		text::Component::toNbt(text::ITextIO::minimessage().parse(hoverFormat))
+	};
+	component->getStyle().clickEvent = {
+		text::ClickEvent::Action::RUN_COMMAND,
+		clickFormat
+	};
 
-	::send(std::move(text));
+	send(std::move(component));
 }
 
-
-void send(std::unique_ptr<acp::text::Component>&& text)
+std::string acp::AlertManager::formatString(const std::string& str, const Alert& alert)
 {
-	auto packet = std::make_unique<acp::packet::play::s2c::SystemChatMessage>();
-	packet->setMessage(std::move(text));
+	std::string replaced = str;
+
+	StrUtils::replace(replaced, "<player>", alert.username);
+	StrUtils::replace(replaced, "<check>", alert.check);
+	StrUtils::replace(replaced, "<check-info>", alert.checkInfo);
+	StrUtils::replace(replaced, "<count>", std::to_string(alert.count));
+
+	return replaced;
+}
+
+void acp::AlertManager::send(std::unique_ptr<text::Component>&& component)
+{
+	auto packet = std::make_unique<packet::play::s2c::SystemChatMessage>();
+	packet->setMessage(std::move(component));
 	packet->setOverlay(false);
 
 	send(std::move(packet));
 }
 
-void send(std::unique_ptr<acp::packet::IPacket>&& packet)
+void acp::AlertManager::send(std::unique_ptr<packet::IPacket>&& packet)
 {
-	acp::AnticheatProxy* acp = acp::AnticheatProxy::get();
-
-	for (const std::shared_ptr<acp::Connection>& connection : acp->getNetworkManager().getConnections())
+	for (const std::shared_ptr<Connection>& connection : AnticheatProxy::get()->getNetworkManager().getConnections())
 	{
-		if (acp->getPermissionManager().hasPermission(connection->getGameProfile().username, acp::Permission::ALERT))
-			connection->sendPacket(acp::NetworkSide::CLIENT, packet);
+		if (AnticheatProxy::get()->getPermissionManager().hasPermission(connection->getGameProfile().username, Permission::ALERT))
+			connection->sendPacket(NetworkSide::CLIENT, packet);
 	}
 }
