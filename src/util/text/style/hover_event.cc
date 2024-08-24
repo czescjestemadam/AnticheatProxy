@@ -42,28 +42,23 @@ acp::text::HoverEvent::HoverEvent(const Action& action, const std::string& conte
 {
 }
 
-std::unique_ptr<acp::nbt::TagCompound> acp::text::HoverEvent::serialize()
+void acp::text::HoverEvent::serialize(std::unique_ptr<nbt::Tag>& v)
 {
-	auto tag = std::make_unique<nbt::TagCompound>();
-	tag->get()["action"] = std::make_unique<nbt::TagString>(action->getName());
-	tag->get()["contents"] = std::make_unique<nbt::TagString>(contents);
-
-	return tag;
+	if (auto* tag = dynamic_cast<nbt::TagCompound*>(v.get()))
+	{
+		tag->set<nbt::TagString>("action", action->getName());
+		tag->set<nbt::TagString>("contents", contents);
+	}
 }
 
-void acp::text::HoverEvent::deserialize(std::unique_ptr<nbt::TagCompound>& v)
+void acp::text::HoverEvent::deserialize(std::unique_ptr<nbt::Tag>& v)
 {
-	if (v->get().contains("action"))
+	if (auto* tag = dynamic_cast<nbt::TagCompound*>(v.get()))
 	{
-		nbt::Tag* tag = v->get()["action"].get();
-		if (const auto* actionTag = dynamic_cast<nbt::TagString*>(tag))
-			action = Action::byName(actionTag->get());
-	}
+		if (tag->contains("action"))
+			action = Action::byName(tag->get<std::string, nbt::TagString>("action"));
 
-	if (v->get().contains("contents"))
-	{
-		nbt::Tag* tag = v->get()["contents"].get();
-		if (const auto* contentsTag = dynamic_cast<nbt::TagString*>(tag))
-			contents = contentsTag->get();
+		if (tag->contains("contents"))
+			contents = tag->get("contents")->toString();
 	}
 }

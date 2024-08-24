@@ -2,6 +2,8 @@
 
 #include "network/handler/configuration_handler.hh"
 #include "network/protocol/protocol_version.hh"
+#include "util/text/io/i_text_io.hh"
+#include "util/text/io/plaintext/plaintext_io.hh"
 
 void acp::packet::configuration::s2c::Disconnect::read(const ProtocolVersion* version)
 {
@@ -10,7 +12,8 @@ void acp::packet::configuration::s2c::Disconnect::read(const ProtocolVersion* ve
 
 void acp::packet::configuration::s2c::Disconnect::write(const ProtocolVersion* version)
 {
-	std::unique_ptr<nbt::Tag> tag = reason->serialize();
+	std::unique_ptr<nbt::Tag> tag = std::make_unique<nbt::TagCompound>();
+	reason->serialize(tag);
 	buf.writeNbt(tag, false);
 }
 
@@ -49,5 +52,5 @@ void acp::packet::configuration::s2c::Disconnect::setReason(std::unique_ptr<text
 
 std::string acp::packet::configuration::s2c::Disconnect::toString() const
 {
-	return std::format("Disconnect[{}]", reason->serialize()->toString());
+	return std::format("Disconnect[{}]", text::ITextIO::plaintext().write(reason));
 }

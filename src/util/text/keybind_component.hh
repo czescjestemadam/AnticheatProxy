@@ -8,10 +8,12 @@ namespace acp::text
 		std::string keybind;
 
 	public:
+		KeybindComponent() = default;
 		explicit KeybindComponent(const std::string& keybind);
 		KeybindComponent(KeybindComponent& component);
 
-		std::unique_ptr<nbt::TagCompound> serialize() override;
+		void serialize(std::unique_ptr<nbt::Tag>& v) override;
+		void deserialize(std::unique_ptr<nbt::Tag>& v) override;
 
 		std::unique_ptr<Component> copy() override;
 

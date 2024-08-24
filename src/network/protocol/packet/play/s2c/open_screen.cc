@@ -2,6 +2,8 @@
 
 #include "network/handler/play_handler.hh"
 #include "network/protocol/protocol_version.hh"
+#include "util/text/io/i_text_io.hh"
+#include "util/text/io/plaintext/plaintext_io.hh"
 
 void acp::packet::play::s2c::OpenScreen::read(const ProtocolVersion* version)
 {
@@ -16,7 +18,8 @@ void acp::packet::play::s2c::OpenScreen::write(const ProtocolVersion* version)
 	buf.writeVarint(windowId);
 	buf.writeVarint(type);
 
-	std::unique_ptr<nbt::Tag> titleTag = title->serialize();
+	std::unique_ptr<nbt::Tag> titleTag = std::make_unique<nbt::TagCompound>();
+	title->serialize(titleTag);
 	buf.writeNbt(titleTag, *version < ProtocolVersion::v1_20_2);
 }
 
@@ -85,5 +88,5 @@ void acp::packet::play::s2c::OpenScreen::setTitle(std::unique_ptr<text::Componen
 
 std::string acp::packet::play::s2c::OpenScreen::toString() const
 {
-	return std::format("OpenScreen[id={}, type={}, title={}]", windowId, type, title->serialize()->toString());
+	return std::format("OpenScreen[id={}, type={}, title={}]", windowId, type, text::ITextIO::plaintext().write(title));
 }

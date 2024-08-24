@@ -9,7 +9,7 @@ namespace acp::text
 {
 	class IOTag;
 
-	struct Style : ISerializable<std::unique_ptr<nbt::TagCompound>>
+	struct Style
 	{
 		std::string color;
 		std::optional<bool> bold, italic, underlined, strikethrough, obfuscated;
@@ -21,7 +21,7 @@ namespace acp::text
 		std::vector<const IOTag*> getIOTags() const;
 		std::vector<IOTag> getCustomIOTags() const;
 
-		std::unique_ptr<nbt::TagCompound> serialize() override;
-		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
+		void serialize(std::unique_ptr<nbt::Tag>& v);
+		void deserialize(std::unique_ptr<nbt::Tag>& v);
 	};
 }

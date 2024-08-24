@@ -43,74 +43,88 @@ std::vector<acp::text::IOTag> acp::text::Style::getCustomIOTags() const
 	return tags;
 }
 
-std::unique_ptr<acp::nbt::TagCompound> acp::text::Style::serialize()
+void acp::text::Style::serialize(std::unique_ptr<nbt::Tag>& v)
 {
-	auto tag = std::make_unique<nbt::TagCompound>();
+	if (auto* tag = dynamic_cast<nbt::TagCompound*>(v.get()))
+	{
+		if (!color.empty())
+			tag->set<nbt::TagString>("color", color);
 
-	if (!color.empty())
-		tag->set<nbt::TagString>("color", color);
+		if (bold.has_value())
+			tag->set<nbt::TagByte>("bold", bold.value());
 
-	if (bold.has_value())
-		tag->set<nbt::TagByte>("bold", bold.value());
+		if (italic.has_value())
+			tag->set<nbt::TagByte>("italic", italic.value());
 
-	if (italic.has_value())
-		tag->set<nbt::TagByte>("italic", italic.value());
+		if (underlined.has_value())
+			tag->set<nbt::TagByte>("underlined", underlined.value());
 
-	if (underlined.has_value())
-		tag->set<nbt::TagByte>("underlined", underlined.value());
+		if (strikethrough.has_value())
+			tag->set<nbt::TagByte>("strikethrough", strikethrough.value());
 
-	if (strikethrough.has_value())
-		tag->set<nbt::TagByte>("strikethrough", strikethrough.value());
+		if (obfuscated.has_value())
+			tag->set<nbt::TagByte>("obfuscated", obfuscated.value());
 
-	if (obfuscated.has_value())
-		tag->set<nbt::TagByte>("obfuscated", obfuscated.value());
+		if (!font.empty())
+			tag->set<nbt::TagString>("font", font);
 
-	if (!font.empty())
-		tag->set<nbt::TagString>("font", font);
+		if (!insertion.empty())
+			tag->set<nbt::TagString>("insertion", insertion);
 
-	if (!insertion.empty())
-		tag->set<nbt::TagString>("insertion", insertion);
+		if (clickEvent.has_value())
+		{
+			std::unique_ptr<nbt::Tag> eventTag;
+			clickEvent->serialize(eventTag);
+			tag->set("clickEvent", std::move(eventTag));
+		}
 
-	if (clickEvent.has_value())
-		tag->set("clickEvent", clickEvent->serialize());
-
-	if (hoverEvent.has_value())
-		tag->set("hoverEvent", hoverEvent->serialize());
-
-	return tag;
+		if (hoverEvent.has_value())
+		{
+			std::unique_ptr<nbt::Tag> eventTag;
+			hoverEvent->serialize(eventTag);
+			tag->set("hoverEvent", std::move(eventTag));
+		}
+	}
 }
 
-void acp::text::Style::deserialize(std::unique_ptr<nbt::TagCompound>& v)
+void acp::text::Style::deserialize(std::unique_ptr<nbt::Tag>& v)
 {
-	if (v->contains("color"))
-		color = v->get<std::string, nbt::TagString>("color");
+	if (auto* tag = dynamic_cast<nbt::TagCompound*>(v.get()))
+	{
+		if (tag->contains("color"))
+			color = tag->get<std::string, nbt::TagString>("color");
 
-	if (v->contains("bold"))
-		bold = v->get<bool, nbt::TagByte>("bold");
+		if (tag->contains("bold"))
+			bold = tag->get<bool, nbt::TagByte>("bold");
 
-	if (v->contains("italic"))
-		italic = v->get<bool, nbt::TagByte>("italic");
+		if (tag->contains("italic"))
+			italic = tag->get<bool, nbt::TagByte>("italic");
 
-	if (v->contains("underlined"))
-		underlined = v->get<bool, nbt::TagByte>("underlined");
+		if (tag->contains("underlined"))
+			underlined = tag->get<bool, nbt::TagByte>("underlined");
 
-	if (v->contains("strikethrough"))
-		strikethrough = v->get<bool, nbt::TagByte>("strikethrough");
+		if (tag->contains("strikethrough"))
+			strikethrough = tag->get<bool, nbt::TagByte>("strikethrough");
 
-	if (v->contains("obfuscated"))
-		obfuscated = v->get<bool, nbt::TagByte>("obfuscated");
+		if (tag->contains("obfuscated"))
+			obfuscated = tag->get<bool, nbt::TagByte>("obfuscated");
 
-	if (v->contains("font"))
-		font = v->get<std::string, nbt::TagString>("font");
+		if (tag->contains("font"))
+			font = tag->get<std::string, nbt::TagString>("font");
 
-	if (v->contains("insertion"))
-		insertion = v->get<std::string, nbt::TagString>("insertion");
+		if (tag->contains("insertion"))
+			insertion = tag->get<std::string, nbt::TagString>("insertion");
 
-	// TODO fuckin unique_ptr wont cast
-	// if (v->get().contains("clickEvent"))
-	// {
-	// 	ClickEvent event;
-	// 	const auto& tag = v->get()["clickEvent"];
-	// 	event.deserialize();
-	// }
+		if (tag->contains("clickEvent"))
+		{
+			clickEvent = ClickEvent{};
+			clickEvent->deserialize(tag->get("clickEvent"));
+		}
+
+		if (tag->contains("hoverEvent"))
+		{
+			hoverEvent = HoverEvent{};
+			hoverEvent->deserialize(tag->get("hoverEvent"));
+		}
+	}
 }

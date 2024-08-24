@@ -14,13 +14,18 @@ acp::text::TextComponent::TextComponent(TextComponent& component) : text(compone
 		extra.push_back(e->copy());
 }
 
-std::unique_ptr<acp::nbt::TagCompound> acp::text::TextComponent::serialize()
+void acp::text::TextComponent::serialize(std::unique_ptr<nbt::Tag>& v)
 {
-	auto tag = Component::serialize();
+	Component::serialize(v);
+	if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+		compound->set<nbt::TagString>("text", text);
+}
 
-	tag->get()["text"] = std::make_unique<nbt::TagString>(text);
-
-	return tag;
+void acp::text::TextComponent::deserialize(std::unique_ptr<nbt::Tag>& v)
+{
+	Component::deserialize(v);
+	if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+		text = compound->get<std::string, nbt::TagString>(compound->contains("text") ? "text" : "");
 }
 
 std::unique_ptr<acp::text::Component> acp::text::TextComponent::copy()

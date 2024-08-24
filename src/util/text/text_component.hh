@@ -12,7 +12,8 @@ namespace acp::text
 		explicit TextComponent(const std::string& text);
 		TextComponent(TextComponent& component);
 
-		std::unique_ptr<nbt::TagCompound> serialize() override;
+		void serialize(std::unique_ptr<nbt::Tag>& v) override;
+		void deserialize(std::unique_ptr<nbt::Tag>& v) override;
 
 		std::unique_ptr<Component> copy() override;
 

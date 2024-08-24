@@ -8,7 +8,7 @@
 
 namespace acp::text
 {
-	class Component : ISerializable<std::unique_ptr<nbt::TagCompound>>
+	class Component
 	{
 	protected:
 		Style style;
@@ -16,8 +16,10 @@ namespace acp::text
 		std::vector<std::unique_ptr<Component>> extra;
 
 	public:
-		std::unique_ptr<nbt::TagCompound> serialize() override;
-		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
+		virtual ~Component() = default;
+
+		virtual void serialize(std::unique_ptr<nbt::Tag>& v);
+		virtual void deserialize(std::unique_ptr<nbt::Tag>& v);
 
 		virtual std::unique_ptr<Component> copy() = 0;
 
@@ -32,6 +34,7 @@ namespace acp::text
 		virtual const Type& getType() const = 0;
 
 
-		static std::unique_ptr<Component> fromNbt(std::unique_ptr<nbt::Tag> tag);
+		static std::unique_ptr<Component> fromNbt(std::unique_ptr<nbt::Tag>&& tag);
+		static std::unique_ptr<Component> fromNbt(std::unique_ptr<nbt::Tag>& tag);
 	};
 }

@@ -1,13 +1,12 @@
 #pragma once
-#include "util/io/i_serializable.hh"
-#include "util/nbt/tag/tag_compound.hh"
+#include "util/nbt/tag.hh"
 
 #include <memory>
 #include <string>
 
 namespace acp::text
 {
-	struct ClickEvent : ISerializable<std::unique_ptr<nbt::TagCompound>>
+	struct ClickEvent
 	{
 		class Action
 		{
@@ -38,7 +37,7 @@ namespace acp::text
 		ClickEvent() = default;
 		ClickEvent(const Action& action, const std::string& value);
 
-		std::unique_ptr<nbt::TagCompound> serialize() override;
-		void deserialize(std::unique_ptr<nbt::TagCompound>& v) override;
+		void serialize(std::unique_ptr<nbt::Tag>& v);
+		void deserialize(std::unique_ptr<nbt::Tag>& v);
 	};
 }

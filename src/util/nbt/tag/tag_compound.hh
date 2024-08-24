@@ -25,6 +25,11 @@ namespace acp::nbt
 		std::unique_ptr<Tag>& get(const std::string& name);
 		const std::unique_ptr<Tag>& get(const std::string& name) const;
 
+		/// simple tag getter helper
+		/// @tparam T cast to type
+		/// @tparam P nbt tag type
+		/// @param name mapped name
+		/// @return mapped value
 		template<class T, class P>
 		T get(const std::string& name)
 		{

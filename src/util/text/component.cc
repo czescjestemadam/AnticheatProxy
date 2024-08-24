@@ -1,26 +1,46 @@
 #include "component.hh"
 
+#include "keybind_component.hh"
 #include "text_component.hh"
+#include "translatable_component.hh"
 #include "util/nbt/tag/tag_list.hh"
 #include "util/nbt/tag/tag_string.hh"
 
-std::unique_ptr<acp::nbt::TagCompound> acp::text::Component::serialize()
+void acp::text::Component::serialize(std::unique_ptr<nbt::Tag>& v)
 {
-	auto tag = style.serialize();
+	style.serialize(v);
 
 	if (!extra.empty())
 	{
-		auto extraTag = std::make_unique<nbt::TagList>();
-		for (const std::unique_ptr<Component>& component : extra)
-			extraTag->get().push_back(component->serialize());
-		tag->set("extra", std::move(extraTag));
+		if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+		{
+			auto extraTag = std::make_unique<nbt::TagList>();
+			for (const std::unique_ptr<Component>& component : extra)
+			{
+				std::unique_ptr<nbt::Tag> extraTagEntry = std::make_unique<nbt::TagCompound>();
+				component->serialize(extraTagEntry);
+				extraTag->get().push_back(std::move(extraTagEntry));
+			}
+			compound->set("extra", std::move(extraTag));
+		}
 	}
-
-	return tag;
 }
 
-void acp::text::Component::deserialize(std::unique_ptr<nbt::TagCompound>& v)
+void acp::text::Component::deserialize(std::unique_ptr<nbt::Tag>& v)
 {
+	style.deserialize(v);
+
+	if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+	{
+		if (compound->contains("extra"))
+		{
+			if (auto* extraTag = dynamic_cast<nbt::TagList*>(compound->get("extra").get()))
+			{
+				for (std::unique_ptr<nbt::Tag>& extraTagEntry : extraTag->get())
+					extra.push_back(fromNbt(extraTagEntry));
+			}
+		}
+	}
 }
 
 acp::text::Style& acp::text::Component::getStyle()
@@ -54,7 +74,12 @@ void acp::text::Component::setExtra(std::vector<std::unique_ptr<Component>>&& ex
 }
 
 
-std::unique_ptr<acp::text::Component> acp::text::Component::fromNbt(std::unique_ptr<nbt::Tag> tag)
+std::unique_ptr<acp::text::Component> acp::text::Component::fromNbt(std::unique_ptr<nbt::Tag>&& tag)
+{
+	return fromNbt(tag);
+}
+
+std::unique_ptr<acp::text::Component> acp::text::Component::fromNbt(std::unique_ptr<nbt::Tag>& tag)
 {
 	if (tag->getType() == nbt::TagType::STRING)
 	{
@@ -62,7 +87,24 @@ std::unique_ptr<acp::text::Component> acp::text::Component::fromNbt(std::unique_
 		return std::make_unique<TextComponent>(strTag->get());
 	}
 
-	// TODO get by checking if contains field for components
-	// TODO deserializer in ISerializable
-	return std::make_unique<TextComponent>("nullptr");
+	if (tag->getType() == nbt::TagType::COMPOUND)
+	{
+		if (const nbt::TagCompound* compound = dynamic_cast<nbt::TagCompound*>(tag.get()))
+		{
+			std::unique_ptr<Component> component;
+			if (compound->contains("text") || compound->contains(""))
+				component = std::make_unique<TextComponent>();
+			else if (compound->contains("translate"))
+				component = std::make_unique<TranslatableComponent>();
+			else if (compound->contains("keybind"))
+				component = std::make_unique<KeybindComponent>();
+			else
+				throw std::invalid_argument("component type of " + tag->toString() + " is not supported");
+
+			component->deserialize(tag);
+			return component;
+		}
+	}
+
+	throw std::invalid_argument("tag type must be STRING or COMPOUND");
 }

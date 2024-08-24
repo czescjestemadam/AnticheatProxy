@@ -14,13 +14,18 @@ acp::text::KeybindComponent::KeybindComponent(KeybindComponent& component) : key
 		extra.push_back(e->copy());
 }
 
-std::unique_ptr<acp::nbt::TagCompound> acp::text::KeybindComponent::serialize()
+void acp::text::KeybindComponent::serialize(std::unique_ptr<nbt::Tag>& v)
 {
-	auto tag = Component::serialize();
+	Component::serialize(v);
+	if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+		compound->set<nbt::TagString>("keybind", keybind);
+}
 
-	tag->get()["keybind"] = std::make_unique<nbt::TagString>(keybind);
-
-	return tag;
+void acp::text::KeybindComponent::deserialize(std::unique_ptr<nbt::Tag>& v)
+{
+	Component::deserialize(v);
+	if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+		keybind = compound->get<std::string, nbt::TagString>("keybind");
 }
 
 std::unique_ptr<acp::text::Component> acp::text::KeybindComponent::copy()

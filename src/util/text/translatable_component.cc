@@ -14,23 +14,46 @@ acp::text::TranslatableComponent::TranslatableComponent(TranslatableComponent& c
 	for (const std::unique_ptr<Component>& e : component.extra)
 		extra.push_back(e->copy());
 
-	for (const std::unique_ptr<TextComponent>& e : component.with)
-		with.push_back(std::make_unique<TextComponent>(*e));
+	for (const std::unique_ptr<Component>& e : component.with)
+		with.push_back(e->copy());
 }
 
-std::unique_ptr<acp::nbt::TagCompound> acp::text::TranslatableComponent::serialize()
+void acp::text::TranslatableComponent::serialize(std::unique_ptr<nbt::Tag>& v)
 {
-	auto tag = Component::serialize();
+	Component::serialize(v);
 
-	tag->get()["translate"] = std::make_unique<nbt::TagString>(key);
+	if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+	{
+		compound->set<nbt::TagString>("translate", key);
 
-	auto withTag = std::make_unique<nbt::TagList>();
-	for (const std::unique_ptr<TextComponent>& component : with)
-		withTag->get().push_back(component->serialize());
+		auto withTag = std::make_unique<nbt::TagList>();
+		for (const std::unique_ptr<Component>& component : with)
+		{
+			std::unique_ptr<nbt::Tag> withTagEntry = std::make_unique<nbt::TagCompound>();
+			component->serialize(withTagEntry);
+			withTag->get().push_back(std::move(withTagEntry));
+		}
+		compound->set("with", std::move(withTag));
+	}
+}
 
-	tag->get()["with"] = std::move(withTag);
+void acp::text::TranslatableComponent::deserialize(std::unique_ptr<nbt::Tag>& v)
+{
+	Component::deserialize(v);
 
-	return tag;
+	if (auto* compound = dynamic_cast<nbt::TagCompound*>(v.get()))
+	{
+		key = compound->get<std::string, nbt::TagString>("translate");
+
+		if (compound->contains("with"))
+		{
+			if (auto* withTag = dynamic_cast<nbt::TagList*>(compound->get("with").get()))
+			{
+				for (std::unique_ptr<nbt::Tag>& withTagEntry : withTag->get())
+					with.push_back(fromNbt(withTagEntry));
+			}
+		}
+	}
 }
 
 std::unique_ptr<acp::text::Component> acp::text::TranslatableComponent::copy()
@@ -48,17 +71,17 @@ void acp::text::TranslatableComponent::setKey(const std::string& key)
 	this->key = key;
 }
 
-std::vector<std::unique_ptr<acp::text::TextComponent>>& acp::text::TranslatableComponent::getWith()
+std::vector<std::unique_ptr<acp::text::Component>>& acp::text::TranslatableComponent::getWith()
 {
 	return with;
 }
 
-const std::vector<std::unique_ptr<acp::text::TextComponent>>& acp::text::TranslatableComponent::getWith() const
+const std::vector<std::unique_ptr<acp::text::Component>>& acp::text::TranslatableComponent::getWith() const
 {
 	return with;
 }
 
-void acp::text::TranslatableComponent::setWith(std::vector<std::unique_ptr<TextComponent>>&& with)
+void acp::text::TranslatableComponent::setWith(std::vector<std::unique_ptr<Component>>&& with)
 {
 	this->with = std::move(with);
 }
