@@ -34,6 +34,8 @@ namespace acp::text
 		virtual const Type& getType() const = 0;
 
 
+		static std::unique_ptr<nbt::Tag> toNbt(std::unique_ptr<Component>&& component);
+		static std::unique_ptr<nbt::Tag> toNbt(std::unique_ptr<Component>& component);
 		static std::unique_ptr<Component> fromNbt(std::unique_ptr<nbt::Tag>&& tag);
 		static std::unique_ptr<Component> fromNbt(std::unique_ptr<nbt::Tag>& tag);
 	};

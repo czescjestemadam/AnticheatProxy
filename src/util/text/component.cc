@@ -74,6 +74,18 @@ void acp::text::Component::setExtra(std::vector<std::unique_ptr<Component>>&& ex
 }
 
 
+std::unique_ptr<acp::nbt::Tag> acp::text::Component::toNbt(std::unique_ptr<Component>&& component)
+{
+	return toNbt(component);
+}
+
+std::unique_ptr<acp::nbt::Tag> acp::text::Component::toNbt(std::unique_ptr<Component>& component)
+{
+	std::unique_ptr<nbt::Tag> tag = std::make_unique<nbt::TagCompound>();
+	component->serialize(tag);
+	return tag;
+}
+
 std::unique_ptr<acp::text::Component> acp::text::Component::fromNbt(std::unique_ptr<nbt::Tag>&& tag)
 {
 	return fromNbt(tag);
