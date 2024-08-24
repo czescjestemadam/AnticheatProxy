@@ -15,6 +15,10 @@ namespace acp::nbt
 
 	public:
 		TagNumber() = default;
+		TagNumber(TagNumber& tag) : val(tag.val)
+		{
+			name = tag.name;
+		}
 		explicit TagNumber(T val) : val(val)
 		{
 		}
@@ -45,6 +49,8 @@ namespace acp::nbt
 	public:
 		using TagNumber::TagNumber;
 
+		std::unique_ptr<Tag> copy() override;
+
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
 	};
@@ -53,6 +59,8 @@ namespace acp::nbt
 	{
 	public:
 		using TagNumber::TagNumber;
+
+		std::unique_ptr<Tag> copy() override;
 
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
@@ -63,6 +71,8 @@ namespace acp::nbt
 	public:
 		using TagNumber::TagNumber;
 
+		std::unique_ptr<Tag> copy() override;
+
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
 	};
@@ -71,6 +81,8 @@ namespace acp::nbt
 	{
 	public:
 		using TagNumber::TagNumber;
+
+		std::unique_ptr<Tag> copy() override;
 
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
@@ -81,6 +93,8 @@ namespace acp::nbt
 	public:
 		using TagNumber::TagNumber;
 
+		std::unique_ptr<Tag> copy() override;
+
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
 	};
@@ -89,6 +103,8 @@ namespace acp::nbt
 	{
 	public:
 		using TagNumber::TagNumber;
+
+		std::unique_ptr<Tag> copy() override;
 
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;

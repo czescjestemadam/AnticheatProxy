@@ -20,6 +20,8 @@ namespace acp::nbt
 		void readName(ByteBuf& buf);
 		void writeName(ByteBuf& buf);
 
+		virtual std::unique_ptr<Tag> copy() = 0;
+
 		virtual TagType getType() const = 0;
 
 		std::string getName() const;

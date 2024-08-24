@@ -2,6 +2,13 @@
 
 #include <utility>
 
+acp::nbt::TagList::TagList(TagList& tag)
+{
+	name = tag.name;
+	for (const auto& element : tag.arr)
+		arr.push_back(element->copy());
+}
+
 acp::nbt::TagList::TagList(std::vector<std::unique_ptr<Tag>>&& elements) : arr(std::move(elements))
 {
 }
@@ -26,6 +33,11 @@ void acp::nbt::TagList::write(ByteBuf& buf)
 	buf.writeInt(static_cast<int>(arr.size()));
 	for (std::unique_ptr<Tag>& element : arr)
 		element->write(buf);
+}
+
+std::unique_ptr<acp::nbt::Tag> acp::nbt::TagList::copy()
+{
+	return std::make_unique<TagList>(*this);
 }
 
 std::vector<std::unique_ptr<acp::nbt::Tag>>& acp::nbt::TagList::get()

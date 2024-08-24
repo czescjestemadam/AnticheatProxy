@@ -11,10 +11,13 @@ namespace acp::nbt
 
 	public:
 		TagList() = default;
+		TagList(TagList& tag);
 		explicit TagList(std::vector<std::unique_ptr<Tag>>&& elements);
 
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
+
+		std::unique_ptr<Tag> copy() override;
 
 		std::vector<std::unique_ptr<Tag>>& get();
 		const std::vector<std::unique_ptr<Tag>>& get() const;

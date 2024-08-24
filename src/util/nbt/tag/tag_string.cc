@@ -2,6 +2,11 @@
 
 #include <format>
 
+acp::nbt::TagString::TagString(TagString& tag) : val(tag.val)
+{
+	name = tag.name;
+}
+
 acp::nbt::TagString::TagString(const std::string& val) : val(val)
 {
 }
@@ -19,6 +24,11 @@ void acp::nbt::TagString::write(ByteBuf& buf)
 	const ushort len = val.length();
 	buf.writeShortU(len);
 	buf.writeBytes(reinterpret_cast<byte_t*>(val.data()), len);
+}
+
+std::unique_ptr<acp::nbt::Tag> acp::nbt::TagString::copy()
+{
+	return std::make_unique<TagString>(*this);
 }
 
 std::string acp::nbt::TagString::get() const

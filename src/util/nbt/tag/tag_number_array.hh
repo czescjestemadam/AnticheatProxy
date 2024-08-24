@@ -13,6 +13,10 @@ namespace acp::nbt
 
 	public:
 		TagNumberArray() = default;
+		TagNumberArray(TagNumberArray& tag) : arr(tag.arr)
+		{
+			name = tag.name;
+		}
 		explicit TagNumberArray(const std::vector<T>& arr) : arr(arr)
 		{
 		}
@@ -70,6 +74,8 @@ namespace acp::nbt
 	public:
 		using TagNumberArray::TagNumberArray;
 
+		std::unique_ptr<Tag> copy() override;
+
 	protected:
 		void readContents(ByteBuf& buf, int len) override;
 		void writeContents(ByteBuf& buf) override;
@@ -80,6 +86,8 @@ namespace acp::nbt
 	public:
 		using TagNumberArray::TagNumberArray;
 
+		std::unique_ptr<Tag> copy() override;
+
 	protected:
 		void readContents(ByteBuf& buf, int len) override;
 		void writeContents(ByteBuf& buf) override;
@@ -89,6 +97,8 @@ namespace acp::nbt
 	{
 	public:
 		using TagNumberArray::TagNumberArray;
+
+		std::unique_ptr<Tag> copy() override;
 
 	protected:
 		void readContents(ByteBuf& buf, int len) override;

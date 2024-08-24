@@ -1,5 +1,12 @@
 #include "tag_compound.hh"
 
+acp::nbt::TagCompound::TagCompound(TagCompound& tag)
+{
+	name = tag.name;
+	for (const auto& [key, val] : tag.tags)
+		tags[key] = val->copy();
+}
+
 acp::nbt::TagCompound::TagCompound(std::unordered_map<std::string, std::unique_ptr<Tag>>&& tags) : tags(std::move(tags))
 {
 }
@@ -27,6 +34,11 @@ void acp::nbt::TagCompound::write(ByteBuf& buf)
 	}
 
 	buf.writeByte(static_cast<byte_t>(TagType::END));
+}
+
+std::unique_ptr<acp::nbt::Tag> acp::nbt::TagCompound::copy()
+{
+	return std::make_unique<TagCompound>(*this);
 }
 
 std::unordered_map<std::string, std::unique_ptr<acp::nbt::Tag>>& acp::nbt::TagCompound::get()

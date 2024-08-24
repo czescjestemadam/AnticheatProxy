@@ -12,10 +12,13 @@ namespace acp::nbt
 
 	public:
 		TagCompound() = default;
+		TagCompound(TagCompound& tag);
 		explicit TagCompound(std::unordered_map<std::string, std::unique_ptr<Tag>>&& tags);
 
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
+
+		std::unique_ptr<Tag> copy() override;
 
 		std::unordered_map<std::string, std::unique_ptr<Tag>>& get();
 		const std::unordered_map<std::string, std::unique_ptr<Tag>>& get() const;

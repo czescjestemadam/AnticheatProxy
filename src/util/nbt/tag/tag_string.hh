@@ -9,10 +9,13 @@ namespace acp::nbt
 
 	public:
 		TagString() = default;
+		TagString(TagString& tag);
 		explicit TagString(const std::string& val);
 
 		void read(ByteBuf& buf) override;
 		void write(ByteBuf& buf) override;
+
+		std::unique_ptr<Tag> copy() override;
 
 		std::string get() const;
 		void set(const std::string& val);
