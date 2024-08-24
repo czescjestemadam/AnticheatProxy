@@ -30,10 +30,15 @@ namespace acp::text
 		};
 
 		const Action* action = &Action::SHOW_TEXT;
-		std::string contents;
+		std::unique_ptr<nbt::Tag> contents;
 
 		HoverEvent() = default;
-		HoverEvent(const Action& action, const std::string& contents);
+		HoverEvent(const HoverEvent& event);
+		HoverEvent(HoverEvent&& event) noexcept;
+		HoverEvent(const Action& action, std::unique_ptr<nbt::Tag>&& contents);
+
+		HoverEvent& operator=(const HoverEvent& other);
+		HoverEvent& operator=(HoverEvent&& other) noexcept;
 
 		void serialize(std::unique_ptr<nbt::Tag>& v);
 		void deserialize(std::unique_ptr<nbt::Tag>& v);
