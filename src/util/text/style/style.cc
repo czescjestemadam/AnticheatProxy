@@ -73,14 +73,14 @@ void acp::text::Style::serialize(std::unique_ptr<nbt::Tag>& v)
 
 		if (clickEvent.has_value())
 		{
-			std::unique_ptr<nbt::Tag> eventTag;
+			std::unique_ptr<nbt::Tag> eventTag = std::make_unique<nbt::TagCompound>();
 			clickEvent->serialize(eventTag);
 			tag->set("clickEvent", std::move(eventTag));
 		}
 
 		if (hoverEvent.has_value())
 		{
-			std::unique_ptr<nbt::Tag> eventTag;
+			std::unique_ptr<nbt::Tag> eventTag = std::make_unique<nbt::TagCompound>();
 			hoverEvent->serialize(eventTag);
 			tag->set("hoverEvent", std::move(eventTag));
 		}
