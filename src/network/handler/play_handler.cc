@@ -1,6 +1,7 @@
 #include "play_handler.hh"
 
 #include "anticheat_proxy.hh"
+#include "anticheat/check/i_interact_check.hh"
 #include "network/connection.hh"
 #include "util/command/properties/string_properties.hh"
 
@@ -346,6 +347,37 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::UpdateSign* packet
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SwingArm* packet)
 {
+	for (auto& [name, check] : connection->getPlayer().getCheckManager().getChecks())
+	{
+		if (auto* interactCheck = dynamic_cast<IInteractCheck*>(check.get()))
+		{
+			const HandleResult result = interactCheck->check(packet);
+			if (result != HandleResult::FORWARD)
+				return result;
+		}
+	}
+
+	// SubLogger logger = connection->getLogger().getSubLogger("Raycasting");
+	// logger.debug("");
+	// logger.debug("dir: {}", connection->getPlayer().getDirection().toString("{:.06f}"));
+	//
+	// RaycastingOptions options;
+	// options.distance = 6;
+	// options.blocks = false;
+	// auto results = connection->getPlayer().raycast(options);
+	// for (const std::unique_ptr<RaycastResult>& result : results)
+	// {
+	// 	logger.debug("{}: {} -> {}, {} -> {}",
+	// 				 EnumNames<RaycastResult::Type>::get(result->getType()),
+	// 				 result->hitDistanceMin,
+	// 				 result->hitDistanceMax,
+	// 				 result->hitPositionMin.toString("{:.06f}"),
+	// 				 result->hitPositionMax.toString("{:.06f}")
+	// 	);
+	// }
+	//
+	// // AnticheatProxy::get()->getAlertManager().send(Alert(connection->getGameProfile().username));
+
 	return HandleResult::FORWARD;
 }
 

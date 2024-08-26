@@ -8,12 +8,13 @@ namespace acp::check
 	public:
 		using IInteractCheck::IInteractCheck;
 
-		void check(packet::play::c2s::Interact* packet) override;
-		void check(packet::play::c2s::UseItem* packet) override;
-		void check(packet::play::c2s::UseItemOn* packet) override;
-		void check(packet::play::c2s::PlayerAction* packet) override;
-		void check(packet::play::c2s::SwingArm* packet) override;
+		HandleResult check(packet::play::c2s::Interact* packet) override;
+		HandleResult check(packet::play::c2s::UseItem* packet) override;
+		HandleResult check(packet::play::c2s::UseItemOn* packet) override;
+		HandleResult check(packet::play::c2s::PlayerAction* packet) override;
+		HandleResult check(packet::play::c2s::SwingArm* packet) override;
 
-		std::string toString() const override;
+		std::string getName() const override;
+		std::string getDescription() const override;
 	};
 }

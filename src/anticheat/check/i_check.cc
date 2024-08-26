@@ -1,20 +1,21 @@
 #include "i_check.hh"
 
-#include "check_manager.hh"
+#include "anticheat_proxy.hh"
 
-acp::ICheck::ICheck(CheckManager* checkManager) : checkManager(checkManager)
+acp::ICheck::ICheck(Connection* connection) : connection(connection)
 {
 }
 
-void acp::ICheck::fail()
+void acp::ICheck::fail(bool sendAlert, const std::string& info)
 {
 	failCount++;
-	checkManager->fail(this);
+	if (sendAlert)
+		AnticheatProxy::get()->getAlertManager().send({ connection->getGameProfile().username, getName(), info, getDescription(), failCount });
 }
 
-void acp::ICheck::alert(const std::string& info)
+int acp::ICheck::getCount() const
 {
-	checkManager->alert(this, info);
+	return count;
 }
 
 int acp::ICheck::getFailCount() const

@@ -15,18 +15,18 @@ namespace acp
 	public:
 		using ICheck::ICheck;
 
-		virtual void check(packet::play::c2s::SetPlayerPosition* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::SetPlayerPosition* packet) = 0;
 
-		virtual void check(packet::play::c2s::SetPlayerPositionRotation* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::SetPlayerPositionRotation* packet) = 0;
 
-		virtual void check(packet::play::c2s::SetPlayerRotation* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::SetPlayerRotation* packet) = 0;
 
-		virtual void check(packet::play::c2s::SetPlayerOnGround* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::SetPlayerOnGround* packet) = 0;
 
-		virtual void check(packet::play::c2s::MoveVehicle* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::MoveVehicle* packet) = 0;
 
-		virtual void check(packet::play::c2s::PlayerInput* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::PlayerInput* packet) = 0;
 
-		virtual void check(packet::play::c2s::PlayerCommand* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::PlayerCommand* packet) = 0;
 	};
 }

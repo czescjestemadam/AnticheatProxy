@@ -1,28 +1,19 @@
 #include "check_manager.hh"
 
 #include "anticheat_proxy.hh"
-#include "anticheat/acp_player.hh"
-#include "anticheat/alert/alert.hh"
+#include "interact/reach.hh"
 
-acp::CheckManager::CheckManager(AcpPlayer* player) : player(player)
+acp::CheckManager::CheckManager(Connection* connection) : connection(connection)
 {
+	if (!connection)
+		return;
 
+	addCheck<check::Reach>();
 }
 
-void acp::CheckManager::fail(ICheck* check)
+acp::Connection* acp::CheckManager::getConnection() const
 {
-
-}
-
-void acp::CheckManager::alert(const ICheck* check, const std::string& info)
-{
-	const Alert alert(player->getProfile().username, check->toString(), info, check->getFailCount());
-	AnticheatProxy::get()->getAlertManager().send(alert);
-}
-
-acp::AcpPlayer* acp::CheckManager::getPlayer() const
-{
-	return player;
+	return connection;
 }
 
 bool acp::CheckManager::isExempt() const
@@ -47,5 +38,5 @@ const std::unordered_map<std::string, std::unique_ptr<acp::ICheck>>& acp::CheckM
 
 acp::ICheck* acp::CheckManager::getByName(const std::string& name)
 {
-	return checks.contains(name) ? checks[name].get() :  nullptr;
+	return checks.contains(name) ? checks[name].get() : nullptr;
 }

@@ -13,14 +13,14 @@ namespace acp
 	public:
 		using ICheck::ICheck;
 
-		virtual void check(packet::play::c2s::Interact* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::Interact* packet) = 0;
 
-		virtual void check(packet::play::c2s::UseItem* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::UseItem* packet) = 0;
 
-		virtual void check(packet::play::c2s::UseItemOn* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::UseItemOn* packet) = 0;
 
-		virtual void check(packet::play::c2s::PlayerAction* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::PlayerAction* packet) = 0;
 
-		virtual void check(packet::play::c2s::SwingArm* packet) = 0;
+		virtual HandleResult check(packet::play::c2s::SwingArm* packet) = 0;
 	};
 }

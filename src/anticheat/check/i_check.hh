@@ -3,23 +3,25 @@
 
 namespace acp
 {
-	class CheckManager;
+	class Connection;
 
 	class ICheck
 	{
 	protected:
-		CheckManager* checkManager;
+		Connection* connection;
+		int count = 0;
 		int failCount = 0;
 
 	public:
-		explicit ICheck(CheckManager* checkManager);
+		explicit ICheck(Connection* connection);
 		virtual ~ICheck() = default;
 
-		void fail();
-		void alert(const std::string& info = "");
+		void fail(bool sendAlert = false, const std::string& info = "");
 
+		int getCount() const;
 		int getFailCount() const;
 
-		virtual std::string toString() const = 0;
+		virtual std::string getName() const = 0;
+		virtual std::string getDescription() const = 0;
 	};
 }
