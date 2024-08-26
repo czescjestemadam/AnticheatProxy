@@ -645,7 +645,6 @@ add_executable(AnticheatProxy
 	src/command/i_command_source.hh
 	src/anticheat/alert/alert_manager.cc
 	src/anticheat/alert/alert_manager.hh
-	src/anticheat/alert/alert.cc
 	src/anticheat/alert/alert.hh
 	src/config/alert_config.cc
 	src/config/alert_config.hh

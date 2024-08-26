@@ -8,6 +8,7 @@ namespace acp
 		std::string username;
 		std::string check;
 		std::string checkInfo;
+		std::string checkDescription;
 		int count;
 	};
 }

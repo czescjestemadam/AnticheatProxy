@@ -40,6 +40,7 @@ std::string acp::AlertManager::formatString(const std::string& str, const Alert&
 	StrUtils::replace(replaced, "<player>", alert.username);
 	StrUtils::replace(replaced, "<check>", alert.check);
 	StrUtils::replace(replaced, "<check-info>", alert.checkInfo);
+	StrUtils::replace(replaced, "<check-description>", alert.checkDescription);
 	StrUtils::replace(replaced, "<count>", std::to_string(alert.count));
 
 	return replaced;
