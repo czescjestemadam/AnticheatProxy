@@ -21,6 +21,7 @@ void acp::ConfigManager::load()
 
 	network.load();
 	alert.load();
+	profiler.load();
 }
 
 void acp::ConfigManager::save()
@@ -31,6 +32,7 @@ void acp::ConfigManager::save()
 
 	network.save();
 	alert.save();
+	profiler.save();
 }
 
 acp::NetworkConfig& acp::ConfigManager::getNetwork()
@@ -41,4 +43,9 @@ acp::NetworkConfig& acp::ConfigManager::getNetwork()
 acp::AlertConfig& acp::ConfigManager::getAlert()
 {
 	return alert;
+}
+
+acp::ProfilerConfig& acp::ConfigManager::getProfiler()
+{
+	return profiler;
 }

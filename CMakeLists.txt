@@ -660,6 +660,8 @@ add_executable(AnticheatProxy
 	src/util/text/io/minimessage/minimessage_io.hh
 	src/util/str_utils.cc
 	src/util/str_utils.hh
+	src/config/profiler_config.cc
+	src/config/profiler_config.hh
 )
 
 find_package(OpenSSL REQUIRED)
