@@ -36,11 +36,11 @@ int main(int argc, char* argv[])
 
 	acp.wait();
 
-	acp::RootLogger::get()->info("== Profiler samples collected from {} to {} ==",
-								 std::chrono::time_point_cast<std::chrono::seconds>(acp::globals::STARTED_AT),
-								 std::chrono::time_point_cast<std::chrono::seconds>(
-									 std::chrono::current_zone()->to_local(std::chrono::system_clock::now())
-								 )
+	std::string profilerDump = std::format("== Profiler samples collected from {} to {} ==\n",
+										   std::chrono::time_point_cast<std::chrono::seconds>(acp::globals::STARTED_AT),
+										   std::chrono::time_point_cast<std::chrono::seconds>(
+											   std::chrono::current_zone()->to_local(std::chrono::system_clock::now())
+										   )
 	);
 	constexpr auto seconds = [](const std::chrono::system_clock::duration& dur)
 	{
@@ -48,18 +48,43 @@ int main(int argc, char* argv[])
 	};
 	for (const auto& [name, sample] : acp::Profiler::get().compileSamples())
 	{
-		acp::RootLogger::get()->info("{}: count = {}, first {}, last {}\n"
-									 "\t\tmin {:.06f}s ({}) -> max {:.06f}s ({})\n"
-									 "\t\tavg {:.06f}s ({}), median {:.06f}s ({})\n"
-									 "\t\ttime sum: {:.06f}s ({})",
-									 name, sample.count,
-									 std::chrono::current_zone()->to_local(sample.first), std::chrono::current_zone()->to_local(sample.last),
-									 seconds(sample.min), sample.min,
-									 seconds(sample.max), sample.max,
-									 seconds(sample.avg), sample.avg,
-									 seconds(sample.median), sample.median,
-									 seconds(sample.time), sample.time
+		profilerDump += std::format("{}: count = {}, first {}, last {}\n"
+									"\t\tmin {:.06f}s ({}) -> max {:.06f}s ({})\n"
+									"\t\tavg {:.06f}s ({}), median {:.06f}s ({})\n"
+									"\t\ttime sum: {:.06f}s ({})\n",
+									name, sample.count,
+									std::chrono::current_zone()->to_local(sample.first), std::chrono::current_zone()->to_local(sample.last),
+									seconds(sample.min), sample.min,
+									seconds(sample.max), sample.max,
+									seconds(sample.avg), sample.avg,
+									seconds(sample.median), sample.median,
+									seconds(sample.time), sample.time
 		);
+	}
+
+	const acp::ProfilerConfig& profilerConfig = acp.getConfigManager().getProfiler();
+	if (profilerConfig.loggerDump)
+		acp::RootLogger::get()->info(profilerDump);
+	if (profilerConfig.fileDump)
+	{
+		const std::filesystem::path profilerDumpsDir = std::filesystem::current_path() / "profiler-dumps";
+		if (!exists(profilerDumpsDir))
+			create_directory(profilerDumpsDir);
+
+		const std::string filename = std::format("{:%Y-%m-%d_%T}",
+												 std::chrono::time_point_cast<std::chrono::seconds>(
+													 std::chrono::current_zone()->to_local(std::chrono::system_clock::now())
+												 )
+		);
+		const std::filesystem::path profilerDumpFile = profilerDumpsDir / filename;
+		std::ofstream ofs(profilerDumpFile);
+		if (ofs.good())
+			ofs << profilerDump << std::flush;
+		else if (!profilerConfig.loggerDump)
+		{
+			acp::RootLogger::get()->warn("error dumping profiler samples to {}, dumping to logger instead", profilerDumpFile.c_str());
+			acp::RootLogger::get()->info(profilerDump);
+		}
 	}
 
 	return 0;
