@@ -1,6 +1,8 @@
 #include "acp_player.hh"
 
+#include "anticheat_proxy.hh"
 #include "network/connection.hh"
+#include "network/protocol/packet/play/s2c/system_chat_message.hh"
 
 #include <complex>
 #include <format>
@@ -90,6 +92,20 @@ std::vector<std::unique_ptr<acp::RaycastResult>> acp::AcpPlayer::raycast(const R
 	}
 
 	return results;
+}
+
+void acp::AcpPlayer::sendMessage(std::unique_ptr<text::Component>&& message)
+{
+	auto packet = std::make_unique<packet::play::s2c::SystemChatMessage>();
+	packet->setMessage(std::move(message));
+	packet->setOverlay(false);
+
+	connection->sendPacket(NetworkSide::CLIENT, std::move(packet));
+}
+
+bool acp::AcpPlayer::hasPermission(const Permission& permission) const
+{
+	return AnticheatProxy::get()->getPermissionManager().hasPermission(profile.username, permission);
 }
 
 acp::Connection* acp::AcpPlayer::getConnection() const

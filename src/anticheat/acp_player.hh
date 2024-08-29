@@ -1,5 +1,6 @@
 #pragma once
 #include "check/check_manager.hh"
+#include "command/i_command_source.hh"
 #include "game/entity/player.hh"
 #include "game/item/player_inventory.hh"
 #include "game/world/world.hh"
@@ -11,7 +12,7 @@ namespace acp
 {
 	class Connection;
 
-	class AcpPlayer : public game::Player, public IRaycastable
+	class AcpPlayer : public game::Player, public IRaycastable, public ICommandSource
 	{
 		Connection* connection;
 
@@ -35,6 +36,9 @@ namespace acp
 		AcpPlayer(Connection* connection, int id, const GameProfile& profile, const Identifier& worldName);
 
 		std::vector<std::unique_ptr<RaycastResult>> raycast(const RaycastingOptions& options) const override;
+
+		void sendMessage(std::unique_ptr<text::Component>&& message) override;
+		bool hasPermission(const Permission& permission) const override;
 
 		Connection* getConnection() const;
 

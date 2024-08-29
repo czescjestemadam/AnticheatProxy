@@ -59,7 +59,7 @@ void acp::AlertManager::send(std::unique_ptr<packet::IPacket>&& packet)
 {
 	for (const std::shared_ptr<Connection>& connection : AnticheatProxy::get()->getNetworkManager().getConnections())
 	{
-		if (AnticheatProxy::get()->getPermissionManager().hasPermission(connection->getGameProfile().username, Permission::ALERT))
+		if (connection->getPlayer().hasPermission(Permission::ALERT))
 			connection->sendPacket(NetworkSide::CLIENT, packet);
 	}
 }

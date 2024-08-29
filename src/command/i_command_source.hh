@@ -1,5 +1,7 @@
 #pragma once
-#include <string>
+#include "util/text/component.hh"
+
+#include <memory>
 
 namespace acp
 {
@@ -10,8 +12,11 @@ namespace acp
 	public:
 		virtual ~ICommandSource() = default;
 
-		virtual void sendMessage(const std::string& message) = 0;
+		/// sends copied component
+		void sendMessage(const std::unique_ptr<text::Component>& message);
+		virtual void sendMessage(std::unique_ptr<text::Component>&& message) = 0;
 
-		virtual bool hasPermission(const Permission* permission) const = 0;
+		bool hasPermission(const Permission* permission) const;
+		virtual bool hasPermission(const Permission& permission) const = 0;
 	};
 }
