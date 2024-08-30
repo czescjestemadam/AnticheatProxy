@@ -9,6 +9,8 @@
 
 constexpr std::string PROMPT = "> ";
 
+static int epollFd;
+
 static std::atomic_bool running = true;
 static std::string inp;
 static int cursor;
@@ -82,21 +84,36 @@ void acp::terminal::prompt::start()
 {
 	// 0 = stdin
 	termios term{};
-	tcgetattr(0, &term);
+	tcgetattr(STDIN_FILENO, &term);
 
 	term.c_lflag &= ~(ECHO | ICANON);
-	tcsetattr(0, TCSANOW, &term);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
+	epollFd = epoll_create(1);
+	if (epollFd < 0)
+		throw std::runtime_error("cant create stdin terminal epoll");
+
+	epoll_event event{};
+	event.events = EPOLLIN;
+	event.data.fd = STDIN_FILENO;
+	if (epoll_ctl(epollFd, EPOLL_CTL_ADD, STDIN_FILENO, &event) < 0)
+		throw std::runtime_error("cant add stdin to terminal epoll");
 
 	print();
 
 	while (running)
-		handleInput(getchar());
+	{
+		epoll_event event{};
+		if (epoll_wait(epollFd, &event, 1, 1000) > 0)
+			handleInput(getchar());
+	}
 }
 
 void acp::terminal::prompt::stop()
 {
 	running = false;
-	close(0);
+	shutdown(epollFd, SHUT_RDWR);
+	close(epollFd);
 }
 
 void acp::terminal::prompt::print()
