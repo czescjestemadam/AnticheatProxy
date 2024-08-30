@@ -673,6 +673,8 @@ add_executable(AnticheatProxy
 	src/anticheat/command/help_command.hh
 	src/anticheat/command/stop_command.cc
 	src/anticheat/command/stop_command.hh
+	src/util/terminal/terminal_command_source.cc
+	src/util/terminal/terminal_command_source.hh
 )
 
 find_package(OpenSSL REQUIRED)

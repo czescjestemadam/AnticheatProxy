@@ -1,6 +1,9 @@
 #include "prompt.hh"
 
+#include "anticheat_proxy.hh"
 #include "format.hh"
+#include "terminal_command_source.hh"
+#include "util/str_utils.hh"
 #include "util/logger/root_logger.hh"
 
 #include <atomic>
@@ -25,8 +28,12 @@ void acp::terminal::prompt::handleInput(int c)
 			inp.clear();
 			cursor = 0;
 
-			RootLogger::get()->info("Executing: {}", command);
-			// TODO commands
+			std::vector<std::string> args = StrUtils::split(command);
+			std::string name = args.front();
+			args.erase(args.begin());
+
+			TerminalCommandSource source;
+			AnticheatProxy::get()->getCommandManager().execute(&source, name, args);
 		}
 	}
 	else if (c == 27) // esape
