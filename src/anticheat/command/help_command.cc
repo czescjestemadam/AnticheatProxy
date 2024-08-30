@@ -22,7 +22,7 @@ void acp::HelpCommand::execute(ICommandSource* source, const std::vector<std::st
 	}
 
 	if (const ICommand* command = commandManager.getCommand(args.front()))
-		source->sendMessage(text::ITextIO::minimessage().parse(std::format("<red>{}<reset>: <yellow>{}", command->getUsage(), command->getHelpMessage())));
+		source->sendMessage(text::ITextIO::minimessage().parse(std::format("<red>Usage: {} <yellow>- {}", command->getUsage(), command->getHelpMessage())));
 	else
 		source->sendMessage(text::ITextIO::minimessage().parse(std::format("<red>Unknown command {}", args.front())));
 }
