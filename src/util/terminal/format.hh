@@ -2,7 +2,6 @@
 #include "util/color.hh"
 
 #include <string>
-#include <ostream>
 
 namespace acp::terminal
 {
@@ -27,6 +26,7 @@ namespace acp::terminal
 		 * @return color formatting
 		 */
 		static Format color(const Format& type, const ColorB& color);
+		static Format color(const Format& type, const std::string& hex);
 
 		static const Format RESET;
 		static const Format BOLD;

@@ -1,6 +1,7 @@
 #pragma once
+#include "util/terminal/format.hh"
+
 #include <functional>
-#include <memory>
 #include <string>
 
 namespace acp::text
@@ -12,15 +13,17 @@ namespace acp::text
 		int id;
 		char legacyCode;
 		std::string minimessageCode;
+		terminal::Format terminalFormat;
 		bool reset;
 		std::function<void(Style&)> applier;
 
 	public:
-		IOTag(int id, char legacy_code, const std::string& minimessage_code, bool reset, std::function<void(Style&)>&& applier);
+		IOTag(int id, char legacy_code, const std::string& minimessage_code, const terminal::Format& terminal_format, bool reset, std::function<void(Style&)>&& applier);
 		explicit IOTag(const std::string& hexColor);
 
 		char getLegacyCode() const;
 		const std::string& getMiniMessageCode() const;
+		const terminal::Format& getTerminalFormat() const;
 		bool isReset() const;
 		void apply(Style& style) const;
 

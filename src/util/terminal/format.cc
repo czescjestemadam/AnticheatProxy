@@ -43,6 +43,20 @@ acp::terminal::Format acp::terminal::Format::color(const Format& type, const Col
 	};
 }
 
+acp::terminal::Format acp::terminal::Format::color(const Format& type, const std::string& hex)
+{
+	ColorB c;
+
+	if (hex.length() == 7 && hex.starts_with('#'))
+	{
+		c.r = std::strtoul(hex.substr(1, 2).c_str(), nullptr, 16);
+		c.g = std::strtoul(hex.substr(3, 2).c_str(), nullptr, 16);
+		c.b = std::strtoul(hex.substr(5, 2).c_str(), nullptr, 16);
+	}
+
+	return color(type, c);
+}
+
 const acp::terminal::Format acp::terminal::Format::RESET = { "0" };
 const acp::terminal::Format acp::terminal::Format::BOLD = { "1" };
 const acp::terminal::Format acp::terminal::Format::DIM = { "2" };

@@ -3,6 +3,7 @@
 #include "legacy/legacy_io.hh"
 #include "minimessage/minimessage_io.hh"
 #include "plaintext/plaintext_io.hh"
+#include "terminal/terminal_io.hh"
 
 acp::text::PlaintextIO& acp::text::ITextIO::plaintext()
 {
@@ -20,4 +21,10 @@ acp::text::MinimessageIO& acp::text::ITextIO::minimessage()
 {
 	static MinimessageIO minimessage;
 	return minimessage;
+}
+
+acp::text::TerminalIO& acp::text::ITextIO::terminal()
+{
+	static TerminalIO terminal;
+	return terminal;
 }
