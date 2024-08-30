@@ -30,10 +30,14 @@ acp::Permission* acp::Permission::getByName(const std::string& name)
 	return permissionByName.contains(name) ? permissionByName[name] : nullptr;
 }
 
-const acp::Permission acp::Permission::ALERT = { 0, "acp.alert" };
-const acp::Permission acp::Permission::CMD = { 1, "acp.cmd" };
-const acp::Permission acp::Permission::CMD_IP = { 1, "acp.cmd.ip" };
-const acp::Permission acp::Permission::CMD_ADMIN = { 1, "acp.cmd.admin" };
-const acp::Permission acp::Permission::PROFILE = { 2, "acp.profile" };
-const acp::Permission acp::Permission::LOGS = { 3, "acp.logs" };
-const acp::Permission acp::Permission::EXEMPT = { 4, "acp.exempt" };
+static int IDX_COUNTER = 0;
+
+const acp::Permission acp::Permission::ALERT = { IDX_COUNTER++, "acp.alert" };
+const acp::Permission acp::Permission::CMD = { IDX_COUNTER++, "acp.cmd" };
+const acp::Permission acp::Permission::CMD_IP = { IDX_COUNTER++, "acp.cmd.ip" };
+const acp::Permission acp::Permission::CMD_ADMIN = { IDX_COUNTER++, "acp.cmd.admin" };
+const acp::Permission acp::Permission::PROFILE = { IDX_COUNTER++, "acp.profile" };
+const acp::Permission acp::Permission::LOGS = { IDX_COUNTER++, "acp.logs" };
+const acp::Permission acp::Permission::EXEMPT = { IDX_COUNTER++, "acp.exempt" };
+const acp::Permission acp::Permission::RELOAD = { IDX_COUNTER++, "acp.reload" };
+const acp::Permission acp::Permission::STOP = { IDX_COUNTER++, "acp.stop" };

@@ -663,6 +663,16 @@ add_executable(AnticheatProxy
 	src/util/str_utils.hh
 	src/config/profiler_config.cc
 	src/config/profiler_config.hh
+	src/anticheat/command/version_command.cc
+	src/anticheat/command/version_command.hh
+	src/anticheat/command/reload_command.cc
+	src/anticheat/command/reload_command.hh
+	src/anticheat/command/connection_command.cc
+	src/anticheat/command/connection_command.hh
+	src/anticheat/command/help_command.cc
+	src/anticheat/command/help_command.hh
+	src/anticheat/command/stop_command.cc
+	src/anticheat/command/stop_command.hh
 )
 
 find_package(OpenSSL REQUIRED)

@@ -46,9 +46,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::AcknowledgeMessage
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChatCommand* packet)
 {
-	if (packet->getCommand().starts_with("acp"))
+	if (packet->getCommand().starts_with("acp") && connection->getPlayer().hasPermission(Permission::CMD))
 	{
-		connection->getLogger().info("Executed: {}", packet->getCommand());
+		connection->getLogger().info("{} executed: /{}", connection->getGameProfile().username, packet->getCommand());
+		AnticheatProxy::get()->getCommandManager().executePacket(&connection->getPlayer(), packet->getCommand());
 		return HandleResult::CANCEL;
 	}
 
@@ -57,9 +58,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ChatCommand* packe
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::SignedChatCommand* packet)
 {
-	if (packet->getCommand().starts_with("acp"))
+	if (packet->getCommand().starts_with("acp") && connection->getPlayer().hasPermission(Permission::CMD))
 	{
-		connection->getLogger().info("Executed signed: {}", packet->getCommand());
+		connection->getLogger().info("{} executed signed: /{}", connection->getGameProfile().username, packet->getCommand());
+		AnticheatProxy::get()->getCommandManager().executePacket(&connection->getPlayer(), packet->getCommand());
 		return HandleResult::CANCEL;
 	}
 
@@ -93,8 +95,9 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ClientInformation*
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CommandSuggestionsRequest* packet)
 {
-	if (packet->getText().starts_with("acp"))
+	if (packet->getText().starts_with("acp") && connection->getPlayer().hasPermission(Permission::CMD))
 	{
+		AnticheatProxy::get()->getCommandManager().completePacket(&connection->getPlayer(), packet->getText(), packet->getTransactionId());
 		return HandleResult::CANCEL;
 	}
 
@@ -502,6 +505,9 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::CommandSuggestions
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Commands* packet)
 {
+	if (!connection->getPlayer().hasPermission(Permission::CMD))
+		return HandleResult::FORWARD;
+
 	std::vector<command::Node>& nodes = packet->getNodes();
 
 	const int acpNodeIdx = static_cast<int>(nodes.size());
@@ -516,13 +522,13 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::Commands* packet)
 	));
 
 	const int acpArgsNodeIdx = static_cast<int>(nodes.size());
-	command::Node& acpArgsNode = nodes.emplace_back(command::Node(
+	nodes.emplace_back(command::Node(
 		command::Node::ARGUMENT | command::Node::EXECUTABLE | command::Node::SUGGESTIONS,
 		{},
 		std::nullopt,
 		"args",
 		command::Parser::STRING.getId(connection->getProtocolVersion()),
-		std::make_unique<command::StringProperties>(command::StringProperties::Type::SINGLE_WORD),
+		std::make_unique<command::StringProperties>(command::StringProperties::Type::GREEDY_PHRASE),
 		Identifier("minecraft", "ask_server")
 	));
 

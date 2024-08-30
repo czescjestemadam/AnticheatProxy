@@ -6,7 +6,9 @@ namespace acp::packet::play::s2c
 	class CommandSuggestionsResponse : public IPacket
 	{
 		int transactionId;
+		/// Start of the text to replace
 		int start;
+		/// Length of the text to replace
 		int length;
 		std::vector<std::pair<std::string, std::unique_ptr<nbt::Tag>>> matches;
 

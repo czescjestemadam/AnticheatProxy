@@ -26,5 +26,7 @@ namespace acp
 		static const Permission PROFILE;
 		static const Permission LOGS;
 		static const Permission EXEMPT;
+		static const Permission RELOAD;
+		static const Permission STOP;
 	};
 }

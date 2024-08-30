@@ -20,6 +20,9 @@ namespace acp
 		virtual void execute(ICommandSource* source, const std::vector<std::string>& args) = 0;
 		virtual std::vector<std::string> complete(ICommandSource* source, const std::vector<std::string>& args) = 0;
 
+		virtual std::string getUsage() const = 0;
+		virtual std::string getHelpMessage() const = 0;
+
 		const Permission* getPermission() const;
 
 	protected:

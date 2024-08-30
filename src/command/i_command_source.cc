@@ -7,5 +7,5 @@ void acp::ICommandSource::sendMessage(const std::unique_ptr<text::Component>& me
 
 bool acp::ICommandSource::hasPermission(const Permission* permission) const
 {
-	return hasPermission(*permission);
+	return permission == nullptr || hasPermission(*permission);
 }
