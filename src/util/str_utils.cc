@@ -21,3 +21,34 @@ std::string acp::StrUtils::replaced(const std::string& str, const std::string& f
 	replace(replaced, from, to);
 	return replaced;
 }
+
+
+std::vector<std::string> acp::StrUtils::split(std::string str, const std::string& delim)
+{
+	std::vector<std::string> arr;
+
+	size_t pos;
+	while ((pos = str.find(delim)) != std::string::npos)
+	{
+		arr.push_back(str.substr(0, pos));
+		str.erase(0, pos + delim.length());
+	}
+	arr.push_back(str);
+
+	return arr;
+}
+
+std::string acp::StrUtils::join(const std::vector<std::string>& arr, const std::string& delim)
+{
+	std::string str;
+
+	for (int i = 0; i < arr.size(); ++i)
+	{
+		str += arr[i];
+
+		if (i + 1 < arr.size())
+			str += delim;
+	}
+
+	return str;
+}
