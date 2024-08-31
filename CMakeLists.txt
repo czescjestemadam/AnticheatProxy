@@ -677,6 +677,8 @@ add_executable(AnticheatProxy
 	src/util/terminal/terminal_command_source.hh
 	src/util/text/io/terminal/terminal_io.cc
 	src/util/text/io/terminal/terminal_io.hh
+	src/network/protocol/packet/shared/i_plugin_message.cc
+	src/network/protocol/packet/shared/i_plugin_message.hh
 )
 
 find_package(OpenSSL REQUIRED)

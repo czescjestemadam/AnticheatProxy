@@ -3,18 +3,6 @@
 #include "network/handler/play_handler.hh"
 #include "network/protocol/protocol_version.hh"
 
-void acp::packet::play::s2c::PluginMessage::read(const ProtocolVersion* version)
-{
-	channel = buf.readIdentifier();
-	data = buf.readBuf(buf.size());
-}
-
-void acp::packet::play::s2c::PluginMessage::write(const ProtocolVersion* version)
-{
-	buf.writeIdentifier(channel);
-	buf.writeBuf(data);
-}
-
 acp::HandleResult acp::packet::play::s2c::PluginMessage::apply(std::unique_ptr<INetworkHandler>& handler)
 {
 	if (auto* playHandler = dynamic_cast<PlayHandler*>(handler.get()))
@@ -41,39 +29,4 @@ int acp::packet::play::s2c::PluginMessage::getId(const ProtocolVersion* version)
 		return 0x18;
 
 	return 0x17;
-}
-
-acp::Identifier& acp::packet::play::s2c::PluginMessage::getChannel()
-{
-	return channel;
-}
-
-const acp::Identifier& acp::packet::play::s2c::PluginMessage::getChannel() const
-{
-	return channel;
-}
-
-void acp::packet::play::s2c::PluginMessage::setChannel(const Identifier& channel)
-{
-	this->channel = channel;
-}
-
-acp::ByteBuf& acp::packet::play::s2c::PluginMessage::getData()
-{
-	return data;
-}
-
-const acp::ByteBuf& acp::packet::play::s2c::PluginMessage::getData() const
-{
-	return data;
-}
-
-void acp::packet::play::s2c::PluginMessage::setData(const ByteBuf& data)
-{
-	this->data = data;
-}
-
-std::string acp::packet::play::s2c::PluginMessage::toString() const
-{
-	return std::format("PluginMessage[ch={}, data={}]", channel.toString(), data.toStringShort());
 }
