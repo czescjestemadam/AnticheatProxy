@@ -1145,6 +1145,27 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ServerLinks* packe
 	return HandleResult::FORWARD;
 }
 
+
+void acp::PlayHandler::sendPluginMessage(NetworkSide to, const Identifier& channel, const ByteBuf& data)
+{
+	if (to == NetworkSide::DEST) // server
+	{
+		auto packet = std::make_unique<packet::play::c2s::PluginMessage>();
+		packet->setChannel(channel);
+		packet->setData(data);
+
+		connection->sendPacket(to, std::move(packet));
+	}
+	else // client
+	{
+		auto packet = std::make_unique<packet::play::s2c::PluginMessage>();
+		packet->setChannel(channel);
+		packet->setData(data);
+
+		connection->sendPacket(to, std::move(packet));
+	}
+}
+
 void acp::PlayHandler::disconnect(const std::unique_ptr<text::Component>& reason)
 {
 	auto packet = std::make_unique<packet::play::s2c::Disconnect>();

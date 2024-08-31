@@ -4,6 +4,10 @@ acp::INetworkHandler::INetworkHandler(Connection* connection) : connection(conne
 {
 }
 
+void acp::INetworkHandler::sendPluginMessage(NetworkSide to, const Identifier& channel, const ByteBuf& data)
+{
+}
+
 void acp::INetworkHandler::disconnect(const std::unique_ptr<text::Component>& reason)
 {
 }

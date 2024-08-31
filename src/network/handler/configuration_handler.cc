@@ -189,6 +189,26 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::
 }
 
 
+void acp::ConfigurationHandler::sendPluginMessage(NetworkSide to, const Identifier& channel, const ByteBuf& data)
+{
+	if (to == NetworkSide::DEST) // server
+	{
+		auto packet = std::make_unique<packet::configuration::c2s::PluginMessage>();
+		packet->setChannel(channel);
+		packet->setData(data);
+
+		connection->sendPacket(to, std::move(packet));
+	}
+	else // client
+	{
+		auto packet = std::make_unique<packet::configuration::s2c::PluginMessage>();
+		packet->setChannel(channel);
+		packet->setData(data);
+
+		connection->sendPacket(to, std::move(packet));
+	}
+}
+
 void acp::ConfigurationHandler::disconnect(const std::unique_ptr<text::Component>& reason)
 {
 	auto packet = std::make_unique<packet::configuration::s2c::Disconnect>();

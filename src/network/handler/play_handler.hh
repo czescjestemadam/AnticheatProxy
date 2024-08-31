@@ -376,6 +376,7 @@ namespace acp
 		HandleResult handle(packet::play::s2c::CustomReportDetails* packet);
 		HandleResult handle(packet::play::s2c::ServerLinks* packet);
 
+		void sendPluginMessage(NetworkSide to, const Identifier& channel, const ByteBuf& data) override;
 		void disconnect(const std::unique_ptr<text::Component>& reason) override;
 	};
 }
