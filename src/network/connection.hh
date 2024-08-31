@@ -1,4 +1,5 @@
 #pragma once
+#include "plugin_messenger.hh"
 #include "protocol/network_state.hh"
 #include "protocol/protocol_version.hh"
 #include "socket/player_socket.hh"
@@ -30,6 +31,9 @@ namespace acp
 		const ProtocolVersion* protocolVersion = nullptr;
 		std::optional<int> compressionThreshold;
 
+		std::string clientbrand;
+		PluginMessenger messenger;
+
 		GameProfile gameProfile;
 		std::vector<std::unique_ptr<nbt::Tag>> damageTypes;
 		std::vector<registry::DimensionTypeEntry> dimensionTypes;
@@ -59,6 +63,12 @@ namespace acp
 		const ProtocolVersion* getProtocolVersion() const;
 		void setProtocolVersion(const ProtocolVersion* protocol_version);
 		void setCompressionThreshold(int threshold);
+
+		const std::string& getClientbrand() const;
+		void setClientbrand(const std::string& clientbrand);
+
+		PluginMessenger& getMessenger();
+		const PluginMessenger& getMessenger() const;
 
 		GameProfile& getGameProfile();
 		void setGameProfile(const GameProfile& game_profile);

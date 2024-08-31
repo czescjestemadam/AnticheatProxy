@@ -12,8 +12,8 @@
 acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket)
 	: logger(SubLogger::fromRoot("Connection " + clientSocket.getAddrStr())),
 	  clientSocket(std::move(clientSocket)),
-	  destSocket(std::move(destSocket))
-
+	  destSocket(std::move(destSocket)),
+	  messenger(this)
 {
 }
 
@@ -215,6 +215,26 @@ void acp::Connection::setProtocolVersion(const ProtocolVersion* protocol_version
 void acp::Connection::setCompressionThreshold(int threshold)
 {
 	compressionThreshold = threshold;
+}
+
+const std::string& acp::Connection::getClientbrand() const
+{
+	return clientbrand;
+}
+
+void acp::Connection::setClientbrand(const std::string& clientbrand)
+{
+	this->clientbrand = clientbrand;
+}
+
+acp::PluginMessenger& acp::Connection::getMessenger()
+{
+	return messenger;
+}
+
+const acp::PluginMessenger& acp::Connection::getMessenger() const
+{
+	return messenger;
 }
 
 acp::GameProfile& acp::Connection::getGameProfile()

@@ -138,7 +138,7 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CookieResponse* pa
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::PluginMessage* packet)
 {
-	return HandleResult::FORWARD;
+	return connection->getMessenger().onPluginMessage(NetworkSide::DEST, packet);
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::DebugSampleSubscription* packet)
@@ -575,7 +575,7 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::ChatSuggestions* p
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::PluginMessage* packet)
 {
-	return HandleResult::FORWARD;
+	return connection->getMessenger().onPluginMessage(NetworkSide::CLIENT, packet);
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::DamageEvent* packet)

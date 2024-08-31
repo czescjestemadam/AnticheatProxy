@@ -17,7 +17,7 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::
 
 acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::PluginMessage* packet)
 {
-	return HandleResult::FORWARD;
+	return connection->getMessenger().onPluginMessage(NetworkSide::DEST, packet);
 }
 
 acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::AcknowledgeFinishConfiguration* packet)
@@ -55,7 +55,7 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::
 
 acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::PluginMessage* packet)
 {
-	return HandleResult::FORWARD;
+	return connection->getMessenger().onPluginMessage(NetworkSide::CLIENT, packet);
 }
 
 acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::Disconnect* packet)

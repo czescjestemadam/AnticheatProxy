@@ -679,6 +679,8 @@ add_executable(AnticheatProxy
 	src/util/text/io/terminal/terminal_io.hh
 	src/network/protocol/packet/shared/i_plugin_message.cc
 	src/network/protocol/packet/shared/i_plugin_message.hh
+	src/network/plugin_messenger.cc
+	src/network/plugin_messenger.hh
 )
 
 find_package(OpenSSL REQUIRED)
