@@ -51,6 +51,9 @@ void acp::ConnectionCommand::execute(ICommandSource* source, const std::vector<s
 						connection->getProtocolVersion()->getIdx()
 			)
 		));
+		source->sendMessage(text::ITextIO::minimessage().parse(
+			std::format("<{}>Client brand: {}", globals::THEME_COLOR, connection->getClientbrand())
+		));
 	}
 	else
 		source->sendMessage(text::ITextIO::minimessage().parse(std::format("<red>Player {} not found", args.front())));
