@@ -31,28 +31,28 @@ void acp::ConnectionCommand::execute(ICommandSource* source, const std::vector<s
 		if (source->hasPermission(Permission::CMD_IP))
 		{
 			source->sendMessage(text::ITextIO::minimessage().parse(
-				std::format("<{}>IP: <reset>{}", globals::THEME_COLOR, connection->getSide(NetworkSide::CLIENT).getAddrStr())
+				std::format("<{}>IP: <white>{}", globals::THEME_COLOR, connection->getSide(NetworkSide::CLIENT).getAddrStr())
 			));
 		}
 		source->sendMessage(text::ITextIO::minimessage().parse(
-			std::format("<{}>Packet count: <reset>c2s={} s2c={}",
+			std::format("<{}>Packet count: <white>c2s={} s2c={}",
 						globals::THEME_COLOR,
 						connection->getPacketCount(NetworkSide::DEST),
 						connection->getPacketCount(NetworkSide::CLIENT)
 			)
 		));
 		source->sendMessage(text::ITextIO::minimessage().parse(
-			std::format("<{}>Network state: <reset>{}", globals::THEME_COLOR, EnumNames<NetworkState>::get(connection->getState()))
+			std::format("<{}>Network state: <white>{}", globals::THEME_COLOR, EnumNames<NetworkState>::get(connection->getState()))
 		));
 		source->sendMessage(text::ITextIO::minimessage().parse(
-			std::format("<{}>Client version: <reset>{} (pvn={})",
+			std::format("<{}>Client version: <white>{} (pvn={})",
 						globals::THEME_COLOR,
 						connection->getProtocolVersion()->getName(),
 						connection->getProtocolVersion()->getIdx()
 			)
 		));
 		source->sendMessage(text::ITextIO::minimessage().parse(
-			std::format("<{}>Client brand: <reset>{}", globals::THEME_COLOR, connection->getClientbrand())
+			std::format("<{}>Client brand: <white>{}", globals::THEME_COLOR, connection->getClientbrand())
 		));
 	}
 	else
