@@ -1,18 +1,19 @@
 #pragma once
+#include "ping_tracker.hh"
 #include "plugin_messenger.hh"
+#include "anticheat/acp_player.hh"
+#include "handler/handshake_handler.hh"
+#include "handler/i_network_handler.hh"
 #include "protocol/network_state.hh"
 #include "protocol/protocol_version.hh"
 #include "socket/player_socket.hh"
-#include "handler/i_network_handler.hh"
-#include "handler/handshake_handler.hh"
-#include "util/logger/sub_logger.hh"
 #include "util/game_profile.hh"
-#include "util/text/component.hh"
-#include "anticheat/acp_player.hh"
+#include "util/logger/sub_logger.hh"
 #include "util/registry/dimension_type.hh"
+#include "util/text/component.hh"
 
-#include <optional>
 #include <memory>
+#include <optional>
 
 namespace acp
 {
@@ -35,6 +36,8 @@ namespace acp
 
 		std::string clientbrand;
 		PluginMessenger messenger;
+
+		PingTracker pingTracker;
 
 		GameProfile gameProfile;
 		std::vector<std::unique_ptr<nbt::Tag>> damageTypes;
@@ -71,6 +74,9 @@ namespace acp
 
 		PluginMessenger& getMessenger();
 		const PluginMessenger& getMessenger() const;
+
+		PingTracker& getPingTracker();
+		const PingTracker& getPingTracker() const;
 
 		GameProfile& getGameProfile();
 		void setGameProfile(const GameProfile& game_profile);

@@ -168,7 +168,10 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::JigsawGenerate* pa
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::KeepAlive* packet)
 {
-	return HandleResult::FORWARD;
+	const long id = packet->getKeepAliveId();
+	connection->getPingTracker().onReceive(id);
+
+	return id < 0 ? HandleResult::CANCEL : HandleResult::FORWARD;
 }
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::LockDifficulty* packet)
@@ -643,6 +646,8 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::InitializeWorldBor
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::s2c::KeepAlive* packet)
 {
+	connection->getPingTracker().onSend(packet->getKeepAliveId());
+
 	return HandleResult::FORWARD;
 }
 

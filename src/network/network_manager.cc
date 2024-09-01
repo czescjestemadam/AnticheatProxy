@@ -1,10 +1,13 @@
 #include "network_manager.hh"
 
+#include "anticheat_proxy.hh"
+#include "protocol/packet/play/s2c/keep_alive.hh"
 #include "socket/exception/socket_close_exception.hh"
 #include "util/profiler/profiler.hh"
 #include "util/text/translatable_component.hh"
 
 #include <memory>
+#include <random>
 
 constexpr int EPOLL_EVENT_COUNT = 32;
 
@@ -35,6 +38,7 @@ void acp::NetworkManager::start()
 
 	acceptThread = std::thread([this] { this->acceptLoop(); });
 	epollThread = std::thread([this] { this->epollLoop(); });
+	keepAliveSenderThread = std::thread([this] { this->keepAliveSenderLoop(); });
 }
 
 void acp::NetworkManager::stop()
@@ -58,6 +62,9 @@ void acp::NetworkManager::wait()
 
 	if (epollThread.joinable())
 		epollThread.join();
+
+	if (keepAliveSenderThread.joinable())
+		keepAliveSenderThread.join();
 }
 
 std::weak_ptr<acp::Connection> acp::NetworkManager::getByFd(int fd) const
@@ -199,4 +206,33 @@ void acp::NetworkManager::epollLoop()
 	}
 
 	logger.info("Stopped epoll loop");
+}
+
+void acp::NetworkManager::keepAliveSenderLoop()
+{
+	logger.info("Started KeepAlive sender loop");
+
+	std::random_device rd;
+	std::mt19937_64 rng(rd());
+	std::uniform_int_distribution<long> dist;
+
+	while (epollSocket.isValid())
+	{
+		for (std::shared_ptr<Connection>& connection : connections)
+		{
+			if (connection->getState() != NetworkState::PLAY)
+				continue;
+
+			const long id = 0 - dist(rng);
+			auto packet = std::make_unique<packet::play::s2c::KeepAlive>();
+			packet->setKeepAliveId(id);
+
+			connection->getPingTracker().onSend(id);
+			connection->sendPacket(NetworkSide::CLIENT, std::move(packet));
+		}
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(AnticheatProxy::get()->getConfigManager().getNetwork().keepAliveSenderIntervalMs));
+	}
+
+	logger.info("Stopped KeepAlive sender loop");
 }

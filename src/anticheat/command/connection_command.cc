@@ -54,6 +54,16 @@ void acp::ConnectionCommand::execute(ICommandSource* source, const std::vector<s
 		source->sendMessage(text::ITextIO::minimessage().parse(
 			std::format("<{}>Client brand: <white>{}", globals::THEME_COLOR, connection->getClientbrand())
 		));
+		source->sendMessage(text::ITextIO::minimessage().parse(
+			std::format("<{}>Client ping: <white>avg{}={} avg25={} avg5={} last={}",
+						globals::THEME_COLOR,
+						PingTracker::getMaxSampleSize(),
+						connection->getPingTracker().getAvg(),
+						connection->getPingTracker().getAvgLast(25),
+						connection->getPingTracker().getAvgLast(5),
+						connection->getPingTracker().getLast()
+			)
+		));
 	}
 	else
 		source->sendMessage(text::ITextIO::minimessage().parse(std::format("<red>Player {} not found", args.front())));

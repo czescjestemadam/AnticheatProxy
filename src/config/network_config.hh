@@ -13,6 +13,9 @@ namespace acp
 		ushort destinationPort = 30077;
 		int destinationOutCompressionThreshold = -1;
 
+		int pingTrackerSamplesCount = 256;
+		int keepAliveSenderIntervalMs = 1500;
+
 
 		NetworkConfig();
 

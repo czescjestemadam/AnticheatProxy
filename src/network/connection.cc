@@ -244,6 +244,16 @@ const acp::PluginMessenger& acp::Connection::getMessenger() const
 	return messenger;
 }
 
+acp::PingTracker& acp::Connection::getPingTracker()
+{
+	return pingTracker;
+}
+
+const acp::PingTracker& acp::Connection::getPingTracker() const
+{
+	return pingTracker;
+}
+
 acp::GameProfile& acp::Connection::getGameProfile()
 {
 	return gameProfile;

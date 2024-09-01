@@ -25,6 +25,8 @@ namespace acp
 		EpollSocket epollSocket;
 		std::thread epollThread;
 
+		std::thread keepAliveSenderThread;
+
 	public:
 		NetworkManager(const std::string& address, ushort port, const std::string& destAddress, ushort destPort);
 		~NetworkManager();
@@ -44,5 +46,6 @@ namespace acp
 	private:
 		void acceptLoop();
 		void epollLoop();
+		void keepAliveSenderLoop();
 	};
 }

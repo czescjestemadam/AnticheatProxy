@@ -685,6 +685,8 @@ add_executable(AnticheatProxy
 	src/util/system.hh
 	src/util/stacktrace/stacktrace.cc
 	src/util/stacktrace/stacktrace.hh
+	src/network/ping_tracker.cc
+	src/network/ping_tracker.hh
 )
 
 find_package(OpenSSL REQUIRED)
