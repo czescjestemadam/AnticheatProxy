@@ -58,5 +58,7 @@ namespace acp::text
 		static const IOTag UNDERLINED;
 		static const IOTag STRIKETHROUGH;
 		static const IOTag OBFUSCATED;
+
+		static const IOTag NEWLINE;
 	};
 }

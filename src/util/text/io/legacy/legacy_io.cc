@@ -1,5 +1,6 @@
 #include "legacy_io.hh"
 
+#include "util/str_utils.hh"
 #include "util/text/keybind_component.hh"
 #include "util/text/text_component.hh"
 #include "util/text/translatable_component.hh"
@@ -7,6 +8,11 @@
 
 std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::string& str, char prefix) const
 {
+	std::string from;
+	from += prefix;
+	from += IOTag::NEWLINE.getLegacyCode();
+	std::string newlinedStr = StrUtils::replaced(str, from, "\n");
+
 	std::unique_ptr<Component> component = std::make_unique<TextComponent>();
 
 	std::vector<const IOTag*> tags;
@@ -17,6 +23,9 @@ std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::stri
 	{
 		if (!text.empty())
 		{
+
+			StrUtils::replace(text, from, "\n");
+
 			std::unique_ptr<Component> extra = std::make_unique<TextComponent>(text);
 			for (const IOTag* t : tags)
 				t->apply(extra->getStyle());
@@ -32,17 +41,17 @@ std::unique_ptr<acp::text::Component> acp::text::LegacyIO::parse(const std::stri
 		text.clear();
 	};
 
-	for (int i = 0; i < str.length(); ++i)
+	for (int i = 0; i < newlinedStr.length(); ++i)
 	{
-		const char c = str[i];
-		if (c == prefix && i + 1 < str.length())
+		const char c = newlinedStr[i];
+		if (c == prefix && i + 1 < newlinedStr.length())
 		{
-			const char code = str[++i];
+			const char code = newlinedStr[++i];
 			if (code == prefix) // parse && as &
 				text += prefix;
-			else if (code == '#' && i + 6 < str.length())
+			else if (code == '#' && i + 6 < newlinedStr.length())
 			{
-				const std::string hexCode = str.substr(i, 7);
+				const std::string hexCode = newlinedStr.substr(i, 7);
 				i += 6;
 				const IOTag tag(hexCode);
 
@@ -149,7 +158,10 @@ std::string acp::text::LegacyIO::write(const std::unique_ptr<Component>& compone
 		}
 	}
 
-	return str;
+	std::string to;
+	to += prefix;
+	to += IOTag::NEWLINE.getLegacyCode();
+	return StrUtils::replaced(str, "\n", to);
 }
 
 std::string acp::text::LegacyIO::write(const std::unique_ptr<Component>& component) const

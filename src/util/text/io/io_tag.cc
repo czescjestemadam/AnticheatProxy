@@ -104,3 +104,5 @@ const acp::text::IOTag acp::text::IOTag::ITALIC = { 18, 'o', "italic", terminal:
 const acp::text::IOTag acp::text::IOTag::UNDERLINED = { 19, 'n', "underlined", terminal::Format::UNDERLINE, false, [](Style& style) { style.underlined = true; } };
 const acp::text::IOTag acp::text::IOTag::STRIKETHROUGH = { 20, 'm', "strikethrough", terminal::Format::STRIKETHROUGH, false, [](Style& style) { style.strikethrough = true; } };
 const acp::text::IOTag acp::text::IOTag::OBFUSCATED = { 21, 'k', "obfuscated", terminal::Format::BLINK, false, [](Style& style) { style.obfuscated = true; } };
+
+const acp::text::IOTag acp::text::IOTag::NEWLINE = { 22, ';', "newline", terminal::Format::RESET, false, [](Style&){} };

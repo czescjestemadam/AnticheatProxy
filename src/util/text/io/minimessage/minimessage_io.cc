@@ -1,5 +1,6 @@
 #include "minimessage_io.hh"
 
+#include "util/str_utils.hh"
 #include "util/text/keybind_component.hh"
 #include "util/text/text_component.hh"
 #include "util/text/translatable_component.hh"
@@ -7,6 +8,8 @@
 
 std::unique_ptr<acp::text::Component> acp::text::MinimessageIO::parse(const std::string& str) const
 {
+	std::string newlinedStr = StrUtils::replaced(str, "<" + IOTag::NEWLINE.getMiniMessageCode() + ">", "\n");
+
 	std::unique_ptr<Component> component = std::make_unique<TextComponent>();
 
 	std::vector<const IOTag*> tags;
@@ -34,9 +37,9 @@ std::unique_ptr<acp::text::Component> acp::text::MinimessageIO::parse(const std:
 
 	bool insideTag = false;
 	std::string tagCode;
-	for (int i = 0; i < str.length(); ++i)
+	for (int i = 0; i < newlinedStr.length(); ++i)
 	{
-		const char c = str[i];
+		const char c = newlinedStr[i];
 		if (c == '<')
 		{
 			if (insideTag)
@@ -142,5 +145,5 @@ std::string acp::text::MinimessageIO::write(const std::unique_ptr<Component>& co
 		}
 	}
 
-	return str;
+	return StrUtils::replaced(str, "\n", "<" + IOTag::NEWLINE.getMiniMessageCode() + ">");
 }
