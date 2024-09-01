@@ -3,10 +3,13 @@
 #include "util/profiler/profiler.hh"
 
 constexpr std::string_view PREFIX = "--";
+std::string BIN_PATH;
 
 acp::RunArgs::RunArgs(int argc, char* argv[])
 {
 	ProfilerStackGuard guard = Profiler::get().pushGuard("RunArgs()");
+
+	BIN_PATH = argv[0];
 
 	std::string currentArg;
 	std::string currentVal;
@@ -54,4 +57,10 @@ std::optional<std::string> acp::RunArgs::getArg(const std::string& name) const
 		return std::nullopt;
 
 	return std::make_optional(pair->second);
+}
+
+
+const std::string& acp::RunArgs::getBinPath()
+{
+	return BIN_PATH;
 }
