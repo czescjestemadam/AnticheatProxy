@@ -52,3 +52,39 @@ std::string acp::StrUtils::join(const std::vector<std::string>& arr, const std::
 
 	return str;
 }
+
+std::string acp::StrUtils::toLowerCase(const std::string& str)
+{
+	std::string ret;
+	ret.reserve(str.length());
+
+	for (const char c : str)
+		ret += std::tolower(c);
+
+	return ret;
+}
+
+std::string acp::StrUtils::toUpperCase(const std::string& str)
+{
+	std::string ret;
+	ret.reserve(str.length());
+
+	for (const char c : str)
+		ret += std::toupper(c);
+
+	return ret;
+}
+
+std::vector<std::string> acp::StrUtils::retMatches(const std::string& arg, const std::vector<std::string>& args)
+{
+	const std::string lowerArg = toLowerCase(arg);
+
+	std::vector<std::string> ret;
+	for (const std::string& s : args)
+	{
+		if (s.length() >= arg.length() && lowerArg == toLowerCase(s.substr(0, arg.length())))
+			ret.push_back(s);
+	}
+
+	return ret;
+}

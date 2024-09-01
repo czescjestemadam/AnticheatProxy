@@ -43,25 +43,37 @@ void acp::CommandManager::completePacket(ICommandSource* source, const std::stri
 {
 	ProfilerStackGuard guard = Profiler::get().pushGuard("CommandManager::completePacket()");
 
-	if (const auto* player = dynamic_cast<AcpPlayer*>(source))
+	const auto* player = dynamic_cast<AcpPlayer*>(source);
+	if (!player)
+		return;
+
+	std::vector<std::string> args = StrUtils::split(command);
+	args.erase(args.begin()); // on packet erase starting "/acp "
+
+	std::vector<std::string> completions;
+
+	if (args.size() == 1) // completing "/acp _" or "/acp c_"
+		completions = getCommandNames();
+	else // completing "/acp cmd _"
 	{
-		std::vector<std::string> args = StrUtils::split(command);
-		args.erase(args.begin()); // on packet erase starting "/acp "
 		const std::string name = args.front();
 		args.erase(args.begin());
 
-		const std::vector<std::string> completions = complete(source, name, args);
-
-		auto packet = std::make_unique<packet::play::s2c::CommandSuggestionsResponse>();
-		packet->setTransactionId(id);
-		packet->setStart(-1); //
-		packet->setLength(-1); //
-
-		for (const std::string& completion : completions)
-			packet->getMatches().emplace_back(completion, nullptr);
-
-		player->getConnection()->sendPacket(NetworkSide::CLIENT, std::move(packet));
+		completions = complete(source, name, args);
 	}
+
+	const int lastArgStart = static_cast<int>(command.rfind(' ')) + 1;
+	const int len = static_cast<int>(command.length()) - lastArgStart;
+
+	auto packet = std::make_unique<packet::play::s2c::CommandSuggestionsResponse>();
+	packet->setTransactionId(id);
+	packet->setStart(lastArgStart);
+	packet->setLength(len);
+
+	for (const std::string& completion : StrUtils::retMatches(args.back(), completions))
+		packet->getMatches().emplace_back(completion, nullptr);
+
+	player->getConnection()->sendPacket(NetworkSide::CLIENT, std::move(packet));
 }
 
 void acp::CommandManager::execute(ICommandSource* source, const std::string& name, const std::vector<std::string>& args)

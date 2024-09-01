@@ -95,7 +95,7 @@ acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::ClientInformation*
 
 acp::HandleResult acp::PlayHandler::handle(packet::play::c2s::CommandSuggestionsRequest* packet)
 {
-	if (packet->getText().starts_with("acp") && connection->getPlayer().hasPermission(Permission::CMD))
+	if (packet->getText().starts_with("/acp") && connection->getPlayer().hasPermission(Permission::CMD))
 	{
 		AnticheatProxy::get()->getCommandManager().completePacket(&connection->getPlayer(), packet->getText(), packet->getTransactionId());
 		return HandleResult::CANCEL;
