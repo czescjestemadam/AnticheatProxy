@@ -17,8 +17,5 @@ namespace acp
 
 		bool hasFlag(const std::string& name) const;
 		std::optional<std::string> getArg(const std::string& name) const;
-
-
-		static const std::string& getBinPath();
 	};
 }
