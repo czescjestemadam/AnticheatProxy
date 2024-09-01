@@ -683,6 +683,8 @@ add_executable(AnticheatProxy
 	src/network/plugin_messenger.hh
 	src/util/system.cc
 	src/util/system.hh
+	src/util/stacktrace/stacktrace.cc
+	src/util/stacktrace/stacktrace.hh
 )
 
 find_package(OpenSSL REQUIRED)
