@@ -147,7 +147,10 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::
 			{
 				auto& [id, tag] = entries[i];
 
-				connection->getLogger().debug("dmg {}: {}", id.toString(), tag ? tag->toString() : "nullptr");
+				registry::DamageType type;
+				type.deserialize(tag);
+
+				connection->getDamageTypes().emplace_back(i, type, id.toString());
 			}
 		}
 	}
