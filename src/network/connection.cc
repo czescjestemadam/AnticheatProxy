@@ -264,12 +264,12 @@ void acp::Connection::setGameProfile(const GameProfile& game_profile)
 	gameProfile = game_profile;
 }
 
-const std::vector<std::unique_ptr<acp::nbt::Tag>>& acp::Connection::getDamageTypes() const
+const std::vector<acp::registry::DamageTypeEntry>& acp::Connection::getDamageTypes() const
 {
 	return damageTypes;
 }
 
-std::vector<std::unique_ptr<acp::nbt::Tag>>& acp::Connection::getDamageTypes()
+std::vector<acp::registry::DamageTypeEntry>& acp::Connection::getDamageTypes()
 {
 	return damageTypes;
 }

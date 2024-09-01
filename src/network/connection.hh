@@ -9,6 +9,7 @@
 #include "socket/player_socket.hh"
 #include "util/game_profile.hh"
 #include "util/logger/sub_logger.hh"
+#include "util/registry/damage_type.hh"
 #include "util/registry/dimension_type.hh"
 #include "util/text/component.hh"
 
@@ -40,7 +41,7 @@ namespace acp
 		PingTracker pingTracker;
 
 		GameProfile gameProfile;
-		std::vector<std::unique_ptr<nbt::Tag>> damageTypes;
+		std::vector<registry::DamageTypeEntry> damageTypes;
 		std::vector<registry::DimensionTypeEntry> dimensionTypes;
 		AcpPlayer player;
 
@@ -81,8 +82,8 @@ namespace acp
 		GameProfile& getGameProfile();
 		void setGameProfile(const GameProfile& game_profile);
 
-		std::vector<std::unique_ptr<nbt::Tag>>& getDamageTypes();
-		const std::vector<std::unique_ptr<nbt::Tag>>& getDamageTypes() const;
+		std::vector<registry::DamageTypeEntry>& getDamageTypes();
+		const std::vector<registry::DamageTypeEntry>& getDamageTypes() const;
 
 		std::vector<registry::DimensionTypeEntry>& getDimensionTypes();
 		const std::vector<registry::DimensionTypeEntry>& getDimensionTypes() const;

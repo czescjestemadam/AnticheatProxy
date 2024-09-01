@@ -1,10 +1,10 @@
 #include "dimension_type.hh"
 
-#include <algorithm>
-
 #include "util/nbt/tag/tag_compound.hh"
 #include "util/nbt/tag/tag_number.hh"
 #include "util/nbt/tag/tag_string.hh"
+
+#include <algorithm>
 
 std::unique_ptr<acp::nbt::Tag> acp::registry::DimensionType::serialize()
 {

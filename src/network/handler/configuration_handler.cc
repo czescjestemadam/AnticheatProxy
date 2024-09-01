@@ -3,6 +3,7 @@
 #include "network/connection.hh"
 #include "util/nbt/tag/tag_list.hh"
 #include "util/nbt/tag/tag_number.hh"
+#include "util/registry/damage_type.hh"
 #include "util/registry/dimension_type.hh"
 
 acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::c2s::ClientInformation* packet)
@@ -92,7 +93,18 @@ acp::HandleResult acp::ConfigurationHandler::handle(packet::configuration::s2c::
 			if (codec->get().contains("damage_type"))
 			{
 				if (auto* damage = dynamic_cast<nbt::TagCompound*>(codec->get()["damage_type"].get()))
-					connection->getLogger().debug("damage: {}", damage->toString());
+				{
+					if (auto* list = dynamic_cast<nbt::TagList*>(damage->get("value").get()))
+					{
+						for (std::unique_ptr<nbt::Tag>& tag : list->get())
+						{
+							registry::DamageTypeEntry entry;
+							entry.deserialize(tag);
+
+							connection->getDamageTypes().push_back(std::move(entry));
+						}
+					}
+				}
 			}
 
 			if (codec->get().contains("dimension_type"))
