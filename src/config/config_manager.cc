@@ -1,5 +1,6 @@
 #include "config_manager.hh"
 
+#include "globals.hh"
 #include "util/profiler/profiler.hh"
 
 acp::ConfigManager::ConfigManager(const RunArgs& args)
@@ -14,7 +15,7 @@ void acp::ConfigManager::load()
 {
 	ProfilerStackGuard guard = Profiler::get().pushGuard("ConfigManager::load()");
 
-	const std::filesystem::path configsDir = std::filesystem::current_path() / "configs";
+	const std::filesystem::path configsDir = globals::RUNDIR / "configs";
 	create_directory(configsDir);
 
 	logger.info("Loading configs from {}", configsDir.c_str());

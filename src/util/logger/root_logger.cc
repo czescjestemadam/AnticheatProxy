@@ -7,6 +7,8 @@
 #include <chrono>
 #include <iostream>
 
+#include "globals.hh"
+
 acp::RootLogger::RootLogger()
 {
 	const auto logsDir = getLogsDir();
@@ -25,7 +27,7 @@ acp::RootLogger::~RootLogger()
 
 std::filesystem::path acp::RootLogger::getLogsDir() const
 {
-	return std::filesystem::current_path() / "logs";
+	return globals::RUNDIR / "logs";
 }
 
 std::string acp::RootLogger::getFilename() const

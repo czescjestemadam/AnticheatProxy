@@ -4,13 +4,15 @@
 #include <fstream>
 #include <unistd.h>
 
-constexpr const char* PIDFILE = ".pid";
+#include "globals.hh"
 
 acp::PidFileLock::PidFileLock()
 {
-	if (std::filesystem::exists(PIDFILE))
+	const std::filesystem::path file = globals::RUNDIR / ".pid";
+
+	if (exists(file))
 	{
-		std::ifstream ifs(PIDFILE);
+		std::ifstream ifs(file);
 		if (!ifs.good())
 			throw std::runtime_error("pid file fstream::good() == false");
 
@@ -23,7 +25,7 @@ acp::PidFileLock::PidFileLock()
 			throw std::runtime_error("AnticheatProxy is already running in this directory");
 	}
 
-	std::ofstream ofs(PIDFILE);
+	std::ofstream ofs(file);
 	if (!ofs.good())
 		throw std::runtime_error("pid file fstream::good() == false");
 
@@ -33,5 +35,5 @@ acp::PidFileLock::PidFileLock()
 
 acp::PidFileLock::~PidFileLock()
 {
-	std::filesystem::remove(PIDFILE);
+	std::filesystem::remove(globals::RUNDIR / ".pid");
 }

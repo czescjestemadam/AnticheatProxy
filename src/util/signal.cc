@@ -4,8 +4,6 @@
 
 #include <csignal>
 
-static acp::SubLogger logger = acp::SubLogger::fromRoot("SignalHandler");
-
 using clk = std::chrono::steady_clock;
 
 static constexpr clk::duration DOUBLE_PRESS_TIME = std::chrono::milliseconds(500);
@@ -13,6 +11,8 @@ static clk::time_point lastSigint = clk::now();
 
 void sigintHandler(int i)
 {
+	acp::SubLogger logger = acp::SubLogger::fromRoot("SignalHandler");
+
 	logger.warn("SIGINT caught");
 	if (clk::now() - lastSigint < DOUBLE_PRESS_TIME)
 	{

@@ -1,6 +1,7 @@
 #include "profiler_config.hh"
 
 #include "config_macros.hh"
+#include "globals.hh"
 
 acp::ProfilerConfig::ProfilerConfig() : IConfig("ProfilerConfig")
 {
@@ -20,5 +21,5 @@ void acp::ProfilerConfig::saveJson(nlohmann::json& json)
 
 std::filesystem::path acp::ProfilerConfig::getFile()
 {
-	return std::filesystem::current_path() / "configs" / "profiler.json";
+	return globals::RUNDIR / "configs" / "profiler.json";
 }

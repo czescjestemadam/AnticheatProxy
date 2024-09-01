@@ -1,6 +1,7 @@
 #include "alert_config.hh"
 
 #include "config_macros.hh"
+#include "globals.hh"
 
 acp::AlertConfig::AlertConfig() : IConfig("AlertConfig")
 {
@@ -24,5 +25,5 @@ void acp::AlertConfig::saveJson(nlohmann::json& json)
 
 std::filesystem::path acp::AlertConfig::getFile()
 {
-	return std::filesystem::current_path() / "configs" / "alert.json";
+	return globals::RUNDIR / "configs" / "alert.json";
 }

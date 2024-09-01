@@ -1,6 +1,7 @@
 #include "network_config.hh"
 
 #include "config_macros.hh"
+#include "globals.hh"
 
 acp::NetworkConfig::NetworkConfig() : IConfig("NetworkConfig")
 {
@@ -34,5 +35,5 @@ void acp::NetworkConfig::saveJson(nlohmann::json& json)
 
 std::filesystem::path acp::NetworkConfig::getFile()
 {
-	return std::filesystem::current_path() / "configs" / "network.json";
+	return globals::RUNDIR / "configs" / "network.json";
 }

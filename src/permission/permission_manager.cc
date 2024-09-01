@@ -6,6 +6,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
+#include "globals.hh"
+
 acp::PermissionManager::PermissionManager()
 {
 	load();
@@ -15,7 +17,7 @@ void acp::PermissionManager::load()
 {
 	ProfilerStackGuard guard = Profiler::get().pushGuard("PermissionManager::load()");
 
-	const auto file = std::filesystem::current_path() / "permissions.json";
+	const auto file = globals::RUNDIR / "permissions.json";
 	if (!exists(file))
 	{
 		logger.warn("{} does not exist, generating example file", file.c_str());

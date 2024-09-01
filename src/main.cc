@@ -24,8 +24,16 @@ int main(int argc, char* argv[])
 		std::cout << "AnticheatProxy " << acp::globals::VERSION << " compiled at " << acp::globals::COMPILE_TIME << std::endl
 				<< "\t--help              shows help" << std::endl
 				<< "\t--version           shows proxy version" << std::endl
-				<< "\t--default-configs   skips loading (and saving default) configs" << std::endl;
+				<< "\t--default-configs   skips loading (and saving default) configs" << std::endl
+				<< "\t--rundir <path>     sets directory to run in" << std::endl;
 		return 0;
+	}
+
+	if (args.getArg("rundir"))
+	{
+		const std::filesystem::path argDir = args.getArg("rundir").value();
+		if (exists(argDir))
+			acp::globals::RUNDIR = argDir;
 	}
 
 	acp::RootLogger::get()->info("Loading...");
@@ -67,7 +75,7 @@ int main(int argc, char* argv[])
 		acp::RootLogger::get()->info(profilerDump);
 	if (profilerConfig.fileDump)
 	{
-		const std::filesystem::path profilerDumpsDir = std::filesystem::current_path() / "profiler-dumps";
+		const std::filesystem::path profilerDumpsDir = acp::globals::RUNDIR / "profiler-dumps";
 		if (!exists(profilerDumpsDir))
 			create_directory(profilerDumpsDir);
 
