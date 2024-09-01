@@ -22,6 +22,8 @@ namespace acp
 
 		PlayerSocket clientSocket;
 		PlayerSocket destSocket;
+		std::mutex clientSocketMx;
+		std::mutex destSocketMx;
 
 		std::unordered_map<NetworkSide, size_t> packetCount;
 

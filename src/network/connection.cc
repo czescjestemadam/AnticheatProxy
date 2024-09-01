@@ -9,6 +9,8 @@
 #include "util/profiler/profiler.hh"
 #include "util/text/translatable_component.hh"
 
+#include <mutex>
+
 acp::Connection::Connection(PlayerSocket&& clientSocket, PlayerSocket&& destSocket)
 	: logger(SubLogger::fromRoot("Connection " + clientSocket.getAddrStr())),
 	  clientSocket(std::move(clientSocket)),
@@ -75,6 +77,7 @@ void acp::Connection::handleEvent(int fd)
 					 packet->toString(),
 					 ex.what()
 		);
+		std::unique_lock lock(toSide == NetworkSide::CLIENT ? clientSocketMx : destSocketMx);
 		to.write(ogBuf);
 		packetCount[toSide]++;
 		return;
@@ -94,6 +97,7 @@ void acp::Connection::handleEvent(int fd)
 					 packet->toString(),
 					 ex.what()
 		);
+		std::unique_lock lock(toSide == NetworkSide::CLIENT ? clientSocketMx : destSocketMx);
 		to.write(ogBuf);
 		packetCount[toSide]++;
 		return;
@@ -102,6 +106,7 @@ void acp::Connection::handleEvent(int fd)
 	if (result == HandleResult::FORWARD)
 	{
 		// sendPacket(toSide, std::move(packet)); // strict read/write TODO fix some packets
+		std::unique_lock lock(toSide == NetworkSide::CLIENT ? clientSocketMx : destSocketMx);
 		to.write(ogBuf);
 		packetCount[toSide]++;
 	}
@@ -158,14 +163,16 @@ void acp::Connection::sendPacket(NetworkSide to, ByteBuf&& data)
 		buf.writeVarint(compress ? dataLen : 0);
 		buf.writeBuf(compress ? data.compress() : data);
 
+		std::unique_lock lock(to == NetworkSide::CLIENT ? clientSocketMx : destSocketMx);
 		getSide(to).write(buf);
+		packetCount[to]++;
 	}
 	else // before SetCompression packet
 	{
+		std::unique_lock lock(to == NetworkSide::CLIENT ? clientSocketMx : destSocketMx);
 		getSide(to).write(data);
+		packetCount[to]++;
 	}
-
-	packetCount[to]++;
 }
 
 acp::SubLogger& acp::Connection::getLogger()
