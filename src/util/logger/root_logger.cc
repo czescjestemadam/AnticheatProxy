@@ -71,7 +71,7 @@ void acp::RootLogger::log(LogLevel level, const std::string& message)
 	}
 
 	if (ofs.is_open())
-		ofs << rawLine << std::endl;
+		ofs << terminal::Format::stripped(rawLine) << std::endl;
 }
 
 acp::SubLogger acp::RootLogger::getSubLogger(const std::string& name)

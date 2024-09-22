@@ -3,8 +3,10 @@
 #include "anticheat_proxy.hh"
 #include "network/protocol/packet/play/s2c/system_chat_message.hh"
 #include "util/str_utils.hh"
+#include "util/logger/root_logger.hh"
 #include "util/text/io/i_text_io.hh"
 #include "util/text/io/minimessage/minimessage_io.hh"
+#include "util/text/io/terminal/terminal_io.hh"
 
 void acp::AlertManager::send(const Alert& alert)
 {
@@ -48,6 +50,8 @@ std::string acp::AlertManager::formatString(const std::string& str, const Alert&
 
 void acp::AlertManager::send(std::unique_ptr<text::Component>&& component)
 {
+	RootLogger::get()->info(text::ITextIO::terminal().write(component));
+
 	auto packet = std::make_unique<packet::play::s2c::SystemChatMessage>();
 	packet->setMessage(std::move(component));
 	packet->setOverlay(false);
