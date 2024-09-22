@@ -38,7 +38,15 @@ int main(int argc, char* argv[])
 
 	acp::RootLogger::get()->info("Loading...");
 	acp::AnticheatProxy acp(std::move(args));
-	acp.start();
+	try
+	{
+		acp.start();
+	}
+	catch (const std::exception& ex)
+	{
+		acp::RootLogger::get()->error("cant start: {}", ex.what());
+		return 1;
+	}
 
 	acp::terminal::prompt::start();
 
